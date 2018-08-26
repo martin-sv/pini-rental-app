@@ -23,6 +23,14 @@ export class AppComponent {
     this.translate.setDefaultLang(defaultLanguage);
 
     const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/en|es/) ? browserLang : defaultLanguage);
+    // this.translate.use(browserLang.match(/en|es/) ? browserLang : defaultLanguage);
+    // TODO: La primera vez que se loguean, detectar el idioma y guardarlo.
+
+    /* Ejemplo con parametros
+    HTML:
+    <h2>{{ 'HOME.TITLE2' | translate:{value : 'Valor a Pasar'} }}</h2>
+    json:
+    "TITLE": "Bienvenido a Pini Rental! {{ value }}"
+    */
   }
 }

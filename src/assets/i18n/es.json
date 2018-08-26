@@ -1,0 +1,6 @@
+{
+  "HOME": {
+    "TITLE": "Bienvenido a Pini Rental!",
+    "TITLE2": "Bienvenido a Pini Rental! {{ value }}"
+  }
+}
