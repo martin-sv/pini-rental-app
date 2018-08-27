@@ -1,0 +1,39 @@
+<section>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px"
+      (ngSubmit)="onSubmit()"
+      [formGroup]= "loginForm">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
+          type="email"
+          name="email"
+          email
+          required
+          formControlName="email">
+          <mat-error *ngIf="!!loginForm.controls.email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
+          <mat-error *ngIf="!!loginForm.controls.email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
+          type="password"
+          name="password"
+          password
+          required
+          formControlName="password">
+          <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <button
+        type="submit"
+        mat-raised-button
+        color="accent"
+        [disabled]="loginForm.invalid">
+        <!-- color="primary"> -->
+        Submit</button>
+    </form>
+  </section>
