@@ -1,86 +1,92 @@
+<div
+  class="div-logo"
+  fxLayout="column"
+  fxLayoutAlign="center center">
+  <img width="300px"  class="img-responsive" src="https://preview.ibb.co/iwendU/pini_rental_logo_8.png" alt="Pini Rental Logo">
+</div>
 <section>
-    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
-          ngModel
-          type="email"
-          name="email"
-          email
-          required
-          #email="ngModel">
-          <mat-error *ngIf="email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
-          <mat-error *ngIf="email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
-      </mat-form-field>
-      <mat-form-field hintLabel="{{ 'SIGNUP.MINPASSWORD' | translate:{value : '6'} }}">
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
-          ngModel
-          type="password"
-          name="password"
-          password
-          required
-          minlength="6"
-          #password="ngModel">
-          <mat-hint align="end">{{ password.value?.length }}/6</mat-hint> <!-- TODO: Pasar minlength a Archivo de configuracion -->
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.FIRST_NAME' | translate }}"
-          ngModel
-          type="first_name"
-          name="first_name"
-          required>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.LAST_NAME' | translate }}"
-          ngModel
-          type="last_name"
-          name="last_name"
-          required>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.PHONE' | translate }}"
-          ngModel
-          type="phone"
-          name="phone">
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.ADDRESS' | translate }}"
-          ngModel
-          type="address"
-          name="address">
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.STATE' | translate }}"
-          ngModel
-          type="state"
-          name="state">
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.COUNTRY' | translate }}"
-          ngModel
-          type="country"
-          name="coutnry">
-      </mat-form-field>
-      <button
-        type="submit"
-        mat-raised-button
-        color="primary"
-        [disabled]="f.invalid">
-        Submit</button>
-    </form>
-  </section>
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
+        ngModel
+        type="email"
+        name="email"
+        email
+        required
+        #email="ngModel">
+        <mat-error *ngIf="email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="{{ 'SIGNUP.MINPASSWORD' | translate:{value : '6'} }}">
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
+        ngModel
+        type="password"
+        name="password"
+        password
+        required
+        minlength="6"
+        #password="ngModel">
+        <mat-hint align="end">{{ password.value?.length }}/6</mat-hint> <!-- TODO: Pasar minlength a Archivo de configuracion -->
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.FIRST_NAME' | translate }}"
+        ngModel
+        type="first_name"
+        name="first_name"
+        required>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.LAST_NAME' | translate }}"
+        ngModel
+        type="last_name"
+        name="last_name"
+        required>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.PHONE' | translate }}"
+        ngModel
+        type="phone"
+        name="phone">
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.ADDRESS' | translate }}"
+        ngModel
+        type="address"
+        name="address">
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.STATE' | translate }}"
+        ngModel
+        type="state"
+        name="state">
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.COUNTRY' | translate }}"
+        ngModel
+        type="country"
+        name="coutnry">
+    </mat-form-field>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="f.invalid">
+      Submit</button>
+  </form>
+<section>

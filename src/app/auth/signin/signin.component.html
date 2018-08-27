@@ -1,34 +1,40 @@
+<div
+  class="div-logo"
+  fxLayout="column"
+  fxLayoutAlign="center center">
+  <img width="300px"  class="img-responsive" src="https://preview.ibb.co/iwendU/pini_rental_logo_8.png" alt="Pini Rental Logo">
+</div>
 <section>
-    <form
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      fxLayoutGap="10px"
-      (ngSubmit)="onSubmit()"
-      [formGroup]= "loginForm">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
-          type="email"
-          name="email"
-          formControlName="email">
-          <mat-error *ngIf="!!loginForm.controls.email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
-          <mat-error *ngIf="!!loginForm.controls.email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
-          type="password"
-          name="password"
-          formControlName="password">
-          <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
-      </mat-form-field>
-      <button
-        type="submit"
-        mat-raised-button
-        color="primary"
-        [disabled]="loginForm.invalid">
-        Submit</button>
-    </form>
-  </section>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    (ngSubmit)="onSubmit()"
+    [formGroup]= "loginForm">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
+        type="email"
+        name="email"
+        formControlName="email">
+        <mat-error *ngIf="!!loginForm.controls.email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
+      <mat-error *ngIf="!!loginForm.controls.email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
+        type="password"
+        name="password"
+        formControlName="password">
+        <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
+    </mat-form-field>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="loginForm.invalid">
+      Submit</button>
+  </form>
+</section>
