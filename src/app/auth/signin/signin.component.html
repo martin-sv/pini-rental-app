@@ -10,6 +10,7 @@
           matInput
           placeholder="{{ 'SIGNUP.EMAIL' | translate }}"
           type="email"
+          name="email"
           formControlName="email">
           <mat-error *ngIf="!!loginForm.controls.email.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
           <mat-error *ngIf="!!loginForm.controls.email.hasError('email')">{{ 'SIGNUP.EMAILINVALID' | translate }}</mat-error>
@@ -19,15 +20,15 @@
           matInput
           placeholder="{{ 'SIGNUP.PASSWORD' | translate }}"
           type="password"
+          name="password"
           formControlName="password">
           <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'SIGNUP.FIELDEMPTYERROR' | translate }}</mat-error>
       </mat-form-field>
       <button
         type="submit"
         mat-raised-button
-        color="accent"
+        color="primary"
         [disabled]="loginForm.invalid">
-        <!-- color="primary"> -->
         Submit</button>
     </form>
   </section>
