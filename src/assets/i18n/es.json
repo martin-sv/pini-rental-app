@@ -2,5 +2,15 @@
   "HOME": {
     "TITLE": "Bienvenido a Pini Rental!",
     "TITLE2": "Bienvenido a Pini Rental! {{ value }}"
+  },
+  "SIGNUP": {
+    "EMAIL": "Email",
+    "PASSWORD": "Contraseña",
+    "FIRST_NAME": "Nombre",
+    "LAST_NAME": "Apellido",
+    "PHONE": "Teléfono Celular",
+    "ADDRESS": "Dirección",
+    "STATE": "Estado",
+    "COUNTRY": "Pais"
   }
 }

@@ -1,5 +1,16 @@
 {
   "HOME": {
     "TITLE": "Welcome to Pini Rental!"
-  }
+  },
+"SIGNUP": {
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "Last Name",
+  "PHONE": "Mobile Phone",
+  "ADDRESS": "Address",
+  "STATE": "State",
+  "COUNTRY": "Country"
+}
+
 }
