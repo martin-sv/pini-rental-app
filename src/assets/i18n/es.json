@@ -5,12 +5,15 @@
   },
   "SIGNUP": {
     "EMAIL": "Email",
+    "EMAILINVALID": "Email inválido",
     "PASSWORD": "Contraseña",
+    "MINPASSWORD": "Debe contener al menos {{ value }} caracteres",
     "FIRST_NAME": "Nombre",
     "LAST_NAME": "Apellido",
     "PHONE": "Teléfono Celular",
     "ADDRESS": "Dirección",
     "STATE": "Estado",
-    "COUNTRY": "Pais"
+    "COUNTRY": "Pais",
+    "FIELDEMPTYERROR": "Campo Requerido"
   }
 }

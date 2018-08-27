@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -18,7 +19,7 @@ import { PropertyCreateEditComponent } from './properties/property-create-edit/p
 import { PropertyListComponent } from './properties/property-list/property-list.component';
 import { PropertyDetailsComponent } from './properties/property-details/property-details.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -45,6 +46,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
+    FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

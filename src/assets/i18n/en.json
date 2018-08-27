@@ -1,16 +1,19 @@
 {
   "HOME": {
-    "TITLE": "Welcome to Pini Rental!"
+    "TITLE": "Welcome to Pini Rental!",
+    "TITLE2": "Welcome to Pini Rental! {{ value }}"
   },
-"SIGNUP": {
-  "EMAIL": "Email",
-  "PASSWORD": "Password",
-  "FIRST_NAME": "First Name",
-  "LAST_NAME": "Last Name",
-  "PHONE": "Mobile Phone",
-  "ADDRESS": "Address",
-  "STATE": "State",
-  "COUNTRY": "Country"
-}
-
+  "SIGNUP": {
+    "EMAIL": "Email",
+    "EMAILINVALID": "Email is invalid",
+    "PASSWORD": "Password",
+    "MINPASSWORD": "Should be at least {{ value }} characters",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "PHONE": "Mobile Phone",
+    "ADDRESS": "Address",
+    "STATE": "State",
+    "COUNTRY": "Country",
+    "FIELDEMPTYERROR": "Campo Requerido"
+  }
 }
