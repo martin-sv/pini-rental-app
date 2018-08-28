@@ -5,7 +5,7 @@
   },
   "SIGNUP-IN": {
     "SIGNUP": "Registrarse",
-    "SIGNIN": "Loguearse",
+    "SIGNIN": "Entrar",
     "EMAIL": "Email",
     "EMAILINVALID": "Email inválido",
     "PASSWORD": "Contraseña",
