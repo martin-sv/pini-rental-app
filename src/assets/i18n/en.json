@@ -3,7 +3,9 @@
     "TITLE": "Welcome to Pini Rental!",
     "TITLE2": "Welcome to Pini Rental! {{ value }}"
   },
-  "SIGNUP": {
+  "SIGNUP-IN": {
+    "SIGNUP": "Signup",
+    "SIGNIN": "Signin",
     "EMAIL": "Email",
     "EMAILINVALID": "Email is invalid",
     "PASSWORD": "Password",
@@ -14,6 +16,6 @@
     "ADDRESS": "Address",
     "STATE": "State",
     "COUNTRY": "Country",
-    "FIELDEMPTYERROR": "Campo Requerido"
+    "FIELDEMPTYERROR": "Required Field"
   }
 }
