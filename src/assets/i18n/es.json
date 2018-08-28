@@ -6,6 +6,7 @@
   "SIGNUP-IN": {
     "SIGNUP": "Registrarse",
     "SIGNIN": "Entrar",
+    "SIGNOUT": "Salir",
     "EMAIL": "Email",
     "EMAILINVALID": "Email inválido",
     "PASSWORD": "Contraseña",
