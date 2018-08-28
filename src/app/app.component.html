@@ -13,6 +13,17 @@
     <p>I'm the sidenav</p>
   </mat-sidenav>
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <mat-toolbar color="primary">
+        <div><button (click)="sidenav.toggle()">Toggle Sidenav</button></div>
+        <div>Logo</div>
+        <div>
+          <a [routerLink]="['/signup']">Signup</a>
+          <a [routerLink]="['/signin']">Signin</a>
+          <a [routerLink]="['/signup']">Signup</a>
+        </div>
+    </mat-toolbar>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>

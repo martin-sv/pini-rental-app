@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,13 +7,18 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(public translate: TranslateService,
               private titleService: Title) {
-    // titleService.setTitle('Pini Rental');
+  // titleService.setTitle('Pini Rental');
 
-    // Start Translations Service
-    this.configureTranslations();
+  // Start Translations Service
+  this.configureTranslations();
+
+  }
+
+  ngOnInit() {
+
   }
 
   private configureTranslations() {
