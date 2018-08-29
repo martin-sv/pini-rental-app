@@ -20,6 +20,8 @@ import { PropertyListComponent } from './properties/property-list/property-list.
 import { PropertyDetailsComponent } from './properties/property-details/property-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -39,7 +41,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     GuestsListComponent,
     PropertyCreateEditComponent,
     PropertyListComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,

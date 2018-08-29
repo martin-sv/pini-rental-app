@@ -1,0 +1,16 @@
+<mat-nav-list>
+    <a mat-list-item [routerLink]="['/signup']" (click)="onClose()">
+      <mat-icon>face</mat-icon>
+      <span class="nav-caption">{{ 'SIGNUP-IN.SIGNUP' | translate }}</span>
+    </a>
+    <a mat-list-item [routerLink]="['/signin']" (click)="onClose()">
+      <mat-icon>input</mat-icon>
+      <span class="nav-caption">{{ 'SIGNUP-IN.SIGNIN' | translate }}</span>
+    </a>
+    <mat-list-item> <!-- TODO: Ver si no se pasa a un <a> -->
+      <button mat-icon-button>
+        <mat-icon>eject</mat-icon>
+        <span class="nav-caption">{{ 'SIGNUP-IN.SIGNOUT' | translate }}</span>
+      </button>
+    </mat-list-item>
+  </mat-nav-list>
