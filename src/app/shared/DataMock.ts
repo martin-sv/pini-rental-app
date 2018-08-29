@@ -12,7 +12,7 @@ export class DataMock {
     const properties: Array<Property> = new Array<Property>();
     for (let i = 0; i < propertyCount; i++) {
     const property: Property = new Property(
-      this.rndNum(), host, this.rndText(), this.rndNum(1), this.rndText(), this.rndNum(), this.rndText());
+      this.rndNum(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
       properties.push(property);
     }
     return properties;
@@ -32,5 +32,24 @@ export class DataMock {
     return (Math.floor(Math.random() * max) + min);
   }
 
+  private static getPropertyImage() {
+    const images = [
+    'https://preview.ibb.co/iufwa9/property0.jpg',
+    'https://preview.ibb.co/czVwa9/property1.png',
+    'https://image.ibb.co/htUpv9/property2.jpg',
+    'https://image.ibb.co/cmcba9/property3.jpg',
+    'https://image.ibb.co/cQ2L2p/property4.jpg',
+    'https://preview.ibb.co/ngNyoU/property5.jpg',
+    'https://preview.ibb.co/mU1DNp/property6.jpg',
+    'https://image.ibb.co/niuYNp/property7.jpg',
+    'https://preview.ibb.co/juwf2p/property8.jpg',
+    'https://preview.ibb.co/cOiShp/property9.jpg',
+    ];
+
+    return images[this.rndNum(9, 1)];
+
+  }
+
 }
+
 
