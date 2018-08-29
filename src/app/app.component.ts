@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { DataMock } from './shared/DataMock';
+import { Host } from './shared/Host';
+import { Property } from './shared/property';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.testMock();
   }
 
   private configureTranslations() {
@@ -37,5 +40,12 @@ export class AppComponent implements OnInit {
     json:
     "TITLE": "Bienvenido a Pini Rental! {{ value }}"
     */
+  }
+
+  private testMock() {
+    const host: Host = DataMock.generateHost();
+    const properties: Array<Property> = DataMock.generateProperties(host, 5);
+    console.log('Host: ' + host);
+    console.log('Properties: ' + properties);
   }
 }

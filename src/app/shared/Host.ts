@@ -13,10 +13,14 @@ export class Host {
   set lastName(newLastName: string) { this._lastName = newLastName; }
   get propertyCount() { return this._propertyList.length; }
 
-  constructor(idHost: number, firstName: string, lastName: string, propertyList: Array<Property> = null) {
+  constructor(idHost: number, firstName: string, lastName: string, propertyList: Array<Property> = Array<Property>()) {
     this._idHost = idHost;
     this._firstName = firstName;
     this._lastName = lastName;
     this._propertyList = propertyList;
+  }
+
+  public addProperty(property: Property): void {
+    this._propertyList.push(property);
   }
 }

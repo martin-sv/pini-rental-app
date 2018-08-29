@@ -33,5 +33,6 @@ export class Property {
     this._address = address;
     this._checkinFee = checkinFee;
     this._picture = picture;
+    host.addProperty(this);
   }
 }
