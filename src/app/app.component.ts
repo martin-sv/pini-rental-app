@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { DataMock } from './shared/dataMock';
 import { Host } from './shared/host.model';
 import { Property } from './shared/property.model';
+import { AuthService } from './auth/auth.service';
+import { AuthData } from './auth/auth-data.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   constructor(public translate: TranslateService,
+              public authService: AuthService,
               private titleService: Title) {
   // titleService.setTitle('Pini Rental');
 
@@ -21,7 +24,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.testMock();
+    this.testMock();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.authService.signIn(new AuthData('asd@asd.com', '123456'));
+    }, 10);
   }
 
   private configureTranslations() {
@@ -44,12 +53,14 @@ export class AppComponent implements OnInit {
 
   private testMock() {
     const host: Host = DataMock.generateHost();
+    const properties: Array<Property> = DataMock.generateProperties(host, 5);
+    /*
     console.log(host.firstName);
     host.firstName = 'B';
     console.log(DataMock.host.firstName);
     console.log(host.firstName);
-    const properties: Array<Property> = DataMock.generateProperties(host, 5);
     console.log('Host: ' + host);
     console.log('Properties: ' + properties);
+    */
   }
 }

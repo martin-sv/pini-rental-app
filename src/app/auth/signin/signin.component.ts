@@ -26,6 +26,6 @@ export class SigninComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm);
-    this.authService.regusterUser(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
+    this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
   }
 }
