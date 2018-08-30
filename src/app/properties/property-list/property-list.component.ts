@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { DataMock } from '../../shared/dataMock';
-import { Property } from '../../shared/property';
-import { Host } from '../../shared/host';
+import { Property } from '../../shared/property.model';
+import { Host } from '../../shared/host.model';
 
 @Component({
   selector: 'app-property-list',

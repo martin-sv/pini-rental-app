@@ -1,5 +1,5 @@
-import { Host } from './host';
-import { Property } from './property';
+import { Host } from './host.model';
+import { Property } from './property.model';
 
 export class DataMock {
   private constructor() {}

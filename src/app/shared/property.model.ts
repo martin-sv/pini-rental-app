@@ -1,5 +1,5 @@
 import { PropertyClassEnum } from './propertyClassEnum';
-import { Host } from './host';
+import { Host } from './host.model';
 
 export class Property {
   /*
