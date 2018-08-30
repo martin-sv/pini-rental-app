@@ -3,11 +3,13 @@ import { Property } from './property.model';
 
 export class DataMock {
   private constructor() {}
-  static host: Host;
-  static properties: Array<Property> = new Array<Property>();
+  static _host: Host;
+  static _properties: Array<Property> = new Array<Property>();
+  static get host() { return Object.create(this._host); }
+  static get properties() { return Object.create(this._properties); }
 
   static generateHost(): Host {
-    this.host = new Host(this.rndNum(), this.rndText(), this.rndText());
+    this._host = new Host(this.rndNum(), this.rndText(), this.rndText());
     return this.host;
   }
 
@@ -18,7 +20,7 @@ export class DataMock {
       this.rndNum(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
       properties.push(property);
     }
-    this.properties.push(...properties);
+    this._properties.push(...properties);
     return this.properties;
   }
 

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.testMock();
+    //this.testMock();
   }
 
   private configureTranslations() {
@@ -44,6 +44,10 @@ export class AppComponent implements OnInit {
 
   private testMock() {
     const host: Host = DataMock.generateHost();
+    console.log(host.firstName);
+    host.firstName = "B";
+    console.log(DataMock.host.firstName);
+    console.log(host.firstName);
     const properties: Array<Property> = DataMock.generateProperties(host, 5);
     console.log('Host: ' + host);
     console.log('Properties: ' + properties);

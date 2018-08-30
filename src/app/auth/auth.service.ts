@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   getUser(): User {
+    // TODO: Creo que esto no anda
     return { ...this.user };  // Creates a new object to avoid returning the reference to the user.
   }
 
