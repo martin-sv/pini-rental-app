@@ -17,7 +17,7 @@ export class PropertyListComponent implements OnInit {
   ngOnInit() {
   }
 
-  getPicture(property: Property) {
+  getCover(property: Property) {
     return ('url("' + property.cover + '")');
   }
 }

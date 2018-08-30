@@ -2,11 +2,11 @@
   <div *ngFor="let property of properties" fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
-        <div mat-card-avatar [ngStyle]="{backgroundImage: getPicture(property), backgroundSize: 'cover'}"></div>
+        <div mat-card-avatar [ngStyle]="{backgroundImage: getCover(property), backgroundSize: 'cover'}"></div>
         <mat-card-title fxLayoutAlign="center">{{ property.name }}</mat-card-title>
         <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
       </mat-card-header>
-      <img mat-card-image src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYIMAGE' | translate }}">
+      <img mat-card-image src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYCOVER' | translate }}">
       <mat-card-content  fxLayoutAlign="left">
         Available<br><br>
         Next Checkin: May 31th, 2018
