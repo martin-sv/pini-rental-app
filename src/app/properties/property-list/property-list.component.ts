@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { DataMock } from '../../shared/DataMock';
-import { Property } from '../../shared/Property';
-import { Host } from '../../shared/Host';
+import { DataMock } from '../../shared/dataMock';
+import { Property } from '../../shared/property';
+import { Host } from '../../shared/host';
 
 @Component({
   selector: 'app-property-list',
@@ -17,8 +17,7 @@ export class PropertyListComponent implements OnInit {
   ngOnInit() {
   }
 
-  getPicture(property) {
-    console.log('GetColor!!!!!!' + property.picture);
-    return ('url("' + property.picture + '")');
+  getPicture(property: Property) {
+    return ('url("' + property.cover + '")');
   }
 }

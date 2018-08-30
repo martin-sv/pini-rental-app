@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { DataMock } from './shared/DataMock';
-import { Host } from './shared/Host';
+import { DataMock } from './shared/dataMock';
+import { Host } from './shared/host';
 import { Property } from './shared/property';
 
 @Component({

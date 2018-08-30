@@ -1,6 +1,7 @@
 import { Property } from './property';
 
 export class Host {
+  /*
   private _idHost: number;
   private _firstName: string;
   private _lastName: string;
@@ -19,8 +20,17 @@ export class Host {
     this._lastName = lastName;
     this._propertyList = propertyList;
   }
+  */
+ get idHost() { return this.idHost; }
+ constructor(
+   private _idHost: number,
+   public firstName: string,
+   public lastName: string,
+   public propertyList: Array<Property> = Array<Property>()) {
+}
+
 
   public addProperty(property: Property): void {
-    this._propertyList.push(property);
+    this.propertyList.push(property);
   }
 }

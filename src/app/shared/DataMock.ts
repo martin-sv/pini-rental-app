@@ -1,4 +1,4 @@
-import { Host } from './Host';
+import { Host } from './host';
 import { Property } from './property';
 
 export class DataMock {

@@ -1,7 +1,8 @@
-import { PropertyClassEnum } from './PropertyClassEnum';
-import { Host } from './Host';
+import { PropertyClassEnum } from './propertyClassEnum';
+import { Host } from './host';
 
 export class Property {
+  /*
   private _idProperty: number;
   private _host: Host;
   private _name: string;
@@ -35,4 +36,19 @@ export class Property {
     this._picture = picture;
     host.addProperty(this);
   }
+  */
+  get idProperty(): number { return this._idProperty; }
+
+  constructor(
+    private _idProperty: number,
+    public host: Host,
+    public name: string,
+    public propertyClass: PropertyClassEnum,
+    public address: string,
+    public checkinFee: number,
+    public cover: string) {
+
+    host.addProperty(this);
+  }
+
 }
