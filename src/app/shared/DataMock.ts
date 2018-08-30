@@ -3,9 +3,12 @@ import { Property } from './property';
 
 export class DataMock {
   private constructor() {}
+  static host: Host;
+  static properties: Array<Property> = new Array<Property>();
 
   static generateHost(): Host {
-    return new Host(this.rndNum(), this.rndText(), this.rndText());
+    this.host = new Host(this.rndNum(), this.rndText(), this.rndText());
+    return this.host;
   }
 
   static generateProperties(host: Host, propertyCount: number = 1) {
@@ -15,7 +18,8 @@ export class DataMock {
       this.rndNum(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
       properties.push(property);
     }
-    return properties;
+    this.properties.push(...properties);
+    return this.properties;
   }
 
   private static rndText(length: number = 7): string {

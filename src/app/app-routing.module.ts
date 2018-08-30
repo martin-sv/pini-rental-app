@@ -10,10 +10,6 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
   { path: 'properties', component: PropertyListComponent},
-  { path: 'signin', component: SigninComponent},
-  { path: 'signin', component: SigninComponent},
-  { path: 'signin', component: SigninComponent},
-  { path: 'signin', component: SigninComponent},
 ];
 // TODO: Agregar logica 404
 

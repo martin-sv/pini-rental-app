@@ -3,7 +3,14 @@
     "TITLE": "Bienvenido a Pini Rental!",
     "TITLE2": "Bienvenido a Pini Rental! {{ value }}"
   },
+  "TITLES": {
+    "SIGNUP": "Registrarse",
+    "SIGNIN": "Entrar",
+    "SIGNOUT": "Salir",
+    "PROPERTIES": "Propiedades"
+  },
   "SIGNUP-IN": {
+    "SUBMIT": "Enviar",
     "SIGNUP": "Registrarse",
     "SIGNIN": "Entrar",
     "SIGNOUT": "Salir",
@@ -18,5 +25,10 @@
     "STATE": "Estado",
     "COUNTRY": "Pais",
     "FIELDEMPTYERROR": "Campo Requerido"
+  },
+  "PROPERTIES": {
+    "EDITDETAILS": "Editar / Detalles",
+    "ALTPROPERTYIMAGE": "Imágen de la Propiedad"
+
   }
 }

@@ -1,3 +1,19 @@
-<p>
-  property-list works!
-</p>
+<section fxLayout="row wrap" fxFlexFill fxLayoutGap="20px grid" fxLayoutAlign="center">
+  <div *ngFor="let property of properties" fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="{backgroundImage: getPicture(property), backgroundSize: 'cover'}"></div>
+        <mat-card-title fxLayoutAlign="center">{{ property.name }}</mat-card-title>
+        <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
+      </mat-card-header>
+      <img mat-card-image src="{{ property.picture }}" alt="{{ 'PROPERTIES.ALTPROPERTYIMAGE' | translate }}">
+      <mat-card-content  fxLayoutAlign="left">
+        Available<br><br>
+        Next Checkin: May 31th, 2018
+      </mat-card-content>
+      <mat-card-actions  fxLayoutAlign="center">
+        <button type="submit" mat-button>{{ 'PROPERTIES.EDITDETAILS' | translate | uppercase }}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

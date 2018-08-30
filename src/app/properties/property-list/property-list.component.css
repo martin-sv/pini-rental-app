@@ -1,0 +1,8 @@
+.new-training {
+  padding: 30px;
+}
+mat-card img{
+  object-fit: cover; /*this makes de image in src fit to the size of specified below*/
+  height: 250px;
+  padding-top: 15px
+}
