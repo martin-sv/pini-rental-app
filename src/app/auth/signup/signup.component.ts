@@ -3,9 +3,6 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { FirestoreService } from '../../shared/firestore.service';
 import { UIService } from '../../shared/ui.service';
 
 @Component({
@@ -19,9 +16,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoadingSub: Subscription;
 
   constructor(private authService: AuthService,
-              private snackBar: MatSnackBar,
-              private translate: TranslateService,
-              private db: FirestoreService,
               private uiService: UIService) { }
 
   ngOnInit() {
@@ -32,15 +26,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {
-      // console.log(error);
-      this.translate.get('FIREBASE.' + error.code).subscribe((translatedText: string) => {
-        if (!translatedText.includes(error.code)) {
-          this.snackBar.open(translatedText, null, { duration: 5000});
-        } else {
-          this.snackBar.open(error.message, null, { duration: 5000});
-          this.db.addNewErrorMessageDiscovered(error.code, error.message);
-        }
-      });
+      this.uiService.showSnackbar(error.code, error.message, null, 5000);
     });
   }
 
