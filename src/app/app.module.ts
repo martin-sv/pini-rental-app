@@ -8,7 +8,6 @@ import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../environments/environment';
 
@@ -57,7 +56,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

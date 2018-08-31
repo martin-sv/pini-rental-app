@@ -72,6 +72,6 @@ export class FirestoreService {
   }
 
   cancelSubscriptions() {
-    this.firebaseSubs.forEach(sub => sub.unsubscribe());
+    if (this.firebaseSubs) { this.firebaseSubs.forEach(sub => sub.unsubscribe()); }
   }
 }

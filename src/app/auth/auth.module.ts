@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule,
+    AngularFireAuthModule,
     TranslateModule
   ],
   exports: []

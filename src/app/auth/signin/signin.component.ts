@@ -49,7 +49,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authErrorSub.unsubscribe();
-    this.isLoadingSub.unsubscribe();
+    if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
+    if (this.isLoadingSub) {this.isLoadingSub.unsubscribe(); }
   }
 }
