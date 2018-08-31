@@ -5,6 +5,7 @@ import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { FirestoreService } from '../../shared/firestore.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private snackBar: MatSnackBar,
-              private translate: TranslateService) { }
+              private translate: TranslateService,
+              private db: FirestoreService) { }
 
   ngOnInit() {
     this.authErrorObs = this.authService.authError.subscribe( error => {
@@ -26,6 +28,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.snackBar.open(translatedText, null, { duration: 5000});
         } else {
           this.snackBar.open(error.message, null, { duration: 5000});
+          this.db.addNewErrorMessageDiscovered(error.code, error.message);
         }
       });
     });

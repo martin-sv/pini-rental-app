@@ -67,6 +67,10 @@ export class FirestoreService {
     this.db.collection('test').add(propertyJSON);
   }
 
+  addNewErrorMessageDiscovered(code: string, message: string) {
+    this.db.collection('error-messages-discovered').add({code: code, message: message});
+  }
+
   cancelSubscriptions() {
     this.firebaseSubs.forEach(sub => sub.unsubscribe());
   }

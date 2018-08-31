@@ -5,6 +5,7 @@ import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
+import { FirestoreService } from '../../shared/firestore.service';
 
 @Component({
   selector: 'app-signin',
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private snackBar: MatSnackBar,
-              private translate: TranslateService) { }
+              private translate: TranslateService,
+              private db: FirestoreService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -37,6 +39,7 @@ export class SigninComponent implements OnInit, OnDestroy {
           this.snackBar.open(translatedText, null, { duration: 5000});
         } else {
           this.snackBar.open(error.message, null, { duration: 5000});
+          this.db.addNewErrorMessageDiscovered(error.code, error.message);
         }
       });
     });
