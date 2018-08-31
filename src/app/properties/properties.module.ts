@@ -3,6 +3,7 @@ import { PropertyDetailsComponent } from './property-details/property-details.co
 import { PropertyListComponent } from './property-list/property-list.component';
 import { PropertyCreateEditComponent } from './property-create-edit/property-create-edit.component';
 import { SharedModule } from '../shared/shared.module';
+import { PropertiesRoutingModule } from './properties-routing.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { SharedModule } from '../shared/shared.module';
     PropertyDetailsComponent,
   ],
   imports: [
-    SharedModule,
+    PropertiesRoutingModule,
+    SharedModule
   ]
 })
 export class PropertiesModule {

@@ -3,6 +3,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SharedModule } from '../shared/shared.module';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
     SigninComponent,
   ],
   imports: [
+    AuthRoutingModule,
     SharedModule,
     AngularFireAuthModule
   ]
