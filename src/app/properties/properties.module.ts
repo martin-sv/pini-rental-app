@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
 import { PropertyListComponent } from './property-list/property-list.component';
 import { PropertyCreateEditComponent } from './property-create-edit/property-create-edit.component';
-import { MaterialModule } from '../material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,12 +11,8 @@ import { CommonModule } from '@angular/common';
     PropertyDetailsComponent,
   ],
   imports: [
-    CommonModule,
-    MaterialModule,
-    FlexLayoutModule,
-    TranslateModule
-  ],
-  exports: []
+    SharedModule,
+  ]
 })
 export class PropertiesModule {
 

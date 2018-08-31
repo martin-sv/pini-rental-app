@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,14 +10,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     SigninComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    AngularFireAuthModule,
-    TranslateModule
-  ],
-  exports: []
+    SharedModule,
+    AngularFireAuthModule
+  ]
 })
 export class AuthModule {}
