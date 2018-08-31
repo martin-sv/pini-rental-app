@@ -1,10 +1,11 @@
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Host } from './host.model';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Property } from './property.model';
 import { PropertyClassEnum } from './propertyClassEnum';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable()
 export class FirestoreService {
@@ -12,22 +13,27 @@ export class FirestoreService {
   propertiesUpdate = new Subject<Property[]>();
   private host: Host;
   hostUpdate = new Subject<Host>();
+  private firebaseSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {}
 
   public fetchHost(idHost: string) {
 
-    this.db.doc<Host>('hosts/' + idHost)
+    this.firebaseSubs.push(this.db.doc<Host>('hosts/' + idHost)
       .valueChanges()
       .subscribe( result => {
         // console.log(result);
         this.host = new Host(result.idHost, result.firstName, result.lastName);
         this.hostUpdate.next(Object.create(this.host));
-    });
+      // tslint:disable-next-line:no-shadowed-variable
+      }, error => {
+        console.log(error);
+      })
+    );
   }
 
   public fetchProperties(host: Host) {
-    this.db
+    this.firebaseSubs.push(this.db
       .collection('hosts/' + host.idHost + '/properties')
       .snapshotChanges()
       .pipe(map(docArray => {
@@ -43,11 +49,15 @@ export class FirestoreService {
             doc.payload.doc.data()['cover']);
         });
       }))
-      .subscribe((props: Array<Property>) => {
+      .subscribe((props: Property[]) => {
         // console.log(props);
         this.properties = props;
         this.propertiesUpdate.next(Object.create(this.properties));
-      });
+      // tslint:disable-next-line:no-shadowed-variable
+      }, error => {
+        console.log(error);
+      })
+    );
   }
 
   addPropertyToFirestore(property: Property) {
@@ -55,5 +65,9 @@ export class FirestoreService {
     delete propertyJSON.host;
     // console.log(propertyJSON);
     this.db.collection('test').add(propertyJSON);
+  }
+
+  cancelSubscriptions() {
+    this.firebaseSubs.forEach(sub => sub.unsubscribe());
   }
 }
