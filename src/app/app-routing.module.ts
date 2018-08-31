@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'properties', component: PropertyListComponent, canActivate: [AuthGuard] },
-  { path: 'property', component: PropertyDetailsComponent }
+  { path: 'properties/:id', component: PropertyDetailsComponent }
 ];
 // TODO: Agregar logica 404
 
