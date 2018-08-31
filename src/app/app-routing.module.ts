@@ -10,7 +10,7 @@ const routes: Routes = [
 // TODO: Agregar logica 404
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})], // TODO: Ver si anda lazy loading
   exports: [RouterModule],
   providers: [AuthGuard]
 })
