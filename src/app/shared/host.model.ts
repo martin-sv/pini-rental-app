@@ -21,7 +21,8 @@ export class Host {
     this._propertyList = propertyList;
   }
   */
- get idHost() { return this.idHost; }
+ get idHost() { return this._idHost; }
+
  constructor(
    private _idHost: number,
    public firstName: string,

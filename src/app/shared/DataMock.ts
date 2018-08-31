@@ -1,12 +1,14 @@
 import { Host } from './host.model';
 import { Property } from './property.model';
 
+
 export class DataMock {
-  private constructor() {}
   static _host: Host;
   static _properties: Array<Property> = new Array<Property>();
   static get host() { return Object.create(this._host); }
   static get properties() { return Object.create(this._properties); }
+
+  private constructor() {}
 
   static generateHost(): Host {
     this._host = new Host(this.rndNum(), this.rndText(), this.rndText());
@@ -17,7 +19,7 @@ export class DataMock {
     const properties: Array<Property> = new Array<Property>();
     for (let i = 0; i < propertyCount; i++) {
     const property: Property = new Property(
-      this.rndNum(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
+      this.rndNum().toString(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
       properties.push(property);
     }
     this._properties.push(...properties);

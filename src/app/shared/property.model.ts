@@ -37,10 +37,10 @@ export class Property {
     host.addProperty(this);
   }
   */
-  get idProperty(): number { return this._idProperty; }
+  get idProperty(): string { return this._idProperty; }
 
   constructor(
-    private _idProperty: number,
+    private _idProperty: string,
     public host: Host,
     public name: string,
     public propertyClass: PropertyClassEnum,

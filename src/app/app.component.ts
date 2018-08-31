@@ -6,6 +6,7 @@ import { Host } from './shared/host.model';
 import { Property } from './shared/property.model';
 import { AuthService } from './auth/auth.service';
 import { AuthData } from './auth/auth-data.model';
+import { FirestoreService } from './shared/firestore.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { AuthData } from './auth/auth-data.model';
 export class AppComponent implements OnInit, AfterViewInit {
   constructor(public translate: TranslateService,
               public authService: AuthService,
+              public db: FirestoreService,
               private titleService: Title) {
   // titleService.setTitle('Pini Rental');
 
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.testMock();
+    // this.db.getPropertiesFromFirebase(DataMock.generateHost());
   }
 
   ngAfterViewInit() {
