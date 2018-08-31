@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this.testMock();
     // this.db.getPropertiesFromFirebase(DataMock.generateHost());
-    this.authService.initAuthListener();
+    // this.authService.initAuthListener();
   }
 
   ngAfterViewInit() {

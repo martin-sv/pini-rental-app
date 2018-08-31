@@ -28,5 +28,10 @@
     "ALTPROPERTYCOVER": "Property Image",
     "REGISTERGUEST": "Add New Guest",
     "ADDPROPERTY": "Register New Property"
+  },
+  "FIREBASE" : {
+    "auth/email-already-in-use": "The email address is already in use by another account.",
+    "auth/wrong-password": "The password is invalid.",
+    "auth/user-not-found": "There is no user record corresponding to this email."
   }
 }

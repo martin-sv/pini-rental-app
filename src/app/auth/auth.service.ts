@@ -1,5 +1,4 @@
 import { Subject } from 'rxjs';
-import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,7 +8,7 @@ import { FirestoreService } from '../shared/firestore.service';
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-  // private user: User;
+  authError = new Subject<any>();
   private isAuthenticated = false;
 
   constructor(private router: Router,
@@ -40,7 +39,8 @@ export class AuthService {
         // this.authSuccessfully(authData);
       })
       .catch( error => {
-        console.log(error);
+        // console.log(error);
+        this.authError.next(error);
       });
   }
 
@@ -53,7 +53,8 @@ export class AuthService {
         // this.authSuccessfully(authData);
       })
       .catch( error => {
-        console.log(error);
+        // console.log(error);
+        this.authError.next(error);
       });
   }
 
