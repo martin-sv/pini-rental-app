@@ -12,7 +12,7 @@ export class UIService {
               private translate: TranslateService,
               private db: FirestoreService) {}
 
-  showSnackbar(messageCode: string, altText: string, action: string, duration: number) {
+  showSnackbar(messageCode: string, altText: string, action: string, duration = 5000) {
     this.translate.get('FIREBASE.' + messageCode).subscribe((translatedText: string) => {
       // console.log(translatedText);
       if (!translatedText.includes(messageCode)) {

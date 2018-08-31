@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {
-      this.uiService.showSnackbar(error.code, error.message, null, 5000);
+      this.uiService.showSnackbar(error.code, error.message, null);
     });
   }
 
