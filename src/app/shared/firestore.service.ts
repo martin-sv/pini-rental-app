@@ -42,4 +42,8 @@ export class FirestoreService {
         this.propertiesUpdate.next(Object.create(this.properties));
       });
   }
+
+  private addPropertyToFirestore(property: Property) {
+    this.db.collection('test').add(property);
+  }
 }

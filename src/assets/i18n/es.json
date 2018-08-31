@@ -11,9 +11,6 @@
   },
   "SIGNUP-IN": {
     "SUBMIT": "Enviar",
-    "SIGNUP": "Registrarse",
-    "SIGNIN": "Entrar",
-    "SIGNOUT": "Salir",
     "EMAIL": "Email",
     "EMAILINVALID": "Email inválido",
     "PASSWORD": "Contraseña",
@@ -28,7 +25,9 @@
   },
   "PROPERTIES": {
     "EDITDETAILS": "Editar / Detalles",
-    "ALTPROPERTYCOVER": "Imágen de la Propiedad"
+    "ALTPROPERTYCOVER": "Imágen de la Propiedad",
+    "REGISTERGUEST": "Agregar Propiedad",
+    "ADDPROPERTY": "Registrar"
 
   }
 }

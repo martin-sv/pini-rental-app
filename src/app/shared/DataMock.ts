@@ -4,7 +4,7 @@ import { Property } from './property.model';
 
 export class DataMock {
   static _host: Host;
-  static _properties: Array<Property> = new Array<Property>();
+  static _properties: Property[];
   static get host() { return Object.create(this._host); }
   static get properties() { return Object.create(this._properties); }
 
