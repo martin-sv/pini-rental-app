@@ -22,6 +22,7 @@ export class SigninComponent implements OnInit, OnDestroy {
               private db: FirestoreService) { }
 
   ngOnInit() {
+    // Add Validators
     this.loginForm = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]
@@ -31,6 +32,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       })
     });
 
+    // Subscribe and show Firebase errors.
     this.authErrorObs = this.authService.authError.subscribe( error => {
       // console.log(error);
       this.translate.get('FIREBASE.' + error.code).subscribe((translatedText: string) => {

@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit, OnDestroy {
               private db: FirestoreService) { }
 
   ngOnInit() {
+    // Subscribe and show Firebase errors.
     this.authErrorObs = this.authService.authError.subscribe( error => {
       // console.log(error);
       this.translate.get('FIREBASE.' + error.code).subscribe((translatedText: string) => {
