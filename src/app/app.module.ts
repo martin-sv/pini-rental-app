@@ -22,7 +22,6 @@ import { UIService } from './shared/ui.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
-import { PropertiesModule } from './properties/properties.module';
 import { CoreModule } from './core/core.module';
 
 // AoT requires an exported function for factories
@@ -55,8 +54,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     CoreModule,
-    AuthModule,
-    PropertiesModule
+    AuthModule
   ],
   providers: [
     AuthService,
