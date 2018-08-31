@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { FirestoreService } from '../../shared/firestore.service';
+import { UIService } from '../../shared/ui.service';
 
 @Component({
   selector: 'app-signin',
@@ -13,13 +14,16 @@ import { FirestoreService } from '../../shared/firestore.service';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  authErrorObs: Subscription;
+  authErrorSub: Subscription;
   loginForm: FormGroup;
+  isLoading = false;
+  isLoadingSub: Subscription;
 
   constructor(private authService: AuthService,
               private snackBar: MatSnackBar,
               private translate: TranslateService,
-              private db: FirestoreService) { }
+              private db: FirestoreService,
+              private uiService: UIService) { }
 
   ngOnInit() {
     // Add Validators
@@ -32,11 +36,16 @@ export class SigninComponent implements OnInit, OnDestroy {
       })
     });
 
+    // Show Spinner if Loading
+    this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
+      this.isLoading = isLoading;
+    });
+
     // Subscribe and show Firebase errors.
-    this.authErrorObs = this.authService.authError.subscribe( error => {
+    this.authErrorSub = this.authService.authError.subscribe( error => {
       // console.log(error);
       this.translate.get('FIREBASE.' + error.code).subscribe((translatedText: string) => {
-        console.log(error.code);
+        // console.log(error.code);
         if (!translatedText.includes(error.code)) {
           this.snackBar.open(translatedText, null, { duration: 5000});
         } else {
@@ -45,6 +54,8 @@ export class SigninComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+
   }
 
   onSubmit() {
@@ -53,6 +64,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authErrorObs.unsubscribe();
+    this.authErrorSub.unsubscribe();
+    this.isLoadingSub.unsubscribe();
   }
 }

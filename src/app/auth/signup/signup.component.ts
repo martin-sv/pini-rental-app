@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FirestoreService } from '../../shared/firestore.service';
+import { UIService } from '../../shared/ui.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,16 +14,24 @@ import { FirestoreService } from '../../shared/firestore.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  authErrorObs: Subscription;
+  authErrorSub: Subscription;
+  isLoading = false;
+  isLoadingSub: Subscription;
 
   constructor(private authService: AuthService,
               private snackBar: MatSnackBar,
               private translate: TranslateService,
-              private db: FirestoreService) { }
+              private db: FirestoreService,
+              private uiService: UIService) { }
 
   ngOnInit() {
+    // Show Spinner if Loading
+    this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
+      this.isLoading = isLoading;
+    });
+
     // Subscribe and show Firebase errors.
-    this.authErrorObs = this.authService.authError.subscribe( error => {
+    this.authErrorSub = this.authService.authError.subscribe( error => {
       // console.log(error);
       this.translate.get('FIREBASE.' + error.code).subscribe((translatedText: string) => {
         if (!translatedText.includes(error.code)) {
@@ -41,6 +50,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authErrorObs.unsubscribe();
+    this.authErrorSub.unsubscribe();
+    this.isLoadingSub.unsubscribe();
   }
 }

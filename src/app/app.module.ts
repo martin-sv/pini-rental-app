@@ -29,6 +29,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AuthService } from './auth/auth.service';
 import { FirestoreService } from './shared/firestore.service';
+import { UIService } from './shared/ui.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -74,7 +75,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     AuthService,
-    FirestoreService
+    FirestoreService,
+    UIService
   ],
   bootstrap: [AppComponent]
 })

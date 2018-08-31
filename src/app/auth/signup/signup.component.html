@@ -82,12 +82,13 @@
         type="country"
         name="coutnry">
     </mat-form-field>
-    <button
+    <button *ngIf="!isLoading"
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="f.invalid">
       {{ 'SIGNUP-IN.SUBMIT' | translate }}
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 <section>

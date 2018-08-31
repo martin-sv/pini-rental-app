@@ -31,12 +31,13 @@
         formControlName="password">
         <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
-    <button
+    <button *ngIf="!isLoading"
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="loginForm.invalid">
       {{ 'SIGNUP-IN.SUBMIT' | translate }}
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

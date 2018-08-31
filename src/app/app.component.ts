@@ -14,6 +14,8 @@ import { FirestoreService } from './shared/firestore.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  private startLogedin = false;
+
   constructor(public translate: TranslateService,
               public authService: AuthService,
               public db: FirestoreService,
@@ -26,15 +28,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.testMock();
-    // this.db.getPropertiesFromFirebase(DataMock.generateHost());
-    // this.authService.initAuthListener();
+    this.authService.initAuthListener();
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.authService.signIn(new AuthData('asd@asd.com', '123456'));
-    }, 10);
+    if (this.startLogedin) {
+      setTimeout(() => {
+        this.authService.signIn(new AuthData('asd@asd.com', '123456'));
+      }, 10);
+    }
   }
 
   private configureTranslations() {
@@ -55,16 +57,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     */
   }
 
-  private testMock() {
+  private generateMockData() {
     const host: Host = DataMock.generateHost();
     const properties: Array<Property> = DataMock.generateProperties(host, 5);
-    /*
-    console.log(host.firstName);
-    host.firstName = 'B';
-    console.log(DataMock.host.firstName);
-    console.log(host.firstName);
-    console.log('Host: ' + host);
-    console.log('Properties: ' + properties);
-    */
   }
 }
