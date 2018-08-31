@@ -15,13 +15,20 @@ export class FirestoreService {
 
   constructor(private db: AngularFirestore) {}
 
-  public fetchHost() {
-    // return new Host();
+  public fetchHost(idHost: string) {
+
+    this.db.doc<Host>('hosts/' + idHost)
+      .valueChanges()
+      .subscribe( result => {
+        // console.log(result);
+        this.host = new Host(result.idHost, result.firstName, result.lastName);
+        this.hostUpdate.next(Object.create(this.host));
+    });
   }
 
-  public async fetchProperties(host: Host) {
+  public fetchProperties(host: Host) {
     this.db
-      .collection('properties')
+      .collection('hosts/' + host.idHost + '/properties')
       .snapshotChanges()
       .pipe(map(docArray => {
         // console.log(docArray);
@@ -36,14 +43,17 @@ export class FirestoreService {
             doc.payload.doc.data()['cover']);
         });
       }))
-      .subscribe( (props: Array<Property>) => {
+      .subscribe((props: Array<Property>) => {
         // console.log(props);
         this.properties = props;
         this.propertiesUpdate.next(Object.create(this.properties));
       });
   }
 
-  private addPropertyToFirestore(property: Property) {
-    this.db.collection('test').add(property);
+  addPropertyToFirestore(property: Property) {
+    const propertyJSON = JSON.parse(JSON.stringify(property));
+    delete propertyJSON.host;
+    // console.log(propertyJSON);
+    this.db.collection('test').add(propertyJSON);
   }
 }

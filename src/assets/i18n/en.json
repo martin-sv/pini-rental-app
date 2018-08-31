@@ -26,7 +26,7 @@
   "PROPERTIES": {
     "EDITDETAILS": "Edit / Details",
     "ALTPROPERTYCOVER": "Property Image",
-    "REGISTERGUEST": "Add New Property",
-    "ADDPROPERTY": "Register New Guest"
+    "REGISTERGUEST": "Add New Guest",
+    "ADDPROPERTY": "Register New Property"
   }
 }

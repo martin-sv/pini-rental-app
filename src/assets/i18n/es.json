@@ -26,8 +26,8 @@
   "PROPERTIES": {
     "EDITDETAILS": "Editar / Detalles",
     "ALTPROPERTYCOVER": "Imágen de la Propiedad",
-    "REGISTERGUEST": "Agregar Propiedad",
-    "ADDPROPERTY": "Registrar"
+    "REGISTERGUEST": "Agregar Huesped",
+    "ADDPROPERTY": "Registrar Propiedad"
 
   }
 }

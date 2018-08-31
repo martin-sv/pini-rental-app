@@ -49,6 +49,7 @@ export class Property {
     public cover: string) {
 
     host.addProperty(this);
+    // host.propertyList.push(this);
   }
 
 }

@@ -21,13 +21,15 @@ export class Host {
     this._propertyList = propertyList;
   }
   */
+
  get idHost() { return this._idHost; }
+ set idHost(val) { this._idHost = val; }  // TODO: Erase setter
 
  constructor(
-   private _idHost: number,
+   private _idHost: string,
    public firstName: string,
    public lastName: string,
-   public propertyList: Array<Property> = Array<Property>()) {
+   public propertyList: Property[] = []) {
 }
 
 
