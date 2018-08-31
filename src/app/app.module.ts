@@ -11,9 +11,6 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../environments/environment';
 
-import { HeaderComponent } from './navigation/header/header.component';
-import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { LandingComponent } from './landing/landing.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HostComponent } from './host/host.component';
 import { GuestsPastComponent } from './guests/guests-past/guests-past.component';
@@ -28,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
 import { PropertiesModule } from './properties/properties.module';
+import { CoreModule } from './core/core.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -39,12 +37,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     HostComponent,
     DashboardComponent,
-    LandingComponent,
     GuestsPastComponent,
     GuestsFutureComponent,
     GuestsListComponent,
-    HeaderComponent,
-    SidenavListComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +59,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    CoreModule,
     AuthModule,
     PropertiesModule
   ],

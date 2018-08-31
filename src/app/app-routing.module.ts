@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LandingComponent } from './landing/landing.component';
+import { LandingComponent } from './core/landing/landing.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { PropertyListComponent } from './properties/property-list/property-list.component';
