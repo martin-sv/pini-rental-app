@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { LandingComponent } from './core/landing/landing.component';
 import { AuthGuard } from './auth/auth.guard';
 
@@ -10,7 +10,7 @@ const routes: Routes = [
 // TODO: Agregar logica 404
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule],
   providers: [AuthGuard]
 })
