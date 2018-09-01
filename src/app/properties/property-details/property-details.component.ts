@@ -13,6 +13,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class PropertyDetailsComponent implements OnInit {
   property: Property;
   focus: boolean[];
+  inputs = [];
   propertyForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
@@ -36,6 +37,21 @@ export class PropertyDetailsComponent implements OnInit {
     this.focus = [];
     this.focus['name'] = false;
     this.focus['address'] = false;
+
+    const v1 = {name: 'name', value: this.property.name};
+    const v2 = {name: 'address', value: this.property.address};
+    this.inputs.push(v1);
+    this.inputs.push(v2);
+    /*
+    {
+      name: 'name',
+      value: this.property.name
+      }, {
+        name: 'name',
+        value: this.property.name
+      }
+    ];
+    */
   }
 
   private showPropertyData() {
