@@ -5,6 +5,8 @@ import { Host } from '../../shared/host.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from '../../shared/firestore.service';
 import { Observable, Subscription } from 'rxjs';
+import { AuthDataStatic } from '../../auth/auth-data.static';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-property-list',
@@ -14,30 +16,33 @@ import { Observable, Subscription } from 'rxjs';
 export class PropertyListComponent implements OnInit, OnDestroy {
   host: Host;
   properties: Property[];
-  propertiesSubscription: Subscription;
-  hostSubscription: Subscription;
+  propertiesSub: Subscription;
+  hostSub: Subscription;
+  authChangeSub: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private db: FirestoreService) { }
+              private db: FirestoreService,
+              private authService: AuthService) { }
 
   ngOnInit() {
-
-    this.fetch();
+    this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
+      if (logedIn) { this.fetch(); }
+    });
   }
 
   fetch() {
-    this.hostSubscription = this.db.hostUpdate.subscribe ( res => {
+    this.hostSub = this.db.hostUpdate.subscribe ( res => {
       this.host = res;
-      this.host.idHost = 'K1Zj0FQYCFxWXoFlTTTV';
+      this.host.idHost = AuthDataStatic.authData.email;
       // console.log(res);
       this.db.fetchMyProperties(this.host);
     });
-    this.propertiesSubscription = this.db.propertiesUpdate.subscribe( res => {
+    this.propertiesSub = this.db.propertiesUpdate.subscribe( res => {
       // console.log (res);
       this.properties = res;
     });
-    this.db.fetchHost('K1Zj0FQYCFxWXoFlTTTV');
+    this.db.fetchHost(AuthDataStatic.authData.email);
   }
 
   getCover(property: Property) {
@@ -62,7 +67,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.propertiesSubscription) { this.propertiesSubscription.unsubscribe(); }
-    if (this.hostSubscription) { this.hostSubscription.unsubscribe(); }
+    if (this.propertiesSub) { this.propertiesSub.unsubscribe(); }
+    if (this.hostSub) { this.hostSub.unsubscribe(); }
+    if (this.authChangeSub) { this.authChangeSub.unsubscribe(); }
   }
 }

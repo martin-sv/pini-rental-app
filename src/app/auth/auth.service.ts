@@ -21,10 +21,11 @@ export class AuthService {
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        AuthDataStatic.setAuthData(new AuthData(user.email, ''));
         this.isAuthenticated = true;
         this.authChange.next(true);
         this.router.navigate(['/properties']);
-        AuthDataStatic.setAuthData(new AuthData(user.email, ''));
+        // console.log('User In: ' + user.email);
       } else {
         this.db.cancelSubscriptions();
         this.isAuthenticated = true;
@@ -66,7 +67,7 @@ export class AuthService {
       });
   }
 
-  onLogin(authData: AuthData) {
+  private onLogin(authData: AuthData) {
     AuthDataStatic.setAuthData(authData);
     // this.db.fetchUserID(authData);
     this.uiService.loadingStateChanged.next(false);
