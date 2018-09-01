@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { FirestoreService } from '../shared/firestore.service';
@@ -9,11 +9,15 @@ import { DataMock } from '../shared/dataMock';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
-  public host: Host;
-  public properties: Property[];
+  private _host: Host;
+  get host() { return ((this._host) ? Object.create(this._host) : null); }
+  private _properties: Property[];
+  get properties() { return ((this._properties)  ? Object.create(this._properties) : null); }
   private propertiesSub: Subscription;
   private hostSub: Subscription;
   private authChangeSub: Subscription;
+  propertiesUpdate = new Subject<Property[]>();
+  hostUpdate = new Subject<Host>();
 
   constructor(private authService: AuthService,
               private db: FirestoreService) {}
@@ -27,16 +31,17 @@ export class PropertiesService implements OnDestroy {
 
     // Subscribe to Host Response
     this.hostSub = this.db.hostUpdate.subscribe(res => {
-      res.idHost = AuthDataStatic.authData.email;
-      this.host = res;
-      this.host.idHost = AuthDataStatic.authData.email;
-      this.db.fetchMyProperties(this.host);
+      this._host = res;
+      this._host.idHost = AuthDataStatic.authData.email;
+      this.hostUpdate.next(Object.create(this._host));
+      this.db.fetchMyProperties(this._host);
       // console.log(this.host);
     });
 
     // Subscribe to Properties Response
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
-      this.properties = res;
+      this._properties = res;
+      this.propertiesUpdate.next(Object.create(this._properties));
       // console.log (this.properties);
     });
   }
@@ -46,7 +51,7 @@ export class PropertiesService implements OnDestroy {
   }
 
   public addMyProperty() {
-    this.db.addMyProperty(DataMock.generateProperty(this.host));
+    this.db.addMyProperty(DataMock.generateProperty(this._host));
   }
 
   public removeMyProperty(idProperty: string) {
