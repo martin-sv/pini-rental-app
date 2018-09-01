@@ -1,11 +1,14 @@
 import { PropertyClassEnum } from './propertyClassEnum';
 import { Host } from './host.model';
-import { PropertyAddress } from './propertyAddress.model';
 import { CheckInOut } from './checkInOut.model';
 import { Cleaning } from './cleaning.model';
+import { PeopleAddress } from './peopleAddress.model';
+import { Condo } from './condo.model';
 
 export class Property {
   get idProperty(): string { return this._idProperty; }
+  public checkInOutHistory: CheckInOut[];
+  public cleaningHistory: Cleaning[];
 
   constructor(
     private _idProperty: string,
@@ -13,12 +16,16 @@ export class Property {
     public name: string,
     public cover: string,
     public propertyClass: PropertyClassEnum,
-    public address: PropertyAddress,
     public serviceFee: number,
-    public checkInOutHistory?: CheckInOut[],
-    public cleaningHistory?: Cleaning[]) {
+    public address: PeopleAddress,
+    public condo?: Condo,
+    checkInOutHistory?: CheckInOut[],
+    cleaningHistory?: Cleaning[]) {
 
+    this.checkInOutHistory = checkInOutHistory;
+    this.cleaningHistory = cleaningHistory;
     host.addProperty(this);
     // host.propertyList.push(this);
   }
+
 }

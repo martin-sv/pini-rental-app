@@ -41,13 +41,15 @@ export class FirestoreService {
         // console.log(docArray);
         return docArray.map(doc => {
           // console.log(doc.payload.doc.data()['name']);
-          return new Property(doc.payload.doc.id,
+          return new Property(
+            doc.payload.doc.id,
             host,
             doc.payload.doc.data()['name'],
             doc.payload.doc.data()['cover'],
             PropertyClassEnum.appartment, // TODO: Traer info de Firebase
-            doc.payload.doc.data()['address'],
             doc.payload.doc.data()['serviceFee'],
+            doc.payload.doc.data()['address'],
+            doc.payload.doc.data()['condo'],
             doc.payload.doc.data()['checkInOutHistory'],
             doc.payload.doc.data()['cleaningHistory']);
         });

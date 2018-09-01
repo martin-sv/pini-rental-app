@@ -1,5 +1,5 @@
 import { Property } from './property.model';
-import { Address } from './address.model';
+import { PeopleAddress } from './peopleAddress.model';
 
 export class Host {
   /*
@@ -32,7 +32,7 @@ export class Host {
    public lastName: string,
    public phone: string,
    public email: string,
-   public homeAddress: Address,
+   public homeAddress: PeopleAddress,
    public propertyList: Property[] = []) {}
 
 

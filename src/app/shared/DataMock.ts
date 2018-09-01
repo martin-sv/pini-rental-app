@@ -1,7 +1,7 @@
 import { Host } from './models/host.model';
 import { Property } from './models/property.model';
-import { PropertyAddress } from './models/propertyAddress.model';
 import { Address } from './models/address.model';
+import { PeopleAddress } from './models/peopleAddress.model';
 import { Condo } from './models/condo.model';
 import { CheckInOut } from './models/checkInOut.model';
 import { Cleaning } from './models/cleaning.model';
@@ -28,8 +28,8 @@ export class DataMock {
       this.rndText(),
       this.getPropertyImage(),
       Math.round(Math.random()),
-      new PropertyAddress(new Address(this.rndText(), this.rndText(), this.rndText(), 'FL', 'US', '12345')),
-      this.rndNum(200, 150));
+      this.rndNum(200, 150),
+      new PeopleAddress(this.rndText(), this.rndText(), this.rndText(), 'FL', 'US', this.rndNum(99999, 10000).toString()));
       properties.push(property);
     }
     this._properties.push(...properties);
