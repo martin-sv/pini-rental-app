@@ -15,8 +15,9 @@ import { Address } from '../../shared/address.model';
 })
 export class SignupComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
-  isLoading = false;
   isLoadingSub: Subscription;
+  isLoading = false;
+  get isAuth() { return this.authService.isAuth; }
 
   constructor(private authService: AuthService,
               private uiService: UIService) { }

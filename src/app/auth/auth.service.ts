@@ -13,6 +13,7 @@ export class AuthService {
   authChange = new Subject<boolean>();
   authError = new Subject<any>();
   private isAuthenticated = false;
+  get isAuth(): boolean { return this.isAuthenticated; }
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
@@ -30,7 +31,7 @@ export class AuthService {
       } else {
         // console.log('User Out');
         this.db.cancelSubscriptions();
-        this.isAuthenticated = true;
+        this.isAuthenticated = false;
         this.router.navigate(['/signin']);
         this.authChange.next(false);
       }
@@ -38,12 +39,12 @@ export class AuthService {
   }
 
   regusterUser(authData: AuthData, newHost: Host): void {
+    this.uiService.loadingStateChanged.next(true);  // Shown before the request since it starts loading as soon as an action ocurs.
     this.afAuth.auth.createUserWithEmailAndPassword(
       authData.email,
       authData.password)
       .then(result => {
         this.onLogin(authData);
-        this.uiService.loadingStateChanged.next(true);
         this.db.addNewHost(newHost);
         // console.log(result);
       })
@@ -72,7 +73,6 @@ export class AuthService {
 
   private onLogin(authData: AuthData) {
     AuthDataStatic.setAuthData(authData);
-    // this.db.fetchUserID(authData);
     this.uiService.loadingStateChanged.next(false);
   }
 
@@ -80,9 +80,5 @@ export class AuthService {
   signOut(): void {
     this.afAuth.auth.signOut();
     AuthDataStatic.clearAuthData();
-  }
-
-  isAuth(): boolean {
-    return this.isAuthenticated != null;
   }
 }

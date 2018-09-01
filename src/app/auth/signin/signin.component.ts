@@ -15,6 +15,9 @@ export class SigninComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   isLoading = false;
   isLoadingSub: Subscription;
+  get isAuth() { return this.authService.isAuth; }
+
+// isAuth = false;
 
   constructor(private authService: AuthService,
               private uiService: UIService) { }
