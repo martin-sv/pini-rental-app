@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { PropertiesService } from './properties/properties.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -54,9 +55,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     CoreModule,
-    AuthModule
+    AuthModule,
+    // PropertiesModule
   ],
   providers: [
+    PropertiesService,
     AuthService,
     FirestoreService,
     UIService

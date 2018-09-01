@@ -16,7 +16,10 @@ export class AuthService {
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
               private db: FirestoreService,
-              private uiService: UIService) {}
+              private uiService: UIService) {
+
+                console.log('Constructor Auth');
+              }
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
@@ -29,8 +32,8 @@ export class AuthService {
       } else {
         this.db.cancelSubscriptions();
         this.isAuthenticated = true;
-        this.authChange.next(false);
         this.router.navigate(['/signin']);
+        this.authChange.next(false);
         // console.log('User Out');
       }
     });
