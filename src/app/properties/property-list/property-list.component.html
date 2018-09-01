@@ -4,7 +4,17 @@
   <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddPropertyClick()">
     {{ 'PROPERTIES.ADDPROPERTY' | translate }}
   </button>
-  <div [ngStyle.xs]="{'height': '50px'}"></div> <!-- provides space between buttons in xs screens -->
+
+<!-- provides space between buttons in xs screens -->
+<!-- <div [ngStyle.xs]="{'height': '50px'}"></div> -->
+
+  <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddMockPropertyClick()">
+    {{ 'PROPERTIES.ADDMOCKPROPERTY' | translate }}
+  </button>
+
+<!-- provides space between buttons in xs screens -->
+<!-- <div [ngStyle.xs]="{'height': '50px'}"></div> -->
+
   <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddGuestClick()">
     {{ 'PROPERTIES.REGISTERGUEST' | translate }}
   </button>

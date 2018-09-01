@@ -30,7 +30,8 @@
     "EDITDETAILS": "Editar / Detalles",
     "ALTPROPERTYCOVER": "Imágen de la Propiedad",
     "REGISTERGUEST": "Agregar Huesped",
-    "ADDPROPERTY": "Registrar Propiedad"
+    "ADDPROPERTY": "Registrar Propiedad",
+    "ADDMOCKPROPERTY": "Registrar [Mock] Propiedad"
   },
   "FIREBASE" : {
     "auth/email-already-in-use": "El email ya fue usado por otra cuenta.",

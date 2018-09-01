@@ -38,7 +38,11 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   onAddPropertyClick() {
     // console.log(this.host);
-    this.propertiesService.addMyProperty();
+    // this.propertiesService.addMyProperty();
+  }
+
+  onAddMockPropertyClick() {
+    this.propertiesService.addMyMockProperty();
   }
 
   onAddGuestClick() {

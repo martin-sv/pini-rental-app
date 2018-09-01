@@ -64,7 +64,11 @@ export class PropertiesService implements OnDestroy {
     });
   }
 
-  public addMyProperty() {
+  public addMyProperty(property: Property) {
+    this.db.addMyProperty(property);
+  }
+
+  public addMyMockProperty() {
     this.db.addMyProperty(DataMock.generateProperty(this._host));
   }
 
