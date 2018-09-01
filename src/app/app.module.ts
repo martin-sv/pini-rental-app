@@ -24,6 +24,7 @@ import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { PropertiesService } from './properties/properties.service';
+import { DataService } from './shared/data.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -62,7 +63,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PropertiesService,
     AuthService,
     FirestoreService,
-    UIService
+    UIService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthData } from './auth/auth-data.model';
 import { FirestoreService } from './shared/firestore.service';
 import { PropertiesService } from './properties/properties.service';
+import { DataService } from './shared/data.service';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,11 @@ import { PropertiesService } from './properties/properties.service';
 export class AppComponent implements OnInit, AfterViewInit {
   private startLogedin = false;
 
-  constructor(public translate: TranslateService,
-              public authService: AuthService,
-              public db: FirestoreService,
+  constructor(private translate: TranslateService,
+              private authService: AuthService,
+              private db: FirestoreService,
               private propertiesService: PropertiesService,
+              private dataService: DataService,
               private titleService: Title) {
   // titleService.setTitle('Pini Rental');
 
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.authService.initAuthListener();
     this.propertiesService.initPropertiesListener();
+    this.dataService.initDataListener();
   }
 
   ngAfterViewInit() {

@@ -64,6 +64,10 @@ export class PropertiesService implements OnDestroy {
     });
   }
 
+  public getCondos() {
+    this.db.fetchCondos();
+  }
+
   public addMyProperty(property: Property) {
     this.db.addMyProperty(property);
   }

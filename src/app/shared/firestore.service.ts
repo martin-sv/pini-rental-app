@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { Property } from './models/property.model';
 import { PropertyClassEnum } from './models/propertyClassEnum';
 import { AuthDataStatic } from '../auth/auth-data.static';
+import { Condo } from './models/condo.model';
+import { Address } from './models/address.model';
 
 @Injectable()
 export class FirestoreService {
@@ -13,13 +15,14 @@ export class FirestoreService {
   private properties: Property[];
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
+  condosUpdate = new Subject<Condo[]>();
   private firebaseSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {}
 
   public fetchHost(emailHost: string) {
     // console.log('fetchHost: ' + emailHost);
-    this.firebaseSubs.push(this.db.doc<any>('hosts/' + emailHost)
+    this.firebaseSubs.push(this.db.doc<Host>('hosts/' + emailHost)
       .valueChanges()
       .subscribe(result => {
         // The properties are then fetched elsewhere. Since they don't come with the doc as they are a collection of the Host.
@@ -71,6 +74,33 @@ export class FirestoreService {
       .valueChanges()
       .subscribe(result => {
         // console.log(result);
+      })
+    );
+  }
+
+  fetchCondos() {
+    this.firebaseSubs.push(this.db.collection<Condo >('condos')
+      .snapshotChanges()
+      .pipe(map(docArray => {
+        return docArray.map(doc => {
+          return new Condo(
+            doc.payload.doc.id,
+            doc.payload.doc.data()['name'],
+            new Address(
+              doc.payload.doc.data()['street'],
+              doc.payload.doc.data()['city'],
+              doc.payload.doc.data()['state'],
+              doc.payload.doc.data()['country'],
+              doc.payload.doc.data()['zip']
+            ),
+            doc.payload.doc.data()['phone'],
+            doc.payload.doc.data()['condoNotes']
+          );
+        });
+      }))
+      .subscribe((condos: Condo[]) => {
+        // console.log(condos);
+        this.condosUpdate.next(condos);
       })
     );
   }
