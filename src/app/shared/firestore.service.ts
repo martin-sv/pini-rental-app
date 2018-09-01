@@ -17,12 +17,13 @@ export class FirestoreService {
 
   constructor(private db: AngularFirestore) {}
 
-  public fetchHost(idHost: string) {
-    this.firebaseSubs.push(this.db.doc<Host>('hosts/' + idHost)
+  public fetchHost(emailHost: string) {
+    // console.log('fetchHost: ' + emailHost);
+    this.firebaseSubs.push(this.db.doc<any>('hosts/' + emailHost)
       .valueChanges()
       .subscribe(result => {
-        // console.log(result);
-        // this.host = new Host(result.idHost, result.firstName, result.lastName);
+        // The properties are then fetched elsewhere. Since they don't come with the doc as they are a collection of the Host.
+        this.host = new Host(result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
         this.hostUpdate.next(Object.create(this.host));
       // tslint:disable-next-line:no-shadowed-variable
       }, error => {
@@ -65,7 +66,7 @@ export class FirestoreService {
     this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
       .valueChanges()
       .subscribe(result => {
-        console.log(result);
+        // console.log(result);
       })
     );
   }

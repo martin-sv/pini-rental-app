@@ -17,25 +17,22 @@ export class AuthService {
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
               private db: FirestoreService,
-              private uiService: UIService) {
-
-                console.log('Constructor Auth');
-              }
+              private uiService: UIService) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        // console.log('User In: ' + user.email);
         AuthDataStatic.setAuthData(new AuthData(user.email, ''));
         this.isAuthenticated = true;
         this.authChange.next(true);
         this.router.navigate(['/properties']);
-        // console.log('User In: ' + user.email);
       } else {
+        // console.log('User Out');
         this.db.cancelSubscriptions();
         this.isAuthenticated = true;
         this.router.navigate(['/signin']);
         this.authChange.next(false);
-        // console.log('User Out');
       }
     });
   }

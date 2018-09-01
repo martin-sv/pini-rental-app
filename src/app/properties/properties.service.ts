@@ -26,7 +26,13 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to AuthChange
     this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
       // console.log('Auth Change Subscriber ' + logedIn);
-      if (logedIn) { this.fetchHostAndProperties(); }
+      // console.log(AuthDataStatic.authData);
+      if (logedIn){
+        this.fetchHostAndProperties();
+      } else {
+        this._host = null;
+        this._properties = null;
+      }
     });
 
     // Subscribe to Host Response
@@ -53,7 +59,7 @@ export class PropertiesService implements OnDestroy {
   public getPropertyByID(idProperty: string): Property {
     // console.log(this._properties);
     return this._properties.find(asd => {
-      console.log(asd.idProperty + ' - ' + idProperty);
+      // console.log(asd.idProperty + ' - ' + idProperty);
       return asd.idProperty === idProperty;
     });
   }
