@@ -62,6 +62,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private generateMockData() {
     const host: Host = DataMock.generateHost();
-    const properties: Array<Property> = DataMock.generateProperties(host, 5);
+    const properties: Property[] = DataMock.generateProperties(host, 5);
   }
 }
