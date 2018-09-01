@@ -26,6 +26,11 @@ export class DataMock {
     return this.properties;
   }
 
+  static generateProperty(host: Host) {
+    this.generateProperties(host);
+    return this.properties[this.properties.length - 1];
+  }
+
   private static rndText(length: number = 7): string {
     let returnText = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

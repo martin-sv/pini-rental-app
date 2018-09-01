@@ -45,7 +45,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   onAddPropertyClick() {
-    this.db.addPropertyToFirestore(new Property('1', this.host, 'name', 1, 'address', 150, 'https://image.ibb.co/cQ2L2p/property4.jpg'));
+    this.db.addPropertyToFirestore(DataMock.generateProperty(this.host));
   }
 
   onAddGuestClick() {

@@ -20,7 +20,7 @@
         <mat-card-title fxLayoutAlign="center">{{ property.name }}</mat-card-title>
         <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
       </mat-card-header>
-      <img mat-card-image src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYCOVER' | translate }}">
+      <img mat-card-image style="cursor: pointer;" src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYCOVER' | translate }}" (click)="onPropertyClick(property.idProperty)">
       <mat-card-content  fxLayoutAlign="left">
         Available<br><br>
         Next Checkin: May 31th, 2018
