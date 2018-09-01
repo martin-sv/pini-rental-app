@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirestoreService } from '../shared/firestore.service';
 import { UIService } from '../shared/ui.service';
+import { AuthDataStatic } from './auth-data.static';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
-              private firestoreService: FirestoreService,
+              private db: FirestoreService,
               private uiService: UIService) {}
 
   initAuthListener() {
@@ -24,7 +25,7 @@ export class AuthService {
         this.authChange.next(true);
         this.router.navigate(['/properties']);
       } else {
-        this.firestoreService.cancelSubscriptions();
+        this.db.cancelSubscriptions();
         this.isAuthenticated = true;
         this.authChange.next(false);
         this.router.navigate(['/signin']);
@@ -38,7 +39,7 @@ export class AuthService {
       authData.email,
       authData.password)
       .then(result => {
-        this.uiService.loadingStateChanged.next(false);
+        this.onLogin(authData);
         // console.log(result);
         // this.authSuccessfully(authData);
       })
@@ -55,9 +56,8 @@ export class AuthService {
       authData.email,
       authData.password)
       .then(result => {
-        this.uiService.loadingStateChanged.next(false);
+        this.onLogin(authData);
         // console.log(result);
-        // this.authSuccessfully(authData);
       })
       .catch( error => {
         this.uiService.loadingStateChanged.next(false);
@@ -66,8 +66,16 @@ export class AuthService {
       });
   }
 
+  onLogin(authData: AuthData) {
+    AuthDataStatic.setAuthData(authData);
+    // this.db.fetchUserID(authData);
+    this.uiService.loadingStateChanged.next(false);
+  }
+
+
   signOut(): void {
     this.afAuth.auth.signOut();
+    AuthDataStatic.clearAuthData();
   }
 
   isAuth(): boolean {

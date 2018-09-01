@@ -30,8 +30,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     this.hostSubscription = this.db.hostUpdate.subscribe ( res => {
       this.host = res;
       this.host.idHost = 'K1Zj0FQYCFxWXoFlTTTV';
-      // console.log(this.host);
-      this.db.fetchProperties(this.host);
+      // console.log(res);
+      this.db.fetchMyProperties(this.host);
     });
     this.propertiesSubscription = this.db.propertiesUpdate.subscribe( res => {
       // console.log (res);
@@ -45,7 +45,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   onAddPropertyClick() {
-    this.db.addPropertyToFirestore(new Property('1', this.host, 'name', 1, 'address', 150, 'q'));
+    this.db.addPropertyToFirestore(new Property('1', this.host, 'name', 1, 'address', 150, 'https://image.ibb.co/cQ2L2p/property4.jpg'));
   }
 
   onAddGuestClick() {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { FirestoreService } from '../../shared/firestore.service';
 
 @Component({
   selector: 'app-property-details',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+              private db: FirestoreService) {}
 
   ngOnInit() {
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          // console.log(params);
+          this.db.fetchProperty(params.id);
+        }
+      );
   }
 
 }

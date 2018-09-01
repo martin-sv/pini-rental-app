@@ -5,7 +5,8 @@ import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Property } from './property.model';
 import { PropertyClassEnum } from './propertyClassEnum';
-import { error } from '@angular/compiler/src/util';
+import { AuthService } from '../auth/auth.service';
+import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Injectable()
 export class FirestoreService {
@@ -18,11 +19,10 @@ export class FirestoreService {
   constructor(private db: AngularFirestore) {}
 
   public fetchHost(idHost: string) {
-
     this.firebaseSubs.push(this.db.doc<Host>('hosts/' + idHost)
       .valueChanges()
-      .subscribe( result => {
-        // console.log(result);
+      .subscribe(result => {
+        console.log(result);
         this.host = new Host(result.idHost, result.firstName, result.lastName);
         this.hostUpdate.next(Object.create(this.host));
       // tslint:disable-next-line:no-shadowed-variable
@@ -32,9 +32,9 @@ export class FirestoreService {
     );
   }
 
-  public fetchProperties(host: Host) {
+  public fetchMyProperties(host: Host) {
     this.firebaseSubs.push(this.db
-      .collection('hosts/' + host.idHost + '/properties')
+      .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
       .snapshotChanges()
       .pipe(map(docArray => {
         // console.log(docArray);
@@ -60,11 +60,21 @@ export class FirestoreService {
     );
   }
 
+  public fetchProperty(idProperty: string) {
+    console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
+    this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
+      .valueChanges()
+      .subscribe(result => {
+        console.log(result);
+      })
+    );
+  }
+
   addPropertyToFirestore(property: Property) {
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
     // console.log(propertyJSON);
-    this.db.collection('test').add(propertyJSON);
+    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {
