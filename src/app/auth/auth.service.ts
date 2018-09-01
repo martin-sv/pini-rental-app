@@ -24,6 +24,7 @@ export class AuthService {
         this.isAuthenticated = true;
         this.authChange.next(true);
         this.router.navigate(['/properties']);
+        AuthDataStatic.setAuthData(new AuthData(user.email, ''));
       } else {
         this.db.cancelSubscriptions();
         this.isAuthenticated = true;
@@ -41,7 +42,6 @@ export class AuthService {
       .then(result => {
         this.onLogin(authData);
         // console.log(result);
-        // this.authSuccessfully(authData);
       })
       .catch( error => {
         this.uiService.loadingStateChanged.next(false);

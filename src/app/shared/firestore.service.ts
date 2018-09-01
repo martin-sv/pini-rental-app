@@ -32,6 +32,7 @@ export class FirestoreService {
     );
   }
 
+  // TODO: Ver que hacer con el tema host
   public fetchMyProperties(host: Host) {
     this.firebaseSubs.push(this.db
       .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
