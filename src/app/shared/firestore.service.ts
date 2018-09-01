@@ -22,7 +22,7 @@ export class FirestoreService {
     this.firebaseSubs.push(this.db.doc<Host>('hosts/' + idHost)
       .valueChanges()
       .subscribe(result => {
-        console.log(result);
+        // console.log(result);
         this.host = new Host(result.idHost, result.firstName, result.lastName);
         this.hostUpdate.next(Object.create(this.host));
       // tslint:disable-next-line:no-shadowed-variable
@@ -76,6 +76,10 @@ export class FirestoreService {
     delete propertyJSON.host;
     // console.log(propertyJSON);
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
+  }
+
+  removeMyProperty(idProperty: string) {
+    this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {

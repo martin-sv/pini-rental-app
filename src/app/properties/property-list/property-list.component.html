@@ -16,7 +16,7 @@
   <div *ngFor="let property of properties" fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
-        <div mat-card-avatar [ngStyle]="{backgroundImage: getCover(property), backgroundSize: 'cover'}"></div>
+        <div (click)="onPropertyCardClick(property.idProperty)" mat-card-avatar [ngStyle]="{backgroundImage: getCover(property), backgroundSize: 'cover'}"></div>
         <mat-card-title fxLayoutAlign="center">{{ property.name }}</mat-card-title>
         <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
       </mat-card-header>

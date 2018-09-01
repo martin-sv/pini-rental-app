@@ -52,9 +52,13 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     // TODO: Implement
   }
 
-  onPropertyClick(id: number) {
+  onPropertyClick(idProperty: number) {
     // console.log('idProperty: ' + id);
-    this.router.navigate(['./', id], {relativeTo: this.route});
+    this.router.navigate(['./', idProperty], {relativeTo: this.route});
+  }
+
+  onPropertyCardClick(idProperty: string) {
+    this.db.removeMyProperty(idProperty);
   }
 
   ngOnDestroy() {
