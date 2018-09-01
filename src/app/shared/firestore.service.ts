@@ -78,6 +78,13 @@ export class FirestoreService {
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
   }
 
+  public updatePropertyValue(idProperty: string, key: string, newValue: string) {
+    this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).update({
+      [key]: newValue
+    });
+
+  }
+
   removeMyProperty(idProperty: string) {
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
   }

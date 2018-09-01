@@ -30,12 +30,12 @@ export class PropertyDetailsComponent implements OnInit {
       );
 
     this.propertyForm = new FormGroup({
-      tel: new FormControl(this.property.name),
-      tel2: new FormControl(this.property.address)
+      name: new FormControl(this.property.name),
+      address: new FormControl(this.property.address)
     });
     this.focus = [];
-    this.focus['tel'] = false;
-    this.focus['tel2'] = false;
+    this.focus['name'] = false;
+    this.focus['address'] = false;
   }
 
   private showPropertyData() {
@@ -48,8 +48,14 @@ export class PropertyDetailsComponent implements OnInit {
     // console.log(this.propertyForm);
   }
   onFieldFocusOut(event) {
+    // console.log(event);
+    // console.log('onFieldFocusOut');
     this.focus[event.target.name] = false;
-    console.log(event);
+    this.propertiesService.updatePropertyValue(this.property.idProperty, event.target.name, event.target.value);
+  }
+
+  onFieldPressEnter(event) {
+    event.target.blur();
   }
 
 }

@@ -3,31 +3,32 @@
     <!-- <span matPrefix>+1 &nbsp;</span> -->
     <input
       matInput
-      type="tel"
-      name="tel"
-      formControlName="tel"
-      placeholder="tel-ph"
+      type="name"
+      name="name"
+      formControlName="name"
+      placeholder="Name -> Translate"
       (focusin)="onFieldFocusIn($event)"
       (focusout)="onFieldFocusOut($event)"
+      (keyup.enter)="onFieldPressEnter($event)"
       value="{{ property.name }}" >
-    <mat-icon style="cursor: pointer;" *ngIf="!focus['tel']" matSuffix>mode_edit</mat-icon>
-    <mat-icon style="cursor: pointer;" *ngIf="focus['tel']" matSuffix>done</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="!focus['name']" matSuffix>mode_edit</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="focus['name']" matSuffix>done</mat-icon>
   </mat-form-field>
 
   <mat-form-field>
     <!-- <span matPrefix>+1 &nbsp;</span> -->
     <input
       matInput
-      type="tel2"
-      name="tel2"
-      formControlName="tel2"
-      placeholder="tel2-ph"
+      type="address"
+      name="address"
+      formControlName="address"
+      placeholder="address -> Translate"
       (focusin)="onFieldFocusIn($event)"
       (focusout)="onFieldFocusOut($event)"
+      (keyup.enter)="onFieldFocusOut($event)"
       value="{{ property.address }}" >
-    <mat-icon style="cursor: pointer;" *ngIf="!focus['tel2']" matSuffix>mode_edit</mat-icon>
-    <mat-icon style="cursor: pointer;" *ngIf="focus['tel2']" matSuffix>done</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="!focus['address']" matSuffix>mode_edit</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="focus['address']" matSuffix>done</mat-icon>
   </mat-form-field>
-
 
 </form>
