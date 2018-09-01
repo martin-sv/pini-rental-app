@@ -31,6 +31,7 @@ export class AuthService {
         this.isAuthenticated = true;
         this.authChange.next(false);
         this.router.navigate(['/signin']);
+        // console.log('User Out');
       }
     });
   }

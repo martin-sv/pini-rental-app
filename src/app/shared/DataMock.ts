@@ -12,7 +12,7 @@ export class DataMock {
 
   static generateHost(): Host {
     this._host = new Host(this.rndNum().toString(), this.rndText(), this.rndText());
-    return this.host;
+    return this._host;
   }
 
   static generateProperties(host: Host, propertyCount: number = 1) {

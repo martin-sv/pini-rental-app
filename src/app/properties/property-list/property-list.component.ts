@@ -14,11 +14,14 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit, OnDestroy {
-  host: Host;
-  properties: Property[];
-  propertiesSub: Subscription;
-  hostSub: Subscription;
-  authChangeSub: Subscription;
+  public host: Host;
+  // public get host() {return this._host; }
+  // public set host(value: Host) { this._host = value; }
+  public properties: Property[];
+  public propertiesSub: Subscription;
+  public hostSub: Subscription;
+  public authChangeSub: Subscription;
+  // TODO: Pasar todos a private
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -27,20 +30,22 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
-      if (logedIn) { this.fetch(); }
+      // console.log('Auth Change Subscriber ' + logedIn);
+      if (logedIn) { this.fetchHostAndProperties(); }
     });
   }
 
-  fetch() {
-    this.hostSub = this.db.hostUpdate.subscribe ( res => {
+  fetchHostAndProperties() {
+    this.hostSub = this.db.hostUpdate.subscribe(res => {
+      res.idHost = AuthDataStatic.authData.email;
       this.host = res;
       this.host.idHost = AuthDataStatic.authData.email;
-      // console.log(res);
       this.db.fetchMyProperties(this.host);
+      // console.log(this.host);
     });
-    this.propertiesSub = this.db.propertiesUpdate.subscribe( res => {
-      // console.log (res);
+    this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
       this.properties = res;
+      // console.log (this.properties);
     });
     this.db.fetchHost(AuthDataStatic.authData.email);
   }
@@ -50,7 +55,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   onAddPropertyClick() {
-    this.db.addPropertyToFirestore(DataMock.generateProperty(this.host));
+    // console.log(this.host);
+    this.db.addMyProperty(DataMock.generateProperty(this.host));
   }
 
   onAddGuestClick() {
@@ -69,6 +75,6 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.propertiesSub) { this.propertiesSub.unsubscribe(); }
     if (this.hostSub) { this.hostSub.unsubscribe(); }
-    if (this.authChangeSub) { this.authChangeSub.unsubscribe(); }
+    // if (this.authChangeSub) { this.authChangeSub.unsubscribe(); }
   }
 }

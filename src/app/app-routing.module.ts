@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { LandingComponent } from './core/landing/landing.component';
 import { AuthGuard } from './auth/auth.guard';
+import { PropertiesModule } from './properties/properties.module';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },

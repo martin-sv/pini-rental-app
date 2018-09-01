@@ -10,9 +10,9 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Injectable()
 export class FirestoreService {
-  private properties: Array<Property>;
-  propertiesUpdate = new Subject<Property[]>();
   private host: Host;
+  private properties: Property[];
+  propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
   private firebaseSubs: Subscription[] = [];
 
@@ -71,7 +71,7 @@ export class FirestoreService {
     );
   }
 
-  addPropertyToFirestore(property: Property) {
+  addMyProperty(property: Property) {
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
     // console.log(propertyJSON);
