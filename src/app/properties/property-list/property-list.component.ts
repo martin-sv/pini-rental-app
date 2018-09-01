@@ -39,6 +39,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   onAddPropertyClick() {
     // console.log(this.host);
     // this.propertiesService.addMyProperty();
+    this.router.navigate(['./addproperty'], {relativeTo: this.route});
   }
 
   onAddMockPropertyClick() {
