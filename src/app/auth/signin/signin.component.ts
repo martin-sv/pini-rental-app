@@ -20,7 +20,7 @@ export class SigninComponent implements OnInit, OnDestroy {
               private uiService: UIService) { }
 
   ngOnInit() {
-    // Add Validators
+    // Init & Add Validators
     this.loginForm = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]

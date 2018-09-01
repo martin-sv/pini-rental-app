@@ -50,6 +50,14 @@ export class PropertiesService implements OnDestroy {
     this.db.fetchHost(AuthDataStatic.authData.email);
   }
 
+  public getPropertyByID(idProperty: string): Property {
+    // console.log(this._properties);
+    return this._properties.find(asd => {
+      console.log(asd.idProperty + ' - ' + idProperty);
+      return asd.idProperty === idProperty;
+    });
+  }
+
   public addMyProperty() {
     this.db.addMyProperty(DataMock.generateProperty(this._host));
   }

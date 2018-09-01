@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit, OnDestroy {
-  private host: Host;
-  private properties: Property[];
+  host: Host;
+  properties: Property[];
   private hostUpdateSub: Subscription;
   private propertiesUpdateSub: Subscription;
 
