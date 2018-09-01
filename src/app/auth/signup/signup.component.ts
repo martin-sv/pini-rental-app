@@ -4,6 +4,9 @@ import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
 import { UIService } from '../../shared/ui.service';
+import { Host } from '../../shared/host.model';
+import { Address } from '../../shared/address.model';
+
 
 @Component({
   selector: 'app-signup',
@@ -32,7 +35,14 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     // console.log(form);
-    this.authService.regusterUser(new AuthData(form.value.email, form.value.password));
+    const authData = new AuthData(form.value.email, form.value.password);
+    const host = new Host(
+      form.value.first_name,
+      form.value.last_name,
+      form.value.phone,
+      form.value.email,
+      new Address(form.value.street, form.value.city, form.value.state, form.value.country));
+    this.authService.regusterUser(authData, host);
   }
 
   ngOnDestroy() {

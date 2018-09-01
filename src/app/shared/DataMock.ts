@@ -11,7 +11,7 @@ export class DataMock {
   private constructor() {}
 
   static generateHost(): Host {
-    this._host = new Host(this.rndNum().toString(), this.rndText(), this.rndText());
+    // this._host = new Host(this.rndNum().toString(), this.rndText(), this.rndText());
     return this._host;
   }
 

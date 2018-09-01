@@ -6,6 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { FirestoreService } from '../shared/firestore.service';
 import { UIService } from '../shared/ui.service';
 import { AuthDataStatic } from './auth-data.static';
+import { Host } from '../shared/host.model';
 
 @Injectable()
 export class AuthService {
@@ -39,13 +40,14 @@ export class AuthService {
     });
   }
 
-  regusterUser(authData: AuthData): void {
-    this.uiService.loadingStateChanged.next(true);
+  regusterUser(authData: AuthData, newHost: Host): void {
     this.afAuth.auth.createUserWithEmailAndPassword(
       authData.email,
       authData.password)
       .then(result => {
         this.onLogin(authData);
+        this.uiService.loadingStateChanged.next(true);
+        this.db.addNewHost(newHost);
         // console.log(result);
       })
       .catch( error => {

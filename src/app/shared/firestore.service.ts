@@ -5,7 +5,6 @@ import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Property } from './property.model';
 import { PropertyClassEnum } from './propertyClassEnum';
-import { AuthService } from '../auth/auth.service';
 import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Injectable()
@@ -23,7 +22,7 @@ export class FirestoreService {
       .valueChanges()
       .subscribe(result => {
         // console.log(result);
-        this.host = new Host(result.idHost, result.firstName, result.lastName);
+        // this.host = new Host(result.idHost, result.firstName, result.lastName);
         this.hostUpdate.next(Object.create(this.host));
       // tslint:disable-next-line:no-shadowed-variable
       }, error => {
@@ -62,13 +61,19 @@ export class FirestoreService {
   }
 
   public fetchProperty(idProperty: string) {
-    console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
+    // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
     this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
       .valueChanges()
       .subscribe(result => {
         console.log(result);
       })
     );
+  }
+
+  addNewHost(host: Host) {
+    const propertyJSON = JSON.parse(JSON.stringify(host));
+    delete propertyJSON.propertyList;
+    this.db.doc('hosts/' + host.email).set(propertyJSON);
   }
 
   addMyProperty(property: Property) {

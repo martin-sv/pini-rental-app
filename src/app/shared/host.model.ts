@@ -1,4 +1,5 @@
 import { Property } from './property.model';
+import { Address } from './address.model';
 
 export class Host {
   /*
@@ -21,16 +22,18 @@ export class Host {
     this._propertyList = propertyList;
   }
   */
-
+/*
  get idHost() { return this._idHost; }
  set idHost(val) { this._idHost = val; }  // TODO: Erase setter
-
+*/
  constructor(
-   private _idHost: string,
+  //  private _idHost: string,
    public firstName: string,
    public lastName: string,
-   public propertyList: Property[] = []) {
-}
+   public phone: string,
+   public email: string,
+   public homeAddress: Address,
+   public propertyList: Property[] = []) {}
 
 
   public addProperty(property: Property): void {

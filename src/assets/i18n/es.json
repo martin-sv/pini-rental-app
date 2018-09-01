@@ -19,6 +19,8 @@
     "LAST_NAME": "Apellido",
     "PHONE": "Teléfono Celular",
     "ADDRESS": "Dirección",
+    "STREET": "Calle",
+    "CITY": "Ciudad",
     "STATE": "Estado",
     "COUNTRY": "Pais",
     "FIELDEMPTYERROR": "Campo Requerido"

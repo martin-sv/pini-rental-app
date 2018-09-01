@@ -32,7 +32,7 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to Host Response
     this.hostSub = this.db.hostUpdate.subscribe(res => {
       this._host = res;
-      this._host.idHost = AuthDataStatic.authData.email;
+      // this._host.idHost = AuthDataStatic.authData.email;
       this.hostUpdate.next(Object.create(this._host));
       this.db.fetchMyProperties(this._host);
       // console.log(this.host);
