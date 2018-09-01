@@ -6,7 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { FirestoreService } from '../shared/firestore.service';
 import { UIService } from '../shared/ui.service';
 import { AuthDataStatic } from './auth-data.static';
-import { Host } from '../shared/host.model';
+import { Host } from '../shared/models/host.model';
 
 @Injectable()
 export class AuthService {

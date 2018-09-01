@@ -2,8 +2,8 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { DataMock } from './shared/dataMock';
-import { Host } from './shared/host.model';
-import { Property } from './shared/property.model';
+import { Host } from './shared/models/host.model';
+import { Property } from './shared/models/property.model';
 import { AuthService } from './auth/auth.service';
 import { AuthData } from './auth/auth-data.model';
 import { FirestoreService } from './shared/firestore.service';

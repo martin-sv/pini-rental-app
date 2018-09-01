@@ -4,8 +4,8 @@ import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription } from 'rxjs';
 import { UIService } from '../../shared/ui.service';
-import { Host } from '../../shared/host.model';
-import { Address } from '../../shared/address.model';
+import { Host } from '../../shared/models/host.model';
+import { Address } from '../../shared/models/address.model';
 
 
 @Component({
@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       form.value.last_name,
       form.value.phone,
       form.value.email,
-      new Address(form.value.street, form.value.city, form.value.state, form.value.country));
+      new Address(form.value.street, form.value.apartment, form.value.city, form.value.state, form.value.country));
     this.authService.regusterUser(authData, host);
   }
 

@@ -19,6 +19,7 @@
     "LAST_NAME": "Apellido",
     "PHONE": "Teléfono Celular",
     "ADDRESS": "Dirección",
+    "APARTMENT": "Piso/Departamento",
     "STREET": "Calle",
     "CITY": "Ciudad",
     "STATE": "Estado",

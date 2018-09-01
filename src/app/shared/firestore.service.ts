@@ -1,10 +1,10 @@
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Host } from './host.model';
+import { Host } from './models/host.model';
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Property } from './property.model';
-import { PropertyClassEnum } from './propertyClassEnum';
+import { Property } from './models/property.model';
+import { PropertyClassEnum } from './models/propertyClassEnum';
 import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Injectable()
@@ -44,10 +44,12 @@ export class FirestoreService {
           return new Property(doc.payload.doc.id,
             host,
             doc.payload.doc.data()['name'],
+            doc.payload.doc.data()['cover'],
             PropertyClassEnum.appartment, // TODO: Traer info de Firebase
             doc.payload.doc.data()['address'],
             doc.payload.doc.data()['serviceFee'],
-            doc.payload.doc.data()['cover']);
+            doc.payload.doc.data()['checkInOutHistory'],
+            doc.payload.doc.data()['cleaningHistory']);
         });
       }))
       .subscribe((props: Property[]) => {

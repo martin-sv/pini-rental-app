@@ -20,6 +20,7 @@
     "PHONE": "Mobile Phone",
     "ADDRESS": "Address",
     "STREET": "Street",
+    "APARTMENT": "Apartment Number",
     "CITY": "City",
     "STATE": "State",
     "COUNTRY": "Country",

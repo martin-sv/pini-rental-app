@@ -2,8 +2,8 @@ import { Subscription, Subject } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { FirestoreService } from '../shared/firestore.service';
-import { Host } from '../shared/host.model';
-import { Property } from '../shared/property.model';
+import { Host } from '../shared/models/host.model';
+import { Property } from '../shared/models/property.model';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
 
@@ -27,7 +27,7 @@ export class PropertiesService implements OnDestroy {
     this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
       // console.log('Auth Change Subscriber ' + logedIn);
       // console.log(AuthDataStatic.authData);
-      if (logedIn){
+      if (logedIn) {
         this.fetchHostAndProperties();
       } else {
         this._host = null;

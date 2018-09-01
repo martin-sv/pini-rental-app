@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
-import { FirestoreService } from '../../shared/firestore.service';
 import { PropertiesService } from '../properties.service';
-import { Property } from '../../shared/property.model';
+import { Property } from '../../shared/models/property.model';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit, Host, OnDestroy } from '@angular/core';
-import { Property } from '../../shared/property.model';
+import { Property } from '../../shared/models/property.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 import { Subscription } from 'rxjs';

@@ -1,6 +1,10 @@
-import { Host } from './host.model';
-import { Property } from './property.model';
-
+import { Host } from './models/host.model';
+import { Property } from './models/property.model';
+import { PropertyAddress } from './models/propertyAddress.model';
+import { Address } from './models/address.model';
+import { Condo } from './models/condo.model';
+import { CheckInOut } from './models/checkInOut.model';
+import { Cleaning } from './models/cleaning.model';
 
 export class DataMock {
   static _host: Host;
@@ -19,7 +23,13 @@ export class DataMock {
     const properties: Property[] = [];
     for (let i = 0; i < propertyCount; i++) {
     const property: Property = new Property(
-      this.rndNum().toString(), host, this.rndText(), Math.round(Math.random()), this.rndText(), this.rndNum(), this.getPropertyImage());
+      this.rndNum().toString(),
+      host,
+      this.rndText(),
+      this.getPropertyImage(),
+      Math.round(Math.random()),
+      new PropertyAddress(new Address(this.rndText(), this.rndText(), this.rndText(), 'FL', 'US', '12345')),
+      this.rndNum(200, 150));
       properties.push(property);
     }
     this._properties.push(...properties);

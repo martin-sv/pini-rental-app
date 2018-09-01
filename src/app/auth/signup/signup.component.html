@@ -77,6 +77,17 @@
         <mat-error *ngIf="street.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
+        <input
+          matInput
+          placeholder="{{ 'SIGNUP-IN.APARTMENT' | translate }}"
+          ngModel
+          type="apartment"
+          name="apartment"
+          required
+          #apartment="ngModel">
+          <mat-error *ngIf="apartment.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
       <input
         matInput
         placeholder="{{ 'SIGNUP-IN.CITY' | translate }}"
