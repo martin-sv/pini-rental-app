@@ -106,8 +106,6 @@ export class FirestoreService {
     );
   }
 
-
-
   fetchPropertyTypes() {
     this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
       .valueChanges()
@@ -119,7 +117,6 @@ export class FirestoreService {
     );
   }
 
-
   addNewHost(host: Host) {
     const propertyJSON = JSON.parse(JSON.stringify(host));
     delete propertyJSON.propertyList;
@@ -129,6 +126,7 @@ export class FirestoreService {
   addMyProperty(property: Property) {
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
+    // console.log(property);
     // console.log(propertyJSON);
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
   }

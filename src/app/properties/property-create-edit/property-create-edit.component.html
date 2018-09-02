@@ -19,7 +19,7 @@
           formControlName="condoHouseSelect"
           required
           placeholder="{{ 'FORM_UNCOMMON.PROPERTY_TYPE' | translate }}">
-          <mat-option *ngFor="let property_type of propertyTypeList; let i=index" [value]="property_type">
+          <mat-option *ngFor="let property_type of propertyTypeList; let i=index" [value]="i">
               {{ 'FORM_UNCOMMON.' + property_type | translate }}
           </mat-option>
 
@@ -30,7 +30,7 @@
       </mat-form-field>
       <!-- <p> Selected value: {{newPropertyForm.value.condoHouseSelect}} </p> -->
 
-      <section *ngIf="newPropertyForm.value.condoHouseSelect == 'CONDO'"
+      <section *ngIf="newPropertyForm.value.condoHouseSelect == '0'"
         fxLayout="column"
         fxLayoutAlign="center center"
         fxLayoutGap="10px">
@@ -53,7 +53,8 @@
           </mat-form-field>
       </section>
 
-      <section *ngIf="newPropertyForm.value.condoHouseSelect == 'HOUSE'"
+      <!-- TODO: Mejorar el tema de 0-1 para casa-condo -->
+      <section *ngIf="newPropertyForm.value.condoHouseSelect == '1'"
         fxLayout="column"
         fxLayoutAlign="center center"
         fxLayoutGap="10px">

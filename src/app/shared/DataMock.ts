@@ -55,7 +55,7 @@ export class DataMock {
     return (Math.floor(Math.random() * max) + min);
   }
 
-  private static getPropertyImage() {
+  public static getPropertyImage() {
     const images = [
     'https://preview.ibb.co/iufwa9/property0.jpg',
     'https://preview.ibb.co/czVwa9/property1.png',
