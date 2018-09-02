@@ -27,9 +27,9 @@
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
         <div (click)="onPropertyCardClick(property.idProperty)" mat-card-avatar [ngStyle]="{backgroundImage: getCover(property), backgroundSize: 'cover'}"></div>
-        <mat-card-title fxLayoutAlign="center">{{ property.name }}</mat-card-title>
-        <mat-card-subtitle *ngIf="property.condo">{{ property.condo.name }}</mat-card-subtitle>
-        <mat-card-subtitle *ngIf="!property.condo">	&nbsp;</mat-card-subtitle> <!-- Se deja en blanco para que la foto no quede sobre el circulito -->
+        <mat-card-title fxLayoutAlign="left">{{ property.name }}</mat-card-title>
+        <mat-card-subtitle *ngIf="property.condo" fxLayoutAlign="left">{{ property.condo.name }}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!property.condo" fxLayoutAlign="left">	&nbsp;</mat-card-subtitle> <!-- Se deja en blanco para que la foto no quede sobre el circulito -->
       </mat-card-header>
       <img mat-card-image style="cursor: pointer;" src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYCOVER' | translate }}" (click)="onPropertyClick(property.idProperty)">
       <mat-card-content  fxLayoutAlign="left">
