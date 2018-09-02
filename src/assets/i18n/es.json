@@ -29,6 +29,8 @@
     "FIELDEMPTYERROR": "Campo Requerido"
   },
   "FORM_UNCOMMON": {
+    "CONDO": "Condominio",
+    "HOUSE":  "Casa",
     "SELECT_CONDO": "Seleccione Condominio",
     "PROPERTY_TYPE": "Tipo de Propiedad"
   },

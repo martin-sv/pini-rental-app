@@ -6,7 +6,9 @@ import { Condo } from './models/condo.model';
 @Injectable()
 export class DataService implements OnDestroy {
   condosSub: Subscription;
+  propertyTypeSub: Subscription;
   public condosList: Condo[];
+  propertyTypeList: string[];
 
   constructor(private db: FirestoreService) {
   }
@@ -18,9 +20,17 @@ export class DataService implements OnDestroy {
       // console.log (this.condosList);
     });
     this.db.fetchCondos();
+
+    // Subscribe to Property Type Response
+    this.propertyTypeSub = this.db.propertyTypesUpdate.subscribe(res => {
+      this.propertyTypeList = res;
+      console.log (this.propertyTypeList);
+    });
+    this.db.fetchPropertyTypes();
   }
 
   ngOnDestroy() {
     if (this.condosSub) { this.condosSub.unsubscribe(); }
+    if (this.propertyTypeSub) { this.propertyTypeSub.unsubscribe(); }
   }
 }

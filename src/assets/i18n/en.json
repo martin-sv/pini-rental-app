@@ -29,6 +29,8 @@
     "FIELDEMPTYERROR": "Required Field"
   },
   "FORM_UNCOMMON": {
+    "CONDO": "Condominium",
+    "HOUSE":  "House",
     "SELECT_CONDO": "Select Condo",
     "PROPERTY_TYPE": "Property Type"
   },

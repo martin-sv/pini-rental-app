@@ -16,6 +16,7 @@ export class FirestoreService {
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
   condosUpdate = new Subject<Condo[]>();
+  propertyTypesUpdate = new Subject<any>();
   private firebaseSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {}
@@ -79,7 +80,7 @@ export class FirestoreService {
   }
 
   fetchCondos() {
-    this.firebaseSubs.push(this.db.collection<Condo >('condos')
+    this.firebaseSubs.push(this.db.collection<Condo>('condos')
       .snapshotChanges()
       .pipe(map(docArray => {
         return docArray.map(doc => {
@@ -104,6 +105,20 @@ export class FirestoreService {
       })
     );
   }
+
+
+
+  fetchPropertyTypes() {
+    this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
+      .valueChanges()
+      .subscribe(result => {
+        const propertyTypes = (result[0].list);
+        // console.log(propertyTypes);
+        this.propertyTypesUpdate.next(propertyTypes);
+      })
+    );
+  }
+
 
   addNewHost(host: Host) {
     const propertyJSON = JSON.parse(JSON.stringify(host));

@@ -12,11 +12,13 @@ export class PropertyCreateEditComponent implements OnInit {
   newPropertyForm: FormGroup;
   inputs = [];
   condosList: Condo[];
+  propertyTypeList: string[];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.condosList = this.dataService.condosList;
+    this.propertyTypeList = this.dataService.propertyTypeList;
 
     this.newPropertyForm = new FormGroup({
       name: new FormControl(),
