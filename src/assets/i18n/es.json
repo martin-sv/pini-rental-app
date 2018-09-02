@@ -15,6 +15,7 @@
     "EMAILINVALID": "Email inválido",
     "PASSWORD": "Contraseña",
     "MINPASSWORD": "Debe contener al menos {{ value }} caracteres",
+    "NAME": "Nombre",
     "FIRST_NAME": "Nombre",
     "LAST_NAME": "Apellido",
     "PHONE": "Teléfono Celular",
@@ -24,7 +25,12 @@
     "CITY": "Ciudad",
     "STATE": "Estado",
     "COUNTRY": "Pais",
+    "ZIP": "Código Postal",
     "FIELDEMPTYERROR": "Campo Requerido"
+  },
+  "FORM_UNCOMMON": {
+    "SELECT_CONDO": "Seleccione Condominio",
+    "PROPERTY_TYPE": "Tipo de Propiedad"
   },
   "PROPERTIES": {
     "EDITDETAILS": "Editar / Detalles",
@@ -37,6 +43,5 @@
     "auth/email-already-in-use": "El email ya fue usado por otra cuenta.",
     "auth/wrong-password": "Password incorrecto.",
     "auth/user-not-found": "No existe un usuario con ese email."
-
   }
 }

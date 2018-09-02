@@ -15,6 +15,7 @@
     "EMAILINVALID": "Email is invalid",
     "PASSWORD": "Password",
     "MINPASSWORD": "Should be at least {{ value }} characters",
+    "NAME": "Name",
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "PHONE": "Mobile Phone",
@@ -24,7 +25,12 @@
     "CITY": "City",
     "STATE": "State",
     "COUNTRY": "Country",
+    "ZIP": "Zip Code",
     "FIELDEMPTYERROR": "Required Field"
+  },
+  "FORM_UNCOMMON": {
+    "SELECT_CONDO": "Select Condo",
+    "PROPERTY_TYPE": "Property Type"
   },
   "PROPERTIES": {
     "EDITDETAILS": "Edit / Details",
