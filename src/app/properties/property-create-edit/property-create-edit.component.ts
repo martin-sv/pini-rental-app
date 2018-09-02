@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Condo } from '../../shared/models/condo.model';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'app-property-create-edit',
@@ -9,13 +11,24 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class PropertyCreateEditComponent implements OnInit {
   newPropertyForm: FormGroup;
   inputs = [];
+  condosList: Condo[];
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.condosList = this.dataService.condosList;
+
     this.newPropertyForm = new FormGroup({
       name: new FormControl(),
-      address: new FormControl()
+      condoHouseSelect: new FormControl(),
+      condoSelect: new FormControl(),
+      apartmentCondo: new FormControl(),
+      apartmentHouse: new FormControl(),
+      street: new FormControl(),
+      city: new FormControl(),
+      state: new FormControl(),
+      country: new FormControl(),
+      zip: new FormControl()
     });
     this.inputs = ['name'];
 

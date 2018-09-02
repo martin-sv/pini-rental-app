@@ -9,20 +9,20 @@
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.EMAIL' | translate }}"
+        placeholder="{{ 'FORM_COMMON.EMAIL' | translate }}"
         ngModel
         type="email"
         name="email"
         email
         required
         #email="ngModel">
-        <mat-error *ngIf="email.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
-        <mat-error *ngIf="email.hasError('email')">{{ 'SIGNUP-IN.EMAILINVALID' | translate }}</mat-error>
+        <mat-error *ngIf="email.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="email.hasError('email')">{{ 'FORM_COMMON.EMAILINVALID' | translate }}</mat-error>
     </mat-form-field>
-    <mat-form-field hintLabel="{{ 'SIGNUP-IN.MINPASSWORD' | translate:{value : '6'} }}">
+    <mat-form-field hintLabel="{{ 'FORM_COMMON.MINPASSWORD' | translate:{value : '6'} }}">
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.PASSWORD' | translate }}"
+        placeholder="{{ 'FORM_COMMON.PASSWORD' | translate }}"
         ngModel
         type="password"
         name="password"
@@ -35,97 +35,97 @@
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.FIRST_NAME' | translate }}"
+        placeholder="{{ 'FORM_COMMON.FIRST_NAME' | translate }}"
         ngModel
         type="first_name"
         name="first_name"
         required
         #first_name="ngModel">
-        <mat-error *ngIf="first_name.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="first_name.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.LAST_NAME' | translate }}"
+        placeholder="{{ 'FORM_COMMON.LAST_NAME' | translate }}"
         ngModel
         type="last_name"
         name="last_name"
         required
         #last_name="ngModel">
-        <mat-error *ngIf="last_name.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="last_name.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.PHONE' | translate }}"
+        placeholder="{{ 'FORM_COMMON.PHONE' | translate }}"
         ngModel
         type="phone"
         name="phone"
         required
         #phone="ngModel">
-        <mat-error *ngIf="phone.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="phone.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.STREET' | translate }}"
+        placeholder="{{ 'FORM_COMMON.STREET' | translate }}"
         ngModel
         type="street"
         name="street"
         required
         #street="ngModel">
-        <mat-error *ngIf="street.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="street.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
         <input
           matInput
-          placeholder="{{ 'SIGNUP-IN.APARTMENT' | translate }}"
+          placeholder="{{ 'FORM_COMMON.APARTMENT' | translate }}"
           ngModel
           type="apartment"
           name="apartment"
           required
           #apartment="ngModel">
-          <mat-error *ngIf="apartment.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+          <mat-error *ngIf="apartment.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.CITY' | translate }}"
+        placeholder="{{ 'FORM_COMMON.CITY' | translate }}"
         ngModel
         type="city"
         name="city"
         required
         #city="ngModel">
-        <mat-error *ngIf="city.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="city.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.STATE' | translate }}"
+        placeholder="{{ 'FORM_COMMON.STATE' | translate }}"
         ngModel
         type="state"
         name="state"
         required
         #state="ngModel">
-        <mat-error *ngIf="state.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="state.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
         matInput
-        placeholder="{{ 'SIGNUP-IN.COUNTRY' | translate }}"
+        placeholder="{{ 'FORM_COMMON.COUNTRY' | translate }}"
         ngModel
         type="country"
         name="country"
         required
         #country="ngModel">
-        <mat-error *ngIf="country.hasError('required')">{{ 'SIGNUP-IN.FIELDEMPTYERROR' | translate }}</mat-error>
+        <mat-error *ngIf="country.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <button *ngIf="!isLoading && !isAuth"
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="f.invalid">
-      {{ 'SIGNUP-IN.SUBMIT' | translate }}
+      {{ 'FORM_COMMON.SUBMIT' | translate }}
     </button>
     <mat-spinner diameter="35" strokeWidth="5"  *ngIf="isLoading || isAuth"></mat-spinner> <!-- Diameter 35 = Button Height -->
   </form>

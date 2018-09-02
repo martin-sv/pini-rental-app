@@ -9,7 +9,7 @@
     "SIGNOUT": "Signout",
     "PROPERTIES": "Properties"
   },
-  "SIGNUP-IN": {
+  "FORM_COMMON": {
     "SUBMIT": "Submit",
     "EMAIL": "Email",
     "EMAILINVALID": "Email is invalid",

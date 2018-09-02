@@ -3,6 +3,8 @@ import { Params, ActivatedRoute } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 import { Property } from '../../shared/models/property.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DataService } from '../../shared/data.service';
+import { Condo } from '../../shared/models/condo.model';
 
 @Component({
   selector: 'app-property-details',
@@ -14,11 +16,15 @@ export class PropertyDetailsComponent implements OnInit {
   focus: boolean[];
   inputs = [];
   propertyForm: FormGroup;
+  condosList: Condo[];
 
   constructor(private route: ActivatedRoute,
-              private propertiesService: PropertiesService) {}
+              private propertiesService: PropertiesService,
+              private dataService: DataService) {}
 
   ngOnInit() {
+    this.condosList = this.dataService.condosList;
+
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -28,6 +34,7 @@ export class PropertyDetailsComponent implements OnInit {
           this.showPropertyData();
         }
       );
+
 
     this.propertyForm = new FormGroup({
       name: new FormControl(this.property.name),

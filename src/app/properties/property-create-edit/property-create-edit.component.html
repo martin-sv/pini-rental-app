@@ -5,20 +5,101 @@
     fxLayoutGap="10px"
     (ngSubmit)="onSubmit()"
     [formGroup]= "newPropertyForm">
-    <mat-form-field *ngFor="let inputName of inputs">
+    <mat-form-field>
         <input
-        matInput
-        type="{{ inputName }}"
-        name="{{ inputName }}"
-        formControlName="{{ inputName }}"
-        placeholder="{{ inputName }} -> Translate">
+        matInput type="name" name="name" formControlName="name" required
+        placeholder="name -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.name.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+
+    <mat-form-field>
+      <mat-select
+        type="condoHouseSelect"
+        name="condoHouseSelect"
+        formControlName="condoHouseSelect"
+        required
+        placeholder="Condo or House">
+        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option> -->
+        <mat-option value="condo">Condo</mat-option>
+        <mat-option value="house">House</mat-option>
+      </mat-select>
+      <mat-error *ngIf="!!newPropertyForm.controls.condoHouseSelect.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
+    <!-- <p> Selected value: {{newPropertyForm.value.condoHouseSelect}} </p> -->
+
+    <section *ngIf="newPropertyForm.value.condoHouseSelect == 'condo'"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px">
+      <mat-form-field>
+        <mat-select
+          type="condoSelect" name="condoSelect" formControlName="condoSelect"
+          required
+          placeholder="Select a Condo -> Translate">
+          <mat-option *ngFor="let condo of condosList" [value]="condo.idCondo">
+            {{condo.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!!newPropertyForm.controls.condoSelect.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <input
+          matInput type="apartmentCondo" name="apartmentCondo" formControlName="apartmentCondo" required
+          placeholder="apartmentCondo -> Translate">
+          <mat-error *ngIf="!!newPropertyForm.controls.apartmentCondo.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+        </mat-form-field>
+    </section>
+
+    <section *ngIf="newPropertyForm.value.condoHouseSelect == 'house'"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px">
+      <mat-form-field>
+        <input
+        matInput type="street" name="street" formControlName="street" required
+        placeholder="street -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.street.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput type="apartmentHouse" name="apartmentHouse" formControlName="apartmentHouse" required
+        placeholder="apartmentHouse -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.apartmentHouse.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput type="city" name="city" formControlName="city" required
+        placeholder="city -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.city.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput type="state" name="state" formControlName="state" required
+        placeholder="state -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.state.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput type="country" name="country" formControlName="country" required
+        placeholder="country -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.country.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matInput type="zip" name="zip" formControlName="zip" required
+        placeholder="zip -> Translate">
+        <mat-error *ngIf="!!newPropertyForm.controls.zip.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+        </mat-form-field>
+    </section>
+
     <button
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="newPropertyForm.invalid">
-      {{ 'SIGNUP-IN.SUBMIT' | translate }}
+      {{ 'FORM_COMMON.SUBMIT' | translate }}
     </button>
   </form>
 </section>
