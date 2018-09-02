@@ -24,7 +24,7 @@ export class DataService implements OnDestroy {
     // Subscribe to Property Type Response
     this.propertyTypeSub = this.db.propertyTypesUpdate.subscribe(res => {
       this.propertyTypeList = res;
-      console.log (this.propertyTypeList);
+      // console.log (this.propertyTypeList);
     });
     this.db.fetchPropertyTypes();
   }
