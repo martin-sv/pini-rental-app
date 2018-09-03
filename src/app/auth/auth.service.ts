@@ -8,7 +8,8 @@ import { FirestoreService } from '../shared/firestore.service';
 import { UIService } from '../shared/ui.service';
 import { AuthDataStatic } from './auth-data.static';
 import { Host } from '../shared/models/host.model';
-import * as fromApp from '../app.reducer';
+import * as fromRoot from '../app.reducer';
+import * as UI from '../shared/ui.actions';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
               private afAuth: AngularFireAuth,
               private db: FirestoreService,
               private uiService: UIService,
-              private store: Store<{ui: fromApp.State}>) {}
+              private store: Store<{ui: fromRoot.State}>) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
@@ -43,7 +44,7 @@ export class AuthService {
 
   regusterUser(authData: AuthData, newHost: Host): void {
     // this.uiService.loadingStateChanged.next(true);  // Shown before the request since it starts loading as soon as an action ocurs.
-    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading());
     this.afAuth.auth.createUserWithEmailAndPassword(
       authData.email,
       authData.password)
@@ -51,11 +52,11 @@ export class AuthService {
         this.onLogin(authData);
         this.db.addNewHost(newHost);
         // console.log(result);
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
       })
       .catch( error => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
         // console.log(error);
         this.authError.next(error);
       });
@@ -63,18 +64,18 @@ export class AuthService {
 
   signIn(authData: AuthData): void {
     // this.uiService.loadingStateChanged.next(true);
-    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading());
     this.afAuth.auth.signInWithEmailAndPassword(
       authData.email,
       authData.password)
       .then(result => {
         this.onLogin(authData);
         // console.log(result);
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
       })
       .catch( error => {
         // this.uiService.loadingStateChanged.next(false);
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
         // console.log(error);
         this.authError.next(error);
       });

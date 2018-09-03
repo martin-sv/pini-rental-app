@@ -7,8 +7,7 @@ import { UIService } from '../../shared/ui.service';
 import { Host } from '../../shared/models/host.model';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../app.reducer';
-import { map } from 'rxjs/operators';
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-signup',
@@ -23,14 +22,14 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private uiService: UIService,
-              private store: Store<{ui: fromApp.State}>) { }
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     // Show Spinner if Loading
     // this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
     //   this.isLoading = isLoading;
     // });
-    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {

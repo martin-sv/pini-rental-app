@@ -26,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { PropertiesService } from './properties/properties.service';
 import { DataService } from './shared/data.service';
-import { appReducer } from './app.reducer';
+import { reducers } from './app.reducer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -59,7 +59,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     CoreModule,
     AuthModule,
-    StoreModule.forRoot({ui: appReducer})
+    StoreModule.forRoot(reducers)
     // PropertiesModule
   ],
   providers: [
