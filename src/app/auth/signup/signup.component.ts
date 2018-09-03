@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { UIService } from '../../shared/ui.service';
 import { Host } from '../../shared/models/host.model';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
-
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../app.reducer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -16,17 +18,19 @@ import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 export class SignupComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   isLoadingSub: Subscription;
-  isLoading = false;
+  isLoading$: Observable<boolean>;
   get isAuth() { return this.authService.isAuth; }
 
   constructor(private authService: AuthService,
-              private uiService: UIService) { }
+              private uiService: UIService,
+              private store: Store<{ui: fromApp.State}>) { }
 
   ngOnInit() {
     // Show Spinner if Loading
-    this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
-      this.isLoading = isLoading;
-    });
+    // this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
+    //   this.isLoading = isLoading;
+    // });
+    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {
@@ -48,6 +52,6 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
-    if (this.isLoadingSub) {this.isLoadingSub.unsubscribe(); }
+    // if (this.isLoadingSub) {this.isLoadingSub.unsubscribe(); }
   }
 }
