@@ -1,5 +1,4 @@
 import { Store } from '@ngrx/store';
-import { Subject, Observable } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,10 +13,6 @@ import * as Auth from '../auth/auth.actions';
 
 @Injectable()
 export class AuthService {
-  // authChange = new Subject<boolean>();
-  authError = new Subject<any>();
-  // private isAuthenticated: Observable<boolean>;
-  // get isAuth(): boolean { return this.isAuthenticated; }
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
@@ -61,7 +56,8 @@ export class AuthService {
         // this.uiService.loadingStateChanged.next(false);
         this.store.dispatch(new UI.StopLoading());
         // console.log(error);
-        this.authError.next(error);
+        // this.authError.next(error);
+        this.store.dispatch(new Auth.AuthError(error));
       });
   }
 
@@ -80,7 +76,9 @@ export class AuthService {
         // this.uiService.loadingStateChanged.next(false);
         this.store.dispatch(new UI.StopLoading());
         // console.log(error);
-        this.authError.next(error);
+        // console.log(typeof error);
+        // this.authError.next(error);
+        this.store.dispatch(new Auth.AuthError(error));
       });
   }
 

@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
-    this.authErrorSub = this.authService.authError.subscribe( error => {
+    this.store.select(fromRoot.onAuthError).subscribe( error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
   }
@@ -45,9 +45,5 @@ export class SigninComponent implements OnInit, OnDestroy {
   onSubmit() {
     // console.log(this.loginForm);
     this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
-  }
-
-  ngOnDestroy() {
-    if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
   }
 }
