@@ -8,9 +8,6 @@ import { PropertyClassEnum } from './models/propertyClassEnum';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import { Condo } from './models/condo.model';
 import { Address } from './models/address.model';
-import * as fromRoot from '../app.reducer';
-import * as data from './data.actions';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class FirestoreService {
@@ -18,10 +15,11 @@ export class FirestoreService {
   private properties: Property[];
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
+  condosUpdate = new Subject<Condo[]>();
+  propertyTypesUpdate = new Subject<any>();
   private firebaseSubs: Subscription[] = [];
 
-  constructor(private db: AngularFirestore,
-              private store: Store<fromRoot.State>) {}
+  constructor(private db: AngularFirestore) {}
 
   public fetchHost(emailHost: string) {
     // console.log('fetchHost: ' + emailHost);
@@ -103,7 +101,8 @@ export class FirestoreService {
       }))
       .subscribe((condos: Condo[]) => {
         // console.log(condos);
-        this.store.dispatch(new data.SetCondosList(condos));
+        this.condosUpdate.next(condos);
+        // this.store.dispatch(new data.SetCondosList(condos));
       })
     );
   }
@@ -114,7 +113,8 @@ export class FirestoreService {
       .subscribe(result => {
         const propertyTypes = (result[0].list);
         // console.log(propertyTypes);
-        this.store.dispatch(new data.SetPropertyTypes(propertyTypes));
+        this.propertyTypesUpdate.next(propertyTypes);
+        // this.store.dispatch(new data.SetPropertyTypes(propertyTypes));
       })
     );
   }

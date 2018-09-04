@@ -1,5 +1,5 @@
 import { DataActions, SET_CONDOS_LIST, SET_PROPERTY_TYPES } from './data.actions';
-import { Condo } from './models/condo.model';
+import { Condo } from '../models/condo.model';
 
 export interface State {
   condosList: Condo[];

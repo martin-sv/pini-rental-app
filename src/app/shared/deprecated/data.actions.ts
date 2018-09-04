@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Condo } from './models/condo.model';
+import { Condo } from '../models/condo.model';
 
 export const SET_CONDOS_LIST = '[DATA] Set Condos List';
 export const SET_PROPERTY_TYPES = '[DATA] Set Property Types';
