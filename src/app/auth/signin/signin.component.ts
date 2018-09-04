@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
@@ -12,20 +12,17 @@ import * as fromRoot from '../../app.reducer';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
-  isLoadingSub: Subscription;
-
-// isAuth = false;
+  isAuth$: Observable<boolean>;
 
   constructor(private authService: AuthService,
               private uiService: UIService,
               private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    // this.store.subscribe(data => console.log(data));
     // Init & Add Validators
     this.loginForm = new FormGroup({
       email: new FormControl('', {
@@ -36,18 +33,13 @@ export class SigninComponent implements OnInit {
       })
     });
 
-    // Show Spinner if Loading
-    // this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
-    //   this.isLoading = isLoading;
-    // });
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
+    this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
-
-
   }
 
   onSubmit() {
@@ -55,8 +47,7 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
   }
 
-  // ngOnDestroy() {
-  //   if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
-  //   if (this.isLoadingSub) {this.isLoadingSub.unsubscribe(); }
-  // }
+  ngOnDestroy() {
+    if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
+  }
 }

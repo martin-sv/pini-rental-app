@@ -32,13 +32,13 @@
         <mat-error *ngIf="!!loginForm.controls.password.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <!-- Double logic to avoid a milisecond when the Submit button appears after logging in and before showing the next screen -->
-    <button *ngIf="!(isLoading$ | async) && !isAuth"
+    <button *ngIf="!(isLoading$ | async) && !(isAuth$ | async)"
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="loginForm.invalid">
       {{ 'FORM_COMMON.SUBMIT' | translate }}
     </button>
-    <mat-spinner diameter="35" strokeWidth="5"  *ngIf="(isLoading$ | async) || isAuth"></mat-spinner>
+    <mat-spinner diameter="35" strokeWidth="5"  *ngIf="(isLoading$ | async) || (isAuth$ | async)"></mat-spinner>
   </form>
 </section>

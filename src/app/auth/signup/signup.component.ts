@@ -18,17 +18,15 @@ export class SignupComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   isLoadingSub: Subscription;
   isLoading$: Observable<boolean>;
+  isAuth$: Observable<boolean>;
 
   constructor(private authService: AuthService,
               private uiService: UIService,
               private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    // Show Spinner if Loading
-    // this.isLoadingSub = this.uiService.loadingStateChanged.subscribe((isLoading: boolean) => {
-    //   this.isLoading = isLoading;
-    // });
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
+    this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
     this.authErrorSub = this.authService.authError.subscribe( error => {
@@ -50,6 +48,5 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
-    // if (this.isLoadingSub) {this.isLoadingSub.unsubscribe(); }
   }
 }
