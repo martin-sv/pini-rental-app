@@ -19,7 +19,7 @@
           formControlName="condoHouseSelect"
           required
           placeholder="{{ 'FORM_UNCOMMON.PROPERTY_TYPE' | translate }}">
-          <mat-option *ngFor="let property_type of propertyTypeList; let i=index" [value]="i">
+          <mat-option *ngFor="let property_type of propertyTypeList$; let i=index" [value]="i">
               {{ 'FORM_UNCOMMON.' + property_type | translate }}
           </mat-option>
 
@@ -39,7 +39,7 @@
             type="condoSelect" name="condoSelect" formControlName="condoSelect"
             required
             placeholder="{{ 'FORM_UNCOMMON.SELECT_CONDO' | translate }}">
-            <mat-option *ngFor="let condo of condosList" [value]="condo.idCondo">
+            <mat-option *ngFor="let condo of condosList$" [value]="condo.idCondo">
               {{condo.name}}
             </mat-option>
           </mat-select>

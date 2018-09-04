@@ -4,6 +4,8 @@ import { PropertyListComponent } from './property-list/property-list.component';
 import { PropertyCreateEditComponent } from './property-create-edit/property-create-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { PropertiesRoutingModule } from './properties-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { propertiesReducer } from './properties.reducer';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { PropertiesRoutingModule } from './properties-routing.module';
   ],
   imports: [
     PropertiesRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('properties', propertiesReducer)
   ]
 })
 export class PropertiesModule {

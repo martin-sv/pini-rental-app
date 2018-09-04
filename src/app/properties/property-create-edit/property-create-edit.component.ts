@@ -7,6 +7,9 @@ import { Property } from '../../shared/models/property.model';
 import { DataMock } from '../../shared/dataMock';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Router } from '@angular/router';
+import * as fromRoot from '../../app.reducer';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-property-create-edit',
@@ -16,16 +19,24 @@ import { Router } from '@angular/router';
 export class PropertyCreateEditComponent implements OnInit {
   newPropertyForm: FormGroup;
   inputs = [];
-  condosList: Condo[];
-  propertyTypeList: string[];
+  // propertyTypeList$: Observable<string[]>;
+  // condosList$: Observable<Condo[]>;
+
+  propertyTypeList$: string[];
+  condosList$: Condo[];
 
   constructor(private router: Router,
-              private dataService: DataService,
-              private propertiesService: PropertiesService) { }
+              private propertiesService: PropertiesService,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.condosList = this.dataService.condosList;
-    this.propertyTypeList = this.dataService.propertyTypeList;
+    // this.propertyTypeList$ = this.store.select(fromRoot.getPropertyTypes);
+    // this.condosList$ = this.store.select(fromRoot.getCondosList);
+
+    this.store.select(fromRoot.getPropertyTypes).pipe(take(1)).subscribe( r => this.propertyTypeList$ = r );
+    this.store.select(fromRoot.getCondosList).pipe(take(1)).subscribe( r => this.condosList$ = r );
+
+    // this.store.select(fromRoot.getCondosList).pipe(take(1)).subscribe( r => this.condos = r );
 
     this.newPropertyForm = new FormGroup({
       name: new FormControl(),
@@ -43,12 +54,13 @@ export class PropertyCreateEditComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  async onSubmit() {
     const propertyFormValues = this.newPropertyForm.value;
     const apartment = (propertyFormValues.condoHouseSelect === 0) ? propertyFormValues.apartmentCondo : propertyFormValues.apartmentHouse;
-    let condo: Condo;
+    let condo;
     if (propertyFormValues.condoHouseSelect === 0) {
-      condo = this.dataService.condosList.find(c => c.idCondo === propertyFormValues.condoSelect);
+      // condo = this.dataService.condosList.find(c => c.idCondo === propertyFormValues.condoSelect);
+      condo = this.condosList$.find(c => c.idCondo === propertyFormValues.condoSelect);
     }
     const property = new Property(
       '0',

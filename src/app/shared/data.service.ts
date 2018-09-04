@@ -14,6 +14,10 @@ export class DataService implements OnDestroy {
   }
 
   initDataListener() {
+    this.db.fetchCondos();
+    this.db.fetchPropertyTypes();
+
+    /*
     // Subscribe to Condos Response
     this.condosSub = this.db.condosUpdate.subscribe(res => {
       this.condosList = res;
@@ -27,6 +31,7 @@ export class DataService implements OnDestroy {
       // console.log (this.propertyTypeList);
     });
     this.db.fetchPropertyTypes();
+    */
   }
 
   ngOnDestroy() {

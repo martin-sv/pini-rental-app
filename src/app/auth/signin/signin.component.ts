@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UIService } from '../../shared/ui.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer';

@@ -16,7 +16,7 @@ import * as Auth from '../auth/auth.actions';
 export class AuthService {
   // authChange = new Subject<boolean>();
   authError = new Subject<any>();
-  private isAuthenticated: Observable<boolean>;
+  // private isAuthenticated: Observable<boolean>;
   // get isAuth(): boolean { return this.isAuthenticated; }
 
   constructor(private router: Router,

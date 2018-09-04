@@ -8,6 +8,7 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
+import * as fromProperties from './properties.reducer';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
@@ -17,7 +18,6 @@ export class PropertiesService implements OnDestroy {
   get properties() { return ((this._properties)  ? Object.create(this._properties) : null); }
   private propertiesSub: Subscription;
   private hostSub: Subscription;
-  private authChangeSub: Subscription;
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
 
@@ -91,7 +91,6 @@ export class PropertiesService implements OnDestroy {
   ngOnDestroy() {
     if (this.propertiesSub) { this.propertiesSub.unsubscribe(); }
     if (this.hostSub) { this.hostSub.unsubscribe(); }
-    if (this.authChangeSub) { this.authChangeSub.unsubscribe(); }
   }
 
 }
