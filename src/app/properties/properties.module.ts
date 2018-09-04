@@ -5,7 +5,7 @@ import { PropertyCreateEditComponent } from './property-create-edit/property-cre
 import { SharedModule } from '../shared/shared.module';
 import { PropertiesRoutingModule } from './properties-routing.module';
 import { StoreModule } from '@ngrx/store';
-import { propertiesReducer } from './properties.reducer';
+import { propertiesReducer } from './store/properties.reducer';
 
 @NgModule({
   declarations: [

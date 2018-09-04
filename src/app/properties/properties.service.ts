@@ -8,7 +8,7 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
-import * as fromProperties from './properties.reducer';
+import * as fromProperties from './store/properties.reducer';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {

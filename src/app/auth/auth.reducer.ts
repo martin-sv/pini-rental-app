@@ -1,4 +1,4 @@
-import { AuthActions, SET_AUTHENTICATED, SET_UNAUTHENTICATED, AUTH_ERROR } from './auth.actions';
+import * as AuthActions from './auth.actions';
 
 export interface State {
   isAuthenticated: boolean;
@@ -10,13 +10,13 @@ const initialState: State = {
   authError: { code: '', message: ''}
 };
 
-export function authReducer(state: State = initialState, action: AuthActions) {
+export function authReducer(state: State = initialState, action: AuthActions.AuthActions) {
   switch (action.type) {
-    case SET_AUTHENTICATED:
+    case AuthActions.SET_AUTHENTICATED:
       return { ...state, isAuthenticated: true };
-    case SET_UNAUTHENTICATED:
+    case AuthActions.SET_UNAUTHENTICATED:
       return { ...state, isAuthenticated: false };
-    case AUTH_ERROR:
+    case AuthActions.AUTH_ERROR:
       return { ...state, authError: action.payload };
     default: return state;
   }

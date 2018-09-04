@@ -1,7 +1,7 @@
-import { Property } from '../shared/models/property.model';
-import { Host } from '../shared/models/host.model';
-import * as fromRoot from '../app.reducer';
-import { PropertiesActions, SET_PROPERTIES_LIST, SET_HOSTS_LIST } from './properties.actions';
+import { Property } from '../../shared/models/property.model';
+import { Host } from '../../shared/models/host.model';
+import * as fromRoot from '../../app.reducer';
+import * as PropertiesActions from './properties.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface PropertiesState {
@@ -18,13 +18,13 @@ const initialState: PropertiesState = {
   hostData: null
 };
 
-export function propertiesReducer(state: PropertiesState = initialState, action: PropertiesActions) {
+export function propertiesReducer(state: PropertiesState = initialState, action: PropertiesActions.PropertiesActions) {
   switch (action.type) {
-    case SET_PROPERTIES_LIST:
+    case PropertiesActions.SET_PROPERTIES_LIST:
       return {
         ...state,
         propertiesList: action.payload };  // Append to the current state. To avoid overwriting.
-    case SET_HOSTS_LIST:
+    case PropertiesActions.SET_HOSTS_LIST:
       return {
         ...state,
         hostData: action.payload };
