@@ -6,6 +6,8 @@ import { Host } from '../shared/models/host.model';
 import { Property } from '../shared/models/property.model';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../app.reducer';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
@@ -19,15 +21,17 @@ export class PropertiesService implements OnDestroy {
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
 
-  constructor(private authService: AuthService,
+  constructor(private store: Store<fromRoot.State>,
+              private authService: AuthService,
               private db: FirestoreService) {}
 
   public initPropertiesListener() {
     // Subscribe to AuthChange
-    this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
+    // this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
+    this.store.select(fromRoot.getIsAuth).subscribe(logedIn => {
       // console.log('Auth Change Subscriber ' + logedIn);
       // console.log(AuthDataStatic.authData);
-      if (logedIn) {
+      if (logedIn ) {
         this.fetchHostAndProperties();
       } else {
         this._host = null;

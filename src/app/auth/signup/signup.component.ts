@@ -18,7 +18,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   isLoadingSub: Subscription;
   isLoading$: Observable<boolean>;
-  get isAuth() { return this.authService.isAuth; }
 
   constructor(private authService: AuthService,
               private uiService: UIService,

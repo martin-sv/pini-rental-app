@@ -18,7 +18,6 @@ export class SigninComponent implements OnInit {
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
   isLoadingSub: Subscription;
-  get isAuth() { return this.authService.isAuth; }
 
 // isAuth = false;
 

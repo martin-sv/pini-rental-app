@@ -6,7 +6,7 @@ import { PropertiesModule } from './properties/properties.module';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'properties', loadChildren: './properties/properties.module#PropertiesModule', canLoad: [AuthGuard] }
+  { path: 'properties', loadChildren: './properties/properties.module#PropertiesModule' }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,34 +10,37 @@ import { AuthDataStatic } from './auth-data.static';
 import { Host } from '../shared/models/host.model';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
+import * as Auth from '../auth/auth.actions';
 
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>();
+  // authChange = new Subject<boolean>();
   authError = new Subject<any>();
-  private isAuthenticated = false;
-  get isAuth(): boolean { return this.isAuthenticated; }
+  private isAuthenticated: Observable<boolean>;
+  // get isAuth(): boolean { return this.isAuthenticated; }
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
               private db: FirestoreService,
               private uiService: UIService,
-              private store: Store<{ui: fromRoot.State}>) {}
+              private store: Store<fromRoot.State>) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         // console.log('User In: ' + user.email);
         AuthDataStatic.setAuthData(new AuthData(user.email, ''));
-        this.isAuthenticated = true;
-        this.authChange.next(true);
+        // this.isAuthenticated = true;
+        // this.authChange.next(true);
+        this.store.dispatch(new Auth.SetAuthenticated());
         this.router.navigate(['/properties']);
       } else {
         // console.log('User Out');
         this.db.cancelSubscriptions();
-        this.isAuthenticated = false;
+        // this.isAuthenticated = false;
+        // this.authChange.next(false);
+        this.store.dispatch(new Auth.SetUnauthenticated());
         this.router.navigate(['/signin']);
-        this.authChange.next(false);
       }
     });
   }
@@ -85,7 +88,6 @@ export class AuthService {
     AuthDataStatic.setAuthData(authData);
     this.uiService.loadingStateChanged.next(false);
   }
-
 
   signOut(): void {
     this.afAuth.auth.signOut();

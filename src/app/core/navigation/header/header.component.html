@@ -7,16 +7,16 @@
     <div><a [routerLink]="['/']">Logo</a></div>
     <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
       <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-        <li *ngIf="!isAuth">
+        <li *ngIf="!(isAuth$ | async)">
           <a [routerLink]="['/signup']">{{ 'TITLES.SIGNUP' | translate }}</a>
         </li>
-        <li *ngIf="!isAuth">
+        <li *ngIf="!(isAuth$ | async)">
           <a [routerLink]="['/signin']">{{ 'TITLES.SIGNIN' | translate }}</a>
         </li>
-        <li *ngIf="isAuth">
+        <li *ngIf="isAuth$ | async">
           <a [routerLink]="['/properties']">{{ 'TITLES.PROPERTIES' | translate }}</a>
         </li>
-        <li *ngIf="isAuth">
+        <li *ngIf="isAuth$ | async">
           <a style="cursor: pointer;" (click)="onSignOut()">{{ 'TITLES.SIGNOUT' | translate }}</a>
         </li>
       </ul>
