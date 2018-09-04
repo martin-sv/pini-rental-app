@@ -12,7 +12,7 @@ import * as fromRoot from '../../app.reducer';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
     this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
-    this.store.select(fromRoot.onAuthError).subscribe( error => {
+    this.authErrorSub = this.store.select(fromRoot.onAuthError).subscribe( error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
   }
@@ -45,5 +45,9 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     // console.log(this.loginForm);
     this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
+  }
+
+  ngOnDestroy() {
+    if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
   }
 }

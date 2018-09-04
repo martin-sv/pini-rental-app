@@ -7,14 +7,15 @@ import { Host } from '../../shared/models/host.model';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
+  authErrorSub: Subscription;
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
 
@@ -43,5 +44,10 @@ export class SignupComponent implements OnInit {
       form.value.email,
       new PeopleAddress(form.value.street, form.value.apartment, form.value.city, form.value.state, form.value.country));
     this.authService.regusterUser(authData, host);
+  }
+
+
+  ngOnDestroy() {
+    if (this.authErrorSub) { this.authErrorSub.unsubscribe(); }
   }
 }

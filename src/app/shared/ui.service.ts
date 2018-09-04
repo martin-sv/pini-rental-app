@@ -12,13 +12,13 @@ export class UIService {
               private translate: TranslateService,
               private db: FirestoreService) {}
 
-  showSnackbar(messageCode: string, altText: string, action: string, duration = 5000) {
+  showSnackbar(messageCode: string, altText: string, action: string, duration = 4000) {
     this.translate.get('FIREBASE.' + messageCode).subscribe((translatedText: string) => {
       // console.log(translatedText);
       if (!translatedText.includes(messageCode)) {
-        this.snackBar.open(translatedText, null, { duration: 5000});
+        this.snackBar.open(translatedText, null, { duration: duration});
       } else {
-        this.snackBar.open(altText, null, { duration: 5000});
+        this.snackBar.open(altText, null, { duration: duration});
         this.db.addNewErrorMessageDiscovered(messageCode, altText);
       }
     });
