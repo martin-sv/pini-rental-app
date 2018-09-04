@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
 

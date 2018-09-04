@@ -12,7 +12,7 @@ import * as fromRoot from '../../app.reducer';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class SigninComponent implements OnInit {
   authErrorSub: Subscription;
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
