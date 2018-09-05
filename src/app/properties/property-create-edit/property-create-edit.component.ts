@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Condo } from '../../shared/models/condo.model';
 import { DataService } from '../../shared/data.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './property-create-edit.component.html',
   styleUrls: ['./property-create-edit.component.css']
 })
-export class PropertyCreateEditComponent implements OnInit {
+export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
   newPropertyForm: FormGroup;
   inputs = [];
   // propertyTypeList$: Observable<string[]>;
@@ -23,7 +23,8 @@ export class PropertyCreateEditComponent implements OnInit {
 
   constructor(private router: Router,
               private propertiesService: PropertiesService,
-              public dataService: DataService) { }
+              public dataService: DataService,
+              private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     // this.propertyTypeList$ = this.store.select(fromRoot.getPropertyTypes);
@@ -42,11 +43,18 @@ export class PropertyCreateEditComponent implements OnInit {
       city: new FormControl(),
       state: new FormControl(),
       country: new FormControl(),
-      zip: new FormControl()
+      zip: new FormControl(),
+      submit: new FormControl()
     });
-    this.inputs = ['name'];
-
+    // this.inputs = ['name'];
   }
+
+  ngAfterViewChecked() {
+    // The reason for this check is to avoid having an ExpressionChangedAfterItHasBeenCheckedError
+    // when the dropdown property type is used and the disabled property of the Submit button changes
+    // Since disabled changes during the changeCheck, it throws the error. This extra checks prevents so.
+    this.cd.detectChanges();
+}
 
   async onSubmit() {
     const propertyFormValues = this.newPropertyForm.value;
@@ -71,7 +79,7 @@ export class PropertyCreateEditComponent implements OnInit {
         propertyFormValues.country,
         propertyFormValues.zip),
       condo);
-      // console.log(property);
+    // console.log(property);
     this.propertiesService.addMyProperty(property);
     this.router.navigate(['/properties']);
   }
