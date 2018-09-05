@@ -9,7 +9,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+// import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HostComponent } from './host/host.component';
@@ -62,6 +64,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CoreModule,
     AuthModule,
     StoreModule.forRoot(reducers),
+    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : []
     // EffectsModule.forRoot([AuthEffects])
     // PropertiesModule
   ],
