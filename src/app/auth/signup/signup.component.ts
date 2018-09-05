@@ -46,6 +46,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       new PeopleAddress(form.value.street, form.value.apartment, form.value.city, form.value.state, form.value.country));
     // this.authService.regusterUser(authData, host);
     this.store.dispatch(new AuthActions.TrySignup({authData, host}));
+
   }
 
 

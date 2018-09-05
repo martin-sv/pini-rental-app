@@ -18,11 +18,12 @@ export class FirestoreService {
   condosUpdate = new Subject<Condo[]>();
   propertyTypesUpdate = new Subject<any>();
   private firebaseSubs: Subscription[] = [];
+  private verbose = true;
 
   constructor(private db: AngularFirestore) {}
 
   public fetchHost(emailHost: string) {
-    // console.log('fetchHost: ' + emailHost);
+    if (this.verbose) { console.log('fetchHost: ' + emailHost); }
     this.firebaseSubs.push(this.db.doc<Host>('hosts/' + emailHost)
       .valueChanges()
       .subscribe(result => {
@@ -38,6 +39,7 @@ export class FirestoreService {
 
   // TODO: Ver que hacer con el tema host
   public fetchMyProperties(host: Host) {
+    if (this.verbose) { console.log('fetchMyProperties: ' + host); }
     this.firebaseSubs.push(this.db
       .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
       .snapshotChanges()
@@ -70,6 +72,7 @@ export class FirestoreService {
   }
 
   public fetchProperty(idProperty: string) {
+    if (this.verbose) { console.log('fetchProperty: ' + idProperty); }
     // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
     this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
       .valueChanges()
@@ -80,6 +83,7 @@ export class FirestoreService {
   }
 
   fetchCondos() {
+    if (this.verbose) { console.log('fetchCondos'); }
     this.firebaseSubs.push(this.db.collection<Condo>('condos')
       .snapshotChanges()
       .pipe(map(docArray => {
@@ -108,6 +112,7 @@ export class FirestoreService {
   }
 
   fetchPropertyTypes() {
+    if (this.verbose) { console.log('fetchPropertyTypes'); }
     this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
       .valueChanges()
       .subscribe(result => {
@@ -120,12 +125,14 @@ export class FirestoreService {
   }
 
   addNewHost(host: Host) {
+    if (this.verbose) { console.log('addNewHost: ' + host); }
     const propertyJSON = JSON.parse(JSON.stringify(host));
     delete propertyJSON.propertyList;
     this.db.doc('hosts/' + host.email).set(propertyJSON);
   }
 
   addMyProperty(property: Property) {
+    if (this.verbose) { console.log('addMyProperty: ' + property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
     // console.log(property);
@@ -134,6 +141,7 @@ export class FirestoreService {
   }
 
   public updatePropertyValue(idProperty: string, key: string, newValue: string) {
+    if (this.verbose) { console.log('updatePropertyValue: ' + key + ' ' + newValue); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).update({
       [key]: newValue
     });
@@ -141,10 +149,12 @@ export class FirestoreService {
   }
 
   removeMyProperty(idProperty: string) {
+    if (this.verbose) { console.log('removeMyProperty: ' + idProperty); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {
+    if (this.verbose) { console.log('addNewErrorMessageDiscovered: ' + code + ' ' + message); }
     this.db.collection('error-messages-discovered').add({code: code, message: message});
   }
 
