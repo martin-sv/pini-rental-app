@@ -9,7 +9,7 @@ import { AuthDataStatic } from './auth-data.static';
 import { Host } from '../shared/models/host.model';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
-import * as Auth from '../auth/auth.actions';
+import * as Auth from './store/auth.actions';
 
 @Injectable()
 export class AuthService {

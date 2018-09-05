@@ -6,8 +6,9 @@ import { UIService } from '../../shared/ui.service';
 import { Host } from '../../shared/models/host.model';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app.reducer';
 import { Observable, Subscription } from 'rxjs';
+import * as fromRoot from '../../app.reducer';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-signup',
@@ -43,7 +44,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       form.value.phone,
       form.value.email,
       new PeopleAddress(form.value.street, form.value.apartment, form.value.city, form.value.state, form.value.country));
-    this.authService.regusterUser(authData, host);
+    // this.authService.regusterUser(authData, host);
+    this.store.dispatch(new AuthActions.TrySignup({authData, host}));
   }
 
 

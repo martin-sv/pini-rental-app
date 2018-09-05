@@ -9,6 +9,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HostComponent } from './host/host.component';
@@ -27,6 +28,7 @@ import { CoreModule } from './core/core.module';
 import { PropertiesService } from './properties/properties.service';
 import { DataService } from './shared/data.service';
 import { reducers } from './app.reducer';
+// import { AuthEffects } from './auth/store/auth.effects';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -59,7 +61,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     CoreModule,
     AuthModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    // EffectsModule.forRoot([AuthEffects])
     // PropertiesModule
   ],
   providers: [
