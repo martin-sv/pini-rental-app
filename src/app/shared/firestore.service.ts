@@ -8,6 +8,7 @@ import { PropertyClassEnum } from './models/propertyClassEnum';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import { Condo } from './models/condo.model';
 import { Address } from './models/address.model';
+import { CheckIn } from './models/checkIn.model';
 
 @Injectable()
 export class FirestoreService {
@@ -152,12 +153,18 @@ export class FirestoreService {
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).update({
       [key]: newValue
     });
-
   }
 
   removeMyProperty(idProperty: string) {
     if (this.verbose) { console.log('Firebase: removeMyProperty: ' + idProperty); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
+  }
+
+  addNewCheckin(checkIn: CheckIn) {
+    if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkIn); }
+    const checkInJSON = JSON.parse(JSON.stringify(checkIn));
+    delete checkInJSON.host;
+    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {

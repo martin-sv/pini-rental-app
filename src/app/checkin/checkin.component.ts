@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PropertiesService } from '../properties/properties.service';
+import { FirestoreService } from '../shared/firestore.service';
+import { CheckIn } from '../shared/models/checkIn.model';
+import { Guest } from '../shared/models/guest.model';
 
 @Component({
   selector: 'app-checkin',
@@ -11,7 +14,8 @@ export class CheckinComponent implements OnInit {
   newCheckinForm: FormGroup;
   guestInputs = [];
 
-  constructor(public propertiesService: PropertiesService) { }
+  constructor(public propertiesService: PropertiesService,
+              private db: FirestoreService) { }
 
   ngOnInit() {
 
@@ -33,9 +37,21 @@ export class CheckinComponent implements OnInit {
 
   }
 
-
-  onSubmint() {
-    const propertyFormValues = this.newCheckinForm.value;
+  onSubmit() {
+    const pfValues = this.newCheckinForm.value;
+    const checkIn = new CheckIn(
+      pfValues.propertySelect,
+      new Guest(
+        pfValues.fullName,
+        pfValues.phone,
+        pfValues.email,
+        pfValues.adultCount,
+        pfValues.childCount),
+        new Date(pfValues.checkin),
+        new Date(pfValues.checkout),
+        pfValues.expensesPaid,
+        pfValues.notes
+      );
+    this.db.addNewCheckin(checkIn);
   }
-
 }
