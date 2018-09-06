@@ -4,6 +4,7 @@ import { PropertiesService } from '../properties/properties.service';
 import { FirestoreService } from '../shared/firestore.service';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { Guest } from '../shared/models/guest.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkin',
@@ -15,7 +16,8 @@ export class CheckinComponent implements OnInit {
   guestInputs = [];
 
   constructor(public propertiesService: PropertiesService,
-              private db: FirestoreService) { }
+              private db: FirestoreService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -53,5 +55,6 @@ export class CheckinComponent implements OnInit {
         pfValues.notes
       );
     this.db.addNewCheckin(checkIn);
+    this.router.navigate(['properties/' + pfValues.propertySelect]);
   }
 }
