@@ -22,6 +22,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
   newPropertyForm: FormGroup;
   inputs = [];
   property: Property;
+  focus: boolean[];
   // propertyTypeList$: Observable<string[]>;
   // condosList$: Observable<Condo[]>;
   // propertyTypeList: string[];
@@ -76,6 +77,10 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       }
     }
 
+
+    this.focus = [];
+    this.focus['name'] = false;
+
   }
 
   ngAfterViewChecked() {
@@ -121,4 +126,21 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       this.router.navigate(['/properties']);
     });
   }
+/*
+  onFieldFocusIn(event) {
+    this.focus[event.target.name] = true;
+    // console.log(event.target.name);
+    // console.log(this.propertyForm);
+  }
+  onFieldFocusOut(event) {
+    // console.log(event);
+    // console.log('onFieldFocusOut');
+    this.focus[event.target.name] = false;
+    this.propertiesService.updatePropertyValue(this.property.idProperty, event.target.name, event.target.value);
+  }
+
+  onFieldPressEnter(event) {
+    event.target.blur();
+  }
+*/
 }

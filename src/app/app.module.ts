@@ -31,6 +31,7 @@ import { PropertiesService } from './properties/properties.service';
 import { DataService } from './shared/data.service';
 import { reducers } from './app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { CheckinComponent } from './checkin/checkin.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -45,6 +46,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     GuestsPastComponent,
     GuestsFutureComponent,
     GuestsListComponent,
+    CheckinComponent
   ],
   imports: [
     BrowserModule,
