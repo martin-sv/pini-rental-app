@@ -7,6 +7,10 @@ import { Property } from '../../shared/models/property.model';
 import { DataMock } from '../../shared/dataMock';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Router } from '@angular/router';
+import * as fromProperties from '../store/properties.reducer';
+import * as PROPERTIES from '../store/properties.actions';
+import { Store } from '@ngrx/store';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-property-create-edit',
@@ -26,7 +30,8 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
   constructor(private router: Router,
               private propertiesService: PropertiesService,
               public dataService: DataService,
-              private cd: ChangeDetectorRef) { }
+              private cd: ChangeDetectorRef,
+              private store: Store<fromProperties.State>) { }
 
   ngOnInit() {
     // this.propertyTypeList$ = this.store.select(fromRoot.getPropertyTypes);
@@ -59,7 +64,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
         this.newPropertyForm.get('apartmentCondo').setValue(this.property.address.appartment);
         // this.newPropertyForm.get('condoSelect').setValue(this.property.condo.idCondo);
         this.newPropertyForm.get('condoSelect').setValue('y8qU3839gLhdkztfXso0');
-        console.log(this.property.condo.idCondo);
+        // console.log(this.property.condo.idCondo);
       } else {
         this.newPropertyForm.get('condoHouseSelect').setValue(1);
         this.newPropertyForm.get('apartmentHouse').setValue(this.property.address.appartment);
@@ -88,23 +93,35 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       condo = this.dataService.condosList.find(c => c.idCondo === propertyFormValues.condoSelect);
       // condo = this.condosList$.find(c => c.idCondo === propertyFormValues.condoSelect);
     }
-    const property = new Property(
-      '0',
-      this.propertiesService.host,
-      propertyFormValues.name,
-      DataMock.getPropertyImage(),
-      propertyFormValues.condoHouseSelect,
-      150,
-      new PeopleAddress(
-        propertyFormValues.street,
-        apartment,
-        propertyFormValues.city,
-        propertyFormValues.state,
-        propertyFormValues.country,
-        propertyFormValues.zip),
-      condo);
     // console.log(property);
-    this.propertiesService.addMyProperty(property);
-    this.router.navigate(['/properties']);
+    this.store.select(fromProperties.getPropertySelected).pipe(take(1)).subscribe(idSelectedProperty => {
+
+      const idProp = (idSelectedProperty === null) ? '0' : idSelectedProperty;
+      const property = new Property(
+        idProp,
+        this.propertiesService.host,
+        propertyFormValues.name,
+        DataMock.getPropertyImage(),
+        propertyFormValues.condoHouseSelect,
+        150,
+        new PeopleAddress(
+          propertyFormValues.street,
+          apartment,
+          propertyFormValues.city,
+          propertyFormValues.state,
+          propertyFormValues.country,
+          propertyFormValues.zip),
+        condo);
+
+
+
+      if (idSelectedProperty === null) {
+        this.propertiesService.addMyProperty(property);
+        // this.router.navigate(['/properties']);
+      } else {
+        this.propertiesService.updateProperty(property);
+      }
+      this.router.navigate(['/properties']);
+    });
   }
 }

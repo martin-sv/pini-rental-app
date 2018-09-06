@@ -1,1 +1,18 @@
 <app-property-create-edit [idProperty]="property.idProperty"></app-property-create-edit>
+
+<!-- <form [formGroup]= "propertyForm">
+  <mat-form-field *ngFor="let inputF of inputs">
+      <input
+      matInput
+      type="{{ inputF.name }}"
+      name="{{ inputF.name }}"
+      formControlName="{{ inputF.name }}"
+      placeholder="{{ inputF.name }} -> Translate"
+      (focusin)="onFieldFocusIn($event)"
+      (focusout)="onFieldFocusOut($event)"
+      (keyup.enter)="onFieldPressEnter($event)"
+      value="{{ inputF.value }}" >
+    <mat-icon style="cursor: pointer;" *ngIf="!focus[inputF.name]" matSuffix>mode_edit</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="focus[inputF.name]" matSuffix>done</mat-icon>
+  </mat-form-field>
+</form> -->

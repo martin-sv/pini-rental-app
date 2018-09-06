@@ -3,6 +3,10 @@ import { Property } from '../../shared/models/property.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PropertiesService } from '../properties.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromProperties from '../store/properties.reducer';
+// import * as fromRoot from '../app.reducer';
+import * as PROPERTIES from '../store/properties.actions';
 
 @Component({
   selector: 'app-property-list',
@@ -17,7 +21,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private propertiesService: PropertiesService) {
+              private propertiesService: PropertiesService,
+              private store: Store<fromProperties.State>) {
   }
 
   ngOnInit() {
@@ -30,6 +35,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     this.propertiesUpdateSub = this.propertiesService.propertiesUpdate.subscribe (properties => {
       this.properties = properties;
     });
+    this.store.dispatch(new PROPERTIES.UnSelectProperty());
   }
 
   getCover(property: Property) {
@@ -38,7 +44,6 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   onAddPropertyClick() {
     // console.log(this.host);
-    // this.propertiesService.addMyProperty();
     this.router.navigate(['./addproperty'], {relativeTo: this.route});
   }
 
@@ -50,8 +55,9 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     // TODO: Implement
   }
 
-  onPropertyClick(idProperty: number) {
+  onPropertyClick(idProperty: string) {
     // console.log('idProperty: ' + id);
+    this.store.dispatch(new PROPERTIES.SelectProperty(idProperty));
     this.router.navigate(['./', idProperty], {relativeTo: this.route});
   }
 

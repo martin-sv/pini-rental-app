@@ -23,7 +23,7 @@ export class FirestoreService {
   constructor(private db: AngularFirestore) {}
 
   public fetchHost(emailHost: string) {
-    if (this.verbose) { console.log('fetchHost: ' + emailHost); }
+    if (this.verbose) { console.log('Firebase: fetchHost: ' + emailHost); }
     this.firebaseSubs.push(this.db.doc<Host>('hosts/' + emailHost)
       .valueChanges()
       .subscribe(result => {
@@ -39,7 +39,7 @@ export class FirestoreService {
 
   // TODO: Ver que hacer con el tema host
   public fetchMyProperties(host: Host) {
-    if (this.verbose) { console.log('fetchMyProperties: ' + host); }
+    if (this.verbose) { console.log('Firebase: fetchMyProperties: '); console.log(host); }
     this.firebaseSubs.push(this.db
       .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
       .snapshotChanges()
@@ -72,7 +72,7 @@ export class FirestoreService {
   }
 
   public fetchProperty(idProperty: string) {
-    if (this.verbose) { console.log('fetchProperty: ' + idProperty); }
+    if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }
     // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
     this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
       .valueChanges()
@@ -83,7 +83,7 @@ export class FirestoreService {
   }
 
   fetchCondos() {
-    if (this.verbose) { console.log('fetchCondos'); }
+    if (this.verbose) { console.log('Firebase: fetchCondos'); }
     this.firebaseSubs.push(this.db.collection<Condo>('condos')
       .snapshotChanges()
       .pipe(map(docArray => {
@@ -112,7 +112,7 @@ export class FirestoreService {
   }
 
   fetchPropertyTypes() {
-    if (this.verbose) { console.log('fetchPropertyTypes'); }
+    if (this.verbose) { console.log('Firebase: fetchPropertyTypes'); }
     this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
       .valueChanges()
       .subscribe(result => {
@@ -125,14 +125,14 @@ export class FirestoreService {
   }
 
   addNewHost(host: Host) {
-    if (this.verbose) { console.log('addNewHost: ' + host); }
+    if (this.verbose) { console.log('Firebase: addNewHost: ' + host); }
     const propertyJSON = JSON.parse(JSON.stringify(host));
     delete propertyJSON.propertyList;
     this.db.doc('hosts/' + host.email).set(propertyJSON);
   }
 
   addMyProperty(property: Property) {
-    if (this.verbose) { console.log('addMyProperty: ' + property); }
+    if (this.verbose) { console.log('Firebase: addMyProperty: ' + property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
     // console.log(property);
@@ -140,8 +140,15 @@ export class FirestoreService {
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
   }
 
+  public updateProperty(property: Property) {
+    if (this.verbose) { console.log('Firebase: updateProperty: '); console.log(property); }
+    const propertyJSON = JSON.parse(JSON.stringify(property));
+    delete propertyJSON.host;
+    this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + property.idProperty).set(propertyJSON);
+  }
+
   public updatePropertyValue(idProperty: string, key: string, newValue: string) {
-    if (this.verbose) { console.log('updatePropertyValue: ' + key + ' ' + newValue); }
+    if (this.verbose) { console.log('Firebase: updatePropertyValue: ' + key + ' ' + newValue); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).update({
       [key]: newValue
     });
@@ -149,12 +156,12 @@ export class FirestoreService {
   }
 
   removeMyProperty(idProperty: string) {
-    if (this.verbose) { console.log('removeMyProperty: ' + idProperty); }
+    if (this.verbose) { console.log('Firebase: removeMyProperty: ' + idProperty); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {
-    if (this.verbose) { console.log('addNewErrorMessageDiscovered: ' + code + ' ' + message); }
+    if (this.verbose) { console.log('Firebase: addNewErrorMessageDiscovered: ' + code + ' ' + message); }
     this.db.collection('error-messages-discovered').add({code: code, message: message});
   }
 

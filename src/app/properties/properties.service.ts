@@ -1,6 +1,5 @@
 import { Subscription, Subject } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { FirestoreService } from '../shared/firestore.service';
 import { Host } from '../shared/models/host.model';
 import { Property } from '../shared/models/property.model';
@@ -16,13 +15,13 @@ export class PropertiesService implements OnDestroy {
   get host() { return ((this._host) ? Object.create(this._host) : null); }
   private _properties: Property[];
   get properties() { return ((this._properties)  ? Object.create(this._properties) : null); }
+  selectedProperty: Property;
   private propertiesSub: Subscription;
   private hostSub: Subscription;
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
 
   constructor(private store: Store<fromRoot.State>,
-              private authService: AuthService,
               private db: FirestoreService) {}
 
   public initPropertiesListener() {
@@ -78,6 +77,10 @@ export class PropertiesService implements OnDestroy {
 
   public addMyMockProperty() {
     this.db.addMyProperty(DataMock.generateProperty(this._host));
+  }
+
+  public updateProperty(property: Property) {
+    this.db.updateProperty(property);
   }
 
   public updatePropertyValue(idProperty: string, key: string, newValue: string) {
