@@ -12,7 +12,20 @@ export class AuthGuard implements CanActivate, CanLoad {
   // constructor(private store: Store<fromRoot.State>, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return (this.store.select(fromRoot.getIsAuth).pipe(take(1)));
+
+    this.store.select(fromRoot.getIsAuth).subscribe(asd => console.log('isAuth'));
+    if (state.url.search('properties') === 1) {
+      return (this.store.select(fromRoot.getIsAuth).pipe(take(1)));
+    } else {
+      return (this.store.select(fromRoot.getIsUnAuth).pipe(take(1)));
+    }
+
+
+
+
+
+
+
 
     // if (this.authService.isAuth()) {
     //   return true;

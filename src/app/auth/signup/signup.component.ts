@@ -9,6 +9,8 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 import * as AuthActions from '../store/auth.actions';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +24,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private uiService: UIService,
-              private store: Store<fromRoot.State>) { }
+              private store: Store<fromRoot.State>,
+              private router: Router) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
@@ -32,7 +35,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.store.select(fromRoot.onAuthError).subscribe( error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
-
   }
 
   onSubmit(form: NgForm) {
