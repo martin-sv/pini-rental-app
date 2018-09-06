@@ -3,7 +3,6 @@ import { Property } from './models/property.model';
 import { Address } from './models/address.model';
 import { PeopleAddress } from './models/peopleAddress.model';
 import { Condo } from './models/condo.model';
-import { CheckInOut } from './models/checkInOut.model';
 import { Cleaning } from './models/cleaning.model';
 
 export class DataMock {

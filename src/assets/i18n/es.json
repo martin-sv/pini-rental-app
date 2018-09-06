@@ -31,7 +31,7 @@
   "FORM_UNCOMMON": {
     "CONDO": "Condominio",
     "HOUSE":  "Casa",
-    "SELECT_CONDO": "Seleccione Condominio",
+    "SELECT_CONDO": "Condominio",
     "PROPERTY_TYPE": "Tipo de Propiedad"
   },
   "PROPERTIES": {
@@ -41,9 +41,12 @@
     "ADDPROPERTY": "Registrar Propiedad",
     "ADDMOCKPROPERTY": "Registrar [Mock] Propiedad"
   },
-  "FIREBASE" : {
+  "FIREBASE": {
     "auth/email-already-in-use": "El email ya fue usado por otra cuenta.",
     "auth/wrong-password": "Password incorrecto.",
     "auth/user-not-found": "No existe un usuario con ese email."
+  },
+  "CHECKIN": {
+    "PROPERTY_SELECT": "Propiedad"
   }
 }

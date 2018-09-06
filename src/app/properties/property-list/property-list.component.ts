@@ -52,7 +52,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   onAddGuestClick() {
-    // TODO: Implement
+    this.router.navigate(['/checkin']);
   }
 
   onPropertyClick(idProperty: string) {

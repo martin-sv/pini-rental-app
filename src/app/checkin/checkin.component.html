@@ -1,3 +1,30 @@
-<p>
-  checkin works!
-</p>
+<section>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    (ngSubmit)="onSubmit()"
+    [formGroup]= "newCheckinForm">
+    <mat-form-field>
+      <mat-select
+        type="propertySelect"
+        name="propertySelect"
+        formControlName="propertySelect"
+        required
+        placeholder="{{ 'CHECKIN.PROPERTY_SELECT' | translate }}">
+        <mat-option *ngFor="let property of propertiesService.properties"  [value]="property.idProperty">
+            {{ property.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!!newCheckinForm.controls.propertySelect.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
+    </mat-form-field>
+    <button
+    type="submit"
+    name="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="newCheckinForm.invalid">
+    {{ 'FORM_COMMON.SUBMIT' | translate }}
+  </button>
+  </form>
+</section>

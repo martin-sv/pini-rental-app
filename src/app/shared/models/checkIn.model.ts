@@ -1,7 +1,7 @@
 import { Property } from './property.model';
 import { Guest } from './guest.model';
 
-export class CheckInOut {
+export class CheckIn {
 
   constructor(
     public property: Property,

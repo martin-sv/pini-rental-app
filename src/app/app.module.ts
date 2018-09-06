@@ -32,6 +32,7 @@ import { DataService } from './shared/data.service';
 import { reducers } from './app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { CheckinComponent } from './checkin/checkin.component';
+import { SharedModule } from './shared/shared.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -68,8 +69,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([AuthEffects]),
     // PropertiesModule
+    SharedModule
   ],
   providers: [
     PropertiesService,

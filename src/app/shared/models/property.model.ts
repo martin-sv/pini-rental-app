@@ -1,13 +1,13 @@
 import { PropertyClassEnum } from './propertyClassEnum';
 import { Host } from './host.model';
-import { CheckInOut } from './checkInOut.model';
 import { Cleaning } from './cleaning.model';
 import { PeopleAddress } from './peopleAddress.model';
 import { Condo } from './condo.model';
+import { CheckIn } from './checkIn.model';
 
 export class Property {
   get idProperty(): string { return this._idProperty; }
-  public checkInOutHistory: CheckInOut[];
+  public checkInOutHistory: CheckIn[];
   public cleaningHistory: Cleaning[];
 
   constructor(
@@ -19,7 +19,7 @@ export class Property {
     public serviceFee: number,
     public address: PeopleAddress,
     public condo?: Condo,
-    checkInOutHistory?: CheckInOut[],
+    checkInOutHistory?: CheckIn[],
     cleaningHistory?: Cleaning[]) {
 
     this.checkInOutHistory = checkInOutHistory;
