@@ -25,7 +25,8 @@
       type="{{ guestField }}"
       name="{{ guestField }}"
       formControlName="{{ guestField }}"
-      placeholder="{{ guestField }} -> Translate">
+      required
+      placeholder="{{ 'CHECKIN.' + guestField | uppercase | translate }}">
   </mat-form-field>
 
   <mat-form-field>
@@ -34,8 +35,9 @@
       type="checkin"
       name="checkin"
       formControlName="checkin"
+      required
       [matDatepicker]="checkin"
-      placeholder="Checkin Date -> Translate">
+      placeholder="{{ 'CHECKIN.CHECKIN' | translate }}">
     <mat-datepicker-toggle matSuffix [for]="checkin"></mat-datepicker-toggle>
     <mat-datepicker #checkin></mat-datepicker>
   </mat-form-field>
@@ -47,17 +49,20 @@
       type="checkout"
       name="checkout"
       formControlName="checkout"
+      required
       [matDatepicker]="checkout"
-      placeholder="Checkin Date -> Translate">
+      placeholder="{{ 'CHECKIN.CHECKOUT' | translate }}">
     <mat-datepicker-toggle matSuffix [for]="checkout"></mat-datepicker-toggle>
     <mat-datepicker #checkout></mat-datepicker>
   </mat-form-field>
 
+  {{ 'CHECKIN.EXPENSES_PAID' | translate }}
   <mat-radio-group
     fxLayout="column"
     fxLayoutAlign="center left"
     fxLayoutGap="10px"
-    formControlName="expensesPaid">
+    formControlName="expensesPaid"
+    required>
     <mat-radio-button value="1">YES -> Translate</mat-radio-button>
     <mat-radio-button value="2">NO -> Translate 2</mat-radio-button>
   </mat-radio-group>
@@ -68,7 +73,8 @@
       type="notes"
       name="notes"
       formControlName="notes"
-      placeholder="Textarea -> Translate"></textarea>
+      placeholder="{{ 'CHECKIN.NOTES' | translate }}"
+      rows="4"></textarea>
   </mat-form-field>
 
     <button

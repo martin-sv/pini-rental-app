@@ -47,6 +47,15 @@
     "auth/user-not-found": "No existe un usuario con ese email."
   },
   "CHECKIN": {
-    "PROPERTY_SELECT": "Propiedad"
+    "PROPERTY_SELECT": "Propiedad",
+    "FULLNAME": "Nombre Completo",
+    "PHONE": "Teléfono",
+    "EMAIL": "Email",
+    "ADULTCOUNT": "Cantidad de Adultos (Mayores de 14)",
+    "CHILDCOUNT": "Cantidad de Niños (Menores de 14)",
+    "CHECKIN": "Fecha Checkin",
+    "CHECKOUT": "Fecha CheckOut",
+    "EXPENSES_PAID": "Gastos Incluidos",
+    "NOTES": "Notas Adicionales"
   }
 }

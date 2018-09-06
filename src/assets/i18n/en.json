@@ -47,6 +47,15 @@
     "auth/user-not-found": "There is no user record corresponding to this email."
   },
   "CHECKIN": {
-    "PROPERTY_SELECT": "Property"
+    "PROPERTY_SELECT": "Property",
+    "FULLNAME": "Full Name",
+    "PHONE": "Phone",
+    "EMAIL": "Email",
+    "ADULTCOUNT": "Adultos (Over 14)",
+    "CHILDCOUNT": "Childs (Under 14)",
+    "CHECKIN": "Checkin Date",
+    "CHECKOUT": "CheckOut Date",
+    "EXPENSES_PAID": "Expenses Included",
+    "NOTES": "Additional Notes"
   }
 }
