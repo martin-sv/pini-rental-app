@@ -22,14 +22,12 @@
         <mat-option *ngFor="let property_type of dataService.propertyTypeList; let i=index" [value]="i">
             {{ 'FORM_UNCOMMON.' + property_type | translate }}
         </mat-option>
-
         <!-- <mat-option value="condo">Condo</mat-option>
         <mat-option value="house">House</mat-option> -->
       </mat-select>
       <mat-error *ngIf="!!newPropertyForm.controls.condoHouseSelect.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
     <!-- <p> Selected value: {{newPropertyForm.value.condoHouseSelect}} </p> -->
-
     <section *ngIf="newPropertyForm.value.condoHouseSelect == '0'"
       fxLayout="column"
       fxLayoutAlign="center center"

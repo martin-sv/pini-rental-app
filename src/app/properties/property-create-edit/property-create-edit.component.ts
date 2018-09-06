@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Condo } from '../../shared/models/condo.model';
 import { DataService } from '../../shared/data.service';
@@ -14,8 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./property-create-edit.component.css']
 })
 export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
+  @Input() idProperty: '';
   newPropertyForm: FormGroup;
   inputs = [];
+  property: Property;
   // propertyTypeList$: Observable<string[]>;
   // condosList$: Observable<Condo[]>;
   // propertyTypeList: string[];
@@ -47,6 +49,28 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       submit: new FormControl()
     });
     // this.inputs = ['name'];
+    this.property = this.propertiesService.getPropertyByID(this.idProperty);
+    // console.log(this.property);
+
+    if (this.property !== undefined) {
+      this.newPropertyForm.get('name').setValue(this.property.name);
+      if (this.property.condo !== undefined) {
+        this.newPropertyForm.get('condoHouseSelect').setValue(0);
+        this.newPropertyForm.get('apartmentCondo').setValue(this.property.address.appartment);
+        // this.newPropertyForm.get('condoSelect').setValue(this.property.condo.idCondo);
+        this.newPropertyForm.get('condoSelect').setValue('y8qU3839gLhdkztfXso0');
+        console.log(this.property.condo.idCondo);
+      } else {
+        this.newPropertyForm.get('condoHouseSelect').setValue(1);
+        this.newPropertyForm.get('apartmentHouse').setValue(this.property.address.appartment);
+        this.newPropertyForm.get('street').setValue(this.property.address.street);
+        this.newPropertyForm.get('city').setValue(this.property.address.city);
+        this.newPropertyForm.get('state').setValue(this.property.address.state);
+        this.newPropertyForm.get('country').setValue(this.property.address.country);
+        this.newPropertyForm.get('zip').setValue(this.property.address.zip);
+      }
+    }
+
   }
 
   ngAfterViewChecked() {

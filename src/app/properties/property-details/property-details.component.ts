@@ -31,7 +31,6 @@ export class PropertyDetailsComponent implements OnInit {
           // console.log(params);
           // this.db.fetchProperty(params.id);
           this.property = this.propertiesService.getPropertyByID(params.id);
-          this.showPropertyData();
         }
       );
 
@@ -58,10 +57,6 @@ export class PropertyDetailsComponent implements OnInit {
       }
     ];
     */
-  }
-
-  private showPropertyData() {
-
   }
 
   onFieldFocusIn(event) {
