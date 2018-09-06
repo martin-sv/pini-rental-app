@@ -95,7 +95,6 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
     }
     // console.log(property);
     this.store.select(fromProperties.getPropertySelected).pipe(take(1)).subscribe(idSelectedProperty => {
-
       const idProp = (idSelectedProperty === null) ? '0' : idSelectedProperty;
       const property = new Property(
         idProp,
@@ -112,8 +111,6 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
           propertyFormValues.country,
           propertyFormValues.zip),
         condo);
-
-
 
       if (idSelectedProperty === null) {
         this.propertiesService.addMyProperty(property);
