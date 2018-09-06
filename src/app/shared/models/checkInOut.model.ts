@@ -1,7 +1,13 @@
 import { Property } from './property.model';
-import { Time } from '@angular/common';
+import { Guest } from './guest.model';
 
 export class CheckInOut {
 
-  constructor(property: Property, guest: String, checkInDate: Date, checkInTime: Time, checkOutDate: Date, checkOutTime: Time) {}
+  constructor(
+    public property: Property,
+    public guest: Guest,
+    public checkingDateTime: Date,
+    public checkoutDateTime: Date,
+    public expensesPaid: boolean,
+    public specialRequirements: string) {}
 }
