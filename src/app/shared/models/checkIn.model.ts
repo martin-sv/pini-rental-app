@@ -9,5 +9,5 @@ export class CheckIn {
     public checkingDateTime: Date,
     public checkoutDateTime: Date,
     public expensesPaid: boolean,
-    public specialRequirements: string) {}
+    public notes: string) {}
 }

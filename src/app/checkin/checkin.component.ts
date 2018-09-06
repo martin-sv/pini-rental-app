@@ -9,14 +9,33 @@ import { PropertiesService } from '../properties/properties.service';
 })
 export class CheckinComponent implements OnInit {
   newCheckinForm: FormGroup;
+  guestInputs = [];
 
   constructor(public propertiesService: PropertiesService) { }
 
   ngOnInit() {
 
+    this.guestInputs = ['fullName', 'phone', 'email', 'adultCount', 'childCount'];
+
     this.newCheckinForm = new FormGroup({
-      propertySelect: new FormControl()
+      propertySelect: new FormControl(),
+      fullName: new FormControl(),
+      phone: new FormControl(),
+      email: new FormControl(),
+      adultCount: new FormControl(),
+      childCount: new FormControl(),
+      checkin: new FormControl(),
+      checkout: new FormControl(),
+      expensesPaid: new FormControl(),
+      notes: new FormControl(),
     });
+
+
+  }
+
+
+  onSubmint() {
+    const propertyFormValues = this.newCheckinForm.value;
   }
 
 }

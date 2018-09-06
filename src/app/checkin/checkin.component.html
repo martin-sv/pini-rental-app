@@ -18,6 +18,59 @@
       </mat-select>
       <mat-error *ngIf="!!newCheckinForm.controls.propertySelect.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
     </mat-form-field>
+
+    <mat-form-field *ngFor="let guestField of guestInputs">
+      <input
+      matInput
+      type="{{ guestField }}"
+      name="{{ guestField }}"
+      formControlName="{{ guestField }}"
+      placeholder="{{ guestField }} -> Translate">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      type="checkin"
+      name="checkin"
+      formControlName="checkin"
+      [matDatepicker]="checkin"
+      placeholder="Checkin Date -> Translate">
+    <mat-datepicker-toggle matSuffix [for]="checkin"></mat-datepicker-toggle>
+    <mat-datepicker #checkin></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      matInput
+      type="checkout"
+      name="checkout"
+      formControlName="checkout"
+      [matDatepicker]="checkout"
+      placeholder="Checkin Date -> Translate">
+    <mat-datepicker-toggle matSuffix [for]="checkout"></mat-datepicker-toggle>
+    <mat-datepicker #checkout></mat-datepicker>
+  </mat-form-field>
+
+  <mat-radio-group
+    fxLayout="column"
+    fxLayoutAlign="center left"
+    fxLayoutGap="10px"
+    formControlName="expensesPaid">
+    <mat-radio-button value="1">YES -> Translate</mat-radio-button>
+    <mat-radio-button value="2">NO -> Translate 2</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field>
+    <textarea
+      matInput
+      type="notes"
+      name="notes"
+      formControlName="notes"
+      placeholder="Textarea -> Translate"></textarea>
+  </mat-form-field>
+
     <button
     type="submit"
     name="submit"
