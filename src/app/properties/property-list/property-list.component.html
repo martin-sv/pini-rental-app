@@ -32,9 +32,13 @@
         <mat-card-subtitle *ngIf="!property.condo" fxLayoutAlign="left">	&nbsp;</mat-card-subtitle> <!-- Se deja en blanco para que la foto no quede sobre el circulito -->
       </mat-card-header>
       <img mat-card-image style="cursor: pointer;" src="{{ property.cover }}" alt="{{ 'PROPERTIES.ALTPROPERTYCOVER' | translate }}" (click)="onPropertyClick(property.idProperty)">
-      <mat-card-content  fxLayoutAlign="left">
-        Available: {{ available(property.idProperty) }}
-        <br><br>
+      <mat-card-content fxLayout="column"  fxLayoutAlign="left">
+        <div [ngSwitch]="available(property.idProperty)">
+          <div *ngSwitchCase="true">Status: Available</div>
+          <div *ngSwitchCase="false">Status: Ocupied</div>
+        </div>
+        <div *ngIf="!available(property.idProperty)">{{ currentGuest(property.idProperty).fullName }}</div>
+        <br>
         Next Checkin: {{ nextCheckin(property.idProperty) | date:'MMM d, y - h:mm a' }}
         <br>
         Next Checkout: {{ nextCheckout(property.idProperty) | date:'MMM d, y - h:mm a' }}

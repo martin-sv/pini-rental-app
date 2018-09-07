@@ -10,6 +10,7 @@ import * as PROPERTIES from '../store/properties.actions';
 import { CheckIn } from '../../shared/models/checkIn.model';
 import { CheckinsHelper } from '../../checkin/checkinsHelper';
 import { OrderEnum } from '../../checkin/oderEnum';
+import { Guest } from '../../shared/models/guest.model';
 
 @Component({
   selector: 'app-property-list',
@@ -49,6 +50,10 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   available(idProperty: string) {
     return CheckinsHelper.available(this.checkins, idProperty);
+  }
+
+  currentGuest(idProperty: string) {
+    return (CheckinsHelper.currentGuest(this.checkins, idProperty) as Guest);
   }
 
   nextCheckin(idProperty: string) {

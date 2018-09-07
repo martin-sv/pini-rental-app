@@ -105,7 +105,7 @@ export class CheckinsHelper {
       const checkingDateTime = new Date(checkin.checkingDateTime);
       const checkoutDateTime = new Date(checkin.checkoutDateTime);
       if (checkingDateTime < new Date() && checkoutDateTime > new Date()) {
-        return checkin;
+        return checkin.guest;
       }
     }
     return '';
