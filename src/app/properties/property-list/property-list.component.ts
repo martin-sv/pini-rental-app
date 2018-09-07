@@ -7,6 +7,9 @@ import { Store } from '@ngrx/store';
 import * as fromProperties from '../store/properties.reducer';
 // import * as fromRoot from '../app.reducer';
 import * as PROPERTIES from '../store/properties.actions';
+import { CheckIn } from '../../shared/models/checkIn.model';
+import { CheckinsHelper } from '../../checkin/checkinsHelper';
+import { OrderEnum } from '../../checkin/oderEnum';
 
 @Component({
   selector: 'app-property-list',
@@ -16,8 +19,10 @@ import * as PROPERTIES from '../store/properties.actions';
 export class PropertyListComponent implements OnInit, OnDestroy {
   host: Host;
   properties: Property[];
+  checkins: CheckIn[];
   private hostUpdateSub: Subscription;
   private propertiesUpdateSub: Subscription;
+  private checkinsUpdateSub: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -29,14 +34,48 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     // Initial Setup + Listeners
     this.host = this.propertiesService.host;
     this.properties = this.propertiesService.properties;
+    this.checkins = this.propertiesService.checkins;
     this.hostUpdateSub = this.propertiesService.hostUpdate.subscribe(host => {
       this.host = host;
     });
-    this.propertiesUpdateSub = this.propertiesService.propertiesUpdate.subscribe (properties => {
+    this.propertiesUpdateSub = this.propertiesService.propertiesUpdate.subscribe(properties => {
       this.properties = properties;
+    });
+    this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(checkins => {
+        this.checkins = checkins;
     });
     this.store.dispatch(new PROPERTIES.UnSelectProperty());
   }
+
+  available(idProperty: string) {
+    return CheckinsHelper.available(this.checkins, idProperty);
+  }
+
+  nextCheckin(idProperty: string) {
+    if (this.checkins !== null) {
+      return (CheckinsHelper.nextCheckin(this.checkins, idProperty) as CheckIn).checkingDateTime;
+    }
+  }
+
+  nextCheckout(idProperty: string) {
+    if (this.checkins !== null) {
+      return (CheckinsHelper.nextCheckout(this.checkins, idProperty) as CheckIn).checkoutDateTime;
+    }
+  }
+
+  lastCheckin(idProperty: string) {
+    if (this.checkins !== null) {
+      return (CheckinsHelper.lastCheckin(this.checkins, idProperty) as CheckIn).checkingDateTime;
+    }
+  }
+
+  lastCheckout(idProperty: string) {
+    if (this.checkins !== null) {
+      return (CheckinsHelper.lastCheckout(this.checkins, idProperty) as CheckIn).checkoutDateTime;
+    }
+  }
+
+
 
   getCover(property: Property) {
     return ('url("' + property.cover + '")');
@@ -68,5 +107,6 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.hostUpdateSub) { this.hostUpdateSub.unsubscribe(); }
     if (this.propertiesUpdateSub) { this.propertiesUpdateSub.unsubscribe(); }
+    if (this.checkinsUpdateSub) { this.checkinsUpdateSub.unsubscribe(); }
   }
 }

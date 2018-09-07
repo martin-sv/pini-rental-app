@@ -67,7 +67,7 @@ export class PropertiesService implements OnDestroy {
       this._checkins = res;
       this.checkinsUpdate.next(Object.create(this._checkins));
       // console.log(res);
-      CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
+      // CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
     });
   }
 

@@ -7,8 +7,8 @@ export class CheckIn {
     public idHost: string,
     public idProperty: string,
     public guest: Guest,
-    public checkingDateTime: Date,
-    public checkoutDateTime: Date,
+    public checkingDateTime: string,
+    public checkoutDateTime: string,
     public expensesPaid: boolean,
-    public notes: string) {}
+    public notes: string = '') {}
 }

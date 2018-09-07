@@ -194,6 +194,8 @@ export class FirestoreService {
 
   addNewCheckin(checkIn: CheckIn) {
     if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkIn); }
+    // checkIn.checkingDateTime = checkIn.checkingDateTime.toUTCString();
+    // checkIn.checkoutDateTime = checkIn.checkingDateTime.toUTCString();
     const checkInJSON = JSON.parse(JSON.stringify(checkIn));
     // this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
     this.db.collection('checkin').add(checkInJSON);

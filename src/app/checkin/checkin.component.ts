@@ -62,8 +62,8 @@ export class CheckinComponent implements OnInit {
         pfValues.email,
         pfValues.adultCount,
         pfValues.childCount),
-        new Date(pfValues.checkin),
-        new Date(pfValues.checkout),
+        new Date(pfValues.checkin).toUTCString(),
+        new Date(pfValues.checkout).toUTCString(),
         pfValues.expensesPaid,
         pfValues.notes
       );
