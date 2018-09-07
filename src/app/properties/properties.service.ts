@@ -51,16 +51,15 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to Properties Response
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
        this._properties = res;
-      this.db.fetchCheckIn(res);
+      this.db.fetchCheckInByHost(this.host);
        this.propertiesUpdate.next(Object.create(this._properties));
       // console.log (this.properties);
     });
-/*
+
     this.checkinSub = this.db.checkinsUpdate.subscribe(res => {
-      this._properties = res;
-      this.propertiesUpdate.next(Object.create(this._properties));
+      console.log(res);
     });
-*/
+
   }
 
   private fetchHostAndProperties() {

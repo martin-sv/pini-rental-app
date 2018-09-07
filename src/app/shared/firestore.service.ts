@@ -74,11 +74,30 @@ export class FirestoreService {
     );
   }
 
-  public fetchCheckIn(properties: Property[]) {
-    const ci: CheckIn[] = [];
-    this.checkins = ci;
-    this.checkinsUpdate.next(Object.create(this.checkins));
+  public fetchCheckInByHost(host: Host) {
+    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
+    this.firebaseSubs.push(this.db
+      .collection('checkin', ref => ref.where('idHost', '==', host.idHost)).valueChanges().subscribe(checkinsRaw => {
+        const checkins: CheckIn[] = [];
+        checkinsRaw.forEach(checkin => {
+          checkins.push(checkin as CheckIn);
+        });
+        this.checkinsUpdate.next(Object.create(checkins));
+    }));
   }
+
+  public fetchCheckInByProperty(property: Property) {
+    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
+    this.firebaseSubs.push(this.db
+      .collection('checkin', ref => ref.where('idProperty', '==', property.idProperty)).valueChanges().subscribe(checkinsRaw => {
+        const checkins: CheckIn[] = [];
+        checkinsRaw.forEach(checkin => {
+          checkins.push(checkin as CheckIn);
+        });
+        this.checkinsUpdate.next(Object.create(checkins));
+    }));
+  }
+
 
   public fetchProperty(idProperty: string) {
     if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }

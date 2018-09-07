@@ -5,6 +5,7 @@ import { FirestoreService } from '../shared/firestore.service';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { Guest } from '../shared/models/guest.model';
 import { Router } from '@angular/router';
+import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Component({
   selector: 'app-checkin',
@@ -35,6 +36,7 @@ export class CheckinComponent implements OnInit {
       expensesPaid: new FormControl(),
       notes: new FormControl(),
     });
+    /*
     const pfValues = this.newCheckinForm.value;
     pfValues.propertySelect = 'qqqq';
     pfValues.fullName = 'NullName',
@@ -46,11 +48,13 @@ export class CheckinComponent implements OnInit {
     pfValues.checkout = new Date();
     pfValues.expensesPaid = true;
     pfValues.notes = 'Note';
+    */
   }
 
   onSubmit() {
     const pfValues = this.newCheckinForm.value;
     const checkIn = new CheckIn(
+      AuthDataStatic.authData.email,
       pfValues.propertySelect,
       new Guest(
         pfValues.fullName,
