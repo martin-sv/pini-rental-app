@@ -8,6 +8,8 @@ import { DataMock } from '../shared/dataMock';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as fromProperties from './store/properties.reducer';
+import { CheckIn } from '../shared/models/checkIn.model';
+import { CheckinsHelper } from '../checkin/checkinsHelper';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
@@ -15,12 +17,16 @@ export class PropertiesService implements OnDestroy {
   get host() { return ((this._host) ? Object.create(this._host) : null); }
   private _properties: Property[];
   get properties() { return ((this._properties)  ? Object.create(this._properties) : null); }
+  private _checkins: CheckIn[];
+  get checkins() { return ((this._checkins)  ? Object.create(this._checkins) : null); }
+
   selectedProperty: Property;
   private propertiesSub: Subscription;
   private hostSub: Subscription;
   private checkinSub: Subscription;
-  propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
+  propertiesUpdate = new Subject<Property[]>();
+  checkinsUpdate = new Subject<CheckIn[]>();
 
   constructor(private store: Store<fromRoot.State>,
               private db: FirestoreService) {}
@@ -45,21 +51,24 @@ export class PropertiesService implements OnDestroy {
       // this._host.idHost = AuthDataStatic.authData.email;
       this.hostUpdate.next(Object.create(this._host));
       this.db.fetchMyProperties(this._host);
+      this.db.fetchCheckInByHost(this._host);
       // console.log(this.host);
     });
 
     // Subscribe to Properties Response
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
-       this._properties = res;
-      this.db.fetchCheckInByHost(this.host);
-       this.propertiesUpdate.next(Object.create(this._properties));
+      this._properties = res;
+      this.propertiesUpdate.next(Object.create(this._properties));
       // console.log (this.properties);
     });
 
+    // Subscribe to Checkins Response
     this.checkinSub = this.db.checkinsUpdate.subscribe(res => {
-      console.log(res);
+      this._checkins = res;
+      this.checkinsUpdate.next(Object.create(this._checkins));
+      // console.log(res);
+      CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
     });
-
   }
 
   private fetchHostAndProperties() {
@@ -68,9 +77,9 @@ export class PropertiesService implements OnDestroy {
 
   public getPropertyByID(idProperty: string): Property {
     // console.log(this._properties);
-    return this._properties.find(asd => {
+    return this._properties.find(prop => {
       // console.log(asd.idProperty + ' - ' + idProperty);
-      return asd.idProperty === idProperty;
+      return prop.idProperty === idProperty;
     });
   }
 
@@ -101,6 +110,7 @@ export class PropertiesService implements OnDestroy {
   ngOnDestroy() {
     if (this.propertiesSub) { this.propertiesSub.unsubscribe(); }
     if (this.hostSub) { this.hostSub.unsubscribe(); }
+    if (this.checkinSub) { this.checkinSub.unsubscribe(); }
   }
 
 }

@@ -87,12 +87,12 @@ export class FirestoreService {
   }
 
   public fetchCheckInByProperty(property: Property) {
-    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
+    if (this.verbose) { console.log('Firebase: fetchCheckInByProperty: '); console.log(property); }
     this.firebaseSubs.push(this.db
       .collection('checkin', ref => ref.where('idProperty', '==', property.idProperty)).valueChanges().subscribe(checkinsRaw => {
         const checkins: CheckIn[] = [];
-        checkinsRaw.forEach(checkin => {
-          checkins.push(checkin as CheckIn);
+        checkinsRaw.forEach((checkin: CheckIn) => {
+          checkins.push(checkin);
         });
         this.checkinsUpdate.next(Object.create(checkins));
     }));
