@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { UIService } from '../../shared/ui.service';
 import { Host } from '../../shared/models/host.model';
@@ -9,8 +8,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 import * as AuthActions from '../store/auth.actions';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -22,10 +19,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
 
-  constructor(private authService: AuthService,
-              private uiService: UIService,
-              private store: Store<fromRoot.State>,
-              private router: Router) { }
+  constructor(private uiService: UIService,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
@@ -41,6 +36,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     // console.log(form);
     const authData = new AuthData(form.value.email, form.value.password);
     const host = new Host(
+      form.value.email,
       form.value.first_name,
       form.value.last_name,
       form.value.phone,
@@ -48,7 +44,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       new PeopleAddress(form.value.street, form.value.apartment, form.value.city, form.value.state, form.value.country));
     // this.authService.regusterUser(authData, host);
     this.store.dispatch(new AuthActions.TrySignup({authData, host}));
-
   }
 
   ngOnDestroy() {

@@ -6,8 +6,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DataService } from '../../shared/data.service';
 import { Condo } from '../../shared/models/condo.model';
 import { CheckIn } from '../../shared/models/checkIn.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-property-details',
@@ -20,11 +21,11 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   inputs = [];
   propertyForm: FormGroup;
   condosList: Condo[];
-  checkins: CheckIn[];
+  // checkins$: Observable<CheckIn[]>;
   private checkinsUpdateSub: Subscription;
 
   displayedColumns: string[] = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
-  dataSource: MatTableDataSource<CheckIn>;
+  dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -32,8 +33,8 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
               public propertiesService: PropertiesService,
               private dataService: DataService) {
 
-    this.checkins = propertiesService.checkins;
-    this.dataSource = new MatTableDataSource(this.checkins);
+    // this.checkins = propertiesService.checkins;
+    // this.dataSource = new MatTableDataSource(this.checkins$);
   }
 
   ngOnInit() {
@@ -49,13 +50,24 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
       );
 
 
+      /*
+      this.propertiesService.checkinsUpdate.pipe(map(data => {
+        this.dataSource.data = data;
+      }));
+      */
+     this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(data => {
+        this.dataSource.data = data;
+      });
+      // Push the initial data
+      this.propertiesService.checkinsUpdate.next(this.propertiesService.checkins);
 
 
+    /*
     this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(checkins => {
       this.checkins = checkins;
       this.dataSource = new MatTableDataSource(this.checkins);
     });
-
+    */
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 

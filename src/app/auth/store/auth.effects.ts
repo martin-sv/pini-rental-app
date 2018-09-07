@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import * as AuthActions from './auth.actions';
 import { map, switchMap } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { from } from 'rxjs';
 import { AuthData } from '../auth-data.model';
 import { Host } from '../../shared/models/host.model';
 import { AngularFireAuth } from 'angularfire2/auth';
