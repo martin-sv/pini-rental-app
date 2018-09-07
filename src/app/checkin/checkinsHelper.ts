@@ -97,27 +97,6 @@ export class CheckinsHelper {
 
   static available(checkins: CheckIn[], idProperty): boolean {
     return (this.currentGuest(checkins, idProperty) === '') ? true : false;
-
-    /*
-    if (idProperty !== null) { checkins = this.getPropertyCheckins(checkins, idProperty); }
-    if (checkins.length === 0) { return true; }
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    let nextOut = this.nextCheckout(checkins);
-    let nextIn = this.nextCheckin(checkins);
-    // if (nextOut === '') { nextOut = new CheckIn('0', '0', null, yesterday, yesterday, true); }
-    // if (nextIn === '') { nextIn = new CheckIn('0', '0', null, yesterday, yesterday, true); }
-
-    if (((nextOut).checkoutDateTime !== '' && ((nextIn).checkingDateTime !== '') {
-      const no = new Date((nextOut as CheckIn).checkoutDateTime);
-      const ni = new Date ((nextIn as CheckIn).checkingDateTime);
-      if (no > new Date() && ni > new Date()) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-    */
   }
 
   static currentGuest(checkins: CheckIn[], idProperty) {
