@@ -18,6 +18,7 @@ export class PropertiesService implements OnDestroy {
   selectedProperty: Property;
   private propertiesSub: Subscription;
   private hostSub: Subscription;
+  private checkinSub: Subscription;
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
 
@@ -49,10 +50,17 @@ export class PropertiesService implements OnDestroy {
 
     // Subscribe to Properties Response
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
-      this._properties = res;
-      this.propertiesUpdate.next(Object.create(this._properties));
+       this._properties = res;
+      this.db.fetchCheckIn(res);
+       this.propertiesUpdate.next(Object.create(this._properties));
       // console.log (this.properties);
     });
+/*
+    this.checkinSub = this.db.checkinsUpdate.subscribe(res => {
+      this._properties = res;
+      this.propertiesUpdate.next(Object.create(this._properties));
+    });
+*/
   }
 
   private fetchHostAndProperties() {

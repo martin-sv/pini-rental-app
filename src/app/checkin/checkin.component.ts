@@ -35,8 +35,17 @@ export class CheckinComponent implements OnInit {
       expensesPaid: new FormControl(),
       notes: new FormControl(),
     });
-
-
+    const pfValues = this.newCheckinForm.value;
+    pfValues.propertySelect = 'qqqq';
+    pfValues.fullName = 'NullName',
+    pfValues.phone = 'Phone';
+    pfValues.email = 'asd@asd.com';
+    pfValues.adultCount = '15';
+    pfValues.childCount = '13';
+    pfValues.checkin = new Date();
+    pfValues.checkout = new Date();
+    pfValues.expensesPaid = true;
+    pfValues.notes = 'Note';
   }
 
   onSubmit() {

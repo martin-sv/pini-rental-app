@@ -22,12 +22,12 @@ export class Host {
     this._propertyList = propertyList;
   }
   */
-/*
+
  get idHost() { return this._idHost; }
- set idHost(val) { this._idHost = val; }  // TODO: Erase setter
-*/
+ // set idHost(val) { this._idHost = val; }
+
  constructor(
-  //  private _idHost: string,
+   private _idHost: string,
    public firstName: string,
    public lastName: string,
    public phone: string,

@@ -12,12 +12,16 @@ import { CheckIn } from './models/checkIn.model';
 
 @Injectable()
 export class FirestoreService {
+  /*
   private host: Host;
   private properties: Property[];
+  private checkins: CheckIn[];
+  */
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
   condosUpdate = new Subject<Condo[]>();
   propertyTypesUpdate = new Subject<any>();
+  checkinsUpdate = new Subject<CheckIn[]>();
   private firebaseSubs: Subscription[] = [];
   private verbose = true;
 
@@ -29,8 +33,8 @@ export class FirestoreService {
       .valueChanges()
       .subscribe(result => {
         // The properties are then fetched elsewhere. Since they don't come with the doc as they are a collection of the Host.
-        this.host = new Host(result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
-        this.hostUpdate.next(Object.create(this.host));
+        const host = new Host(emailHost, result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
+        this.hostUpdate.next(Object.create(host));
       // tslint:disable-next-line:no-shadowed-variable
       }, error => {
         console.log(error);
@@ -47,7 +51,6 @@ export class FirestoreService {
       .pipe(map(docArray => {
         // console.log(docArray);
         return docArray.map(doc => {
-          // console.log(doc.payload.doc.data()['name']);
           return new Property(
             doc.payload.doc.id,
             host,
@@ -63,13 +66,18 @@ export class FirestoreService {
       }))
       .subscribe((props: Property[]) => {
         // console.log(props);
-        this.properties = props;
-        this.propertiesUpdate.next(Object.create(this.properties));
+        this.propertiesUpdate.next(Object.create(props));
       // tslint:disable-next-line:no-shadowed-variable
       }, error => {
         console.log(error);
       })
     );
+  }
+
+  public fetchCheckIn(properties: Property[]) {
+    const ci: CheckIn[] = [];
+    this.checkins = ci;
+    this.checkinsUpdate.next(Object.create(this.checkins));
   }
 
   public fetchProperty(idProperty: string) {
@@ -138,7 +146,11 @@ export class FirestoreService {
     delete propertyJSON.host;
     // console.log(property);
     // console.log(propertyJSON);
-    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON);
+    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON)
+      .then(f => {
+        propertyJSON.idHost = property.host.idHost;
+        this.db.doc('properties/' + f.id).set(propertyJSON);
+      });
   }
 
   public updateProperty(property: Property) {
@@ -158,13 +170,14 @@ export class FirestoreService {
   removeMyProperty(idProperty: string) {
     if (this.verbose) { console.log('Firebase: removeMyProperty: ' + idProperty); }
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
+    this.db.doc('properties/' + idProperty).delete();
   }
 
   addNewCheckin(checkIn: CheckIn) {
     if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkIn); }
     const checkInJSON = JSON.parse(JSON.stringify(checkIn));
-    delete checkInJSON.host;
-    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
+    // this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
+    this.db.collection('checkin').add(checkInJSON);
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {

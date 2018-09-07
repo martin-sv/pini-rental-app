@@ -26,7 +26,6 @@ export class AuthEffects {
     console.log(result);
   }));
 
-
   constructor (private actions$: Actions,
                private afAuth: AngularFireAuth ) {}
 }
