@@ -68,6 +68,7 @@ export class CheckinComponent implements OnInit {
         pfValues.notes
       );
     this.db.addNewCheckin(checkIn);
-    this.router.navigate(['properties/' + pfValues.propertySelect]);
+    // this.router.navigate(['properties/' + pfValues.propertySelect]);
+    this.router.navigate(['properties']);
   }
 }
