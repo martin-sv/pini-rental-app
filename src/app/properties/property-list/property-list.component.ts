@@ -29,6 +29,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
               private router: Router,
               private propertiesService: PropertiesService,
               private store: Store<fromProperties.State>) {
+
+    this.checkins = propertiesService.checkins;
   }
 
   ngOnInit() {
