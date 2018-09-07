@@ -23,7 +23,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   checkins: CheckIn[];
   private checkinsUpdateSub: Subscription;
 
-  displayedColumns: string[] = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid'];
+  displayedColumns: string[] = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
   dataSource: MatTableDataSource<CheckIn>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,7 +33,6 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
               private dataService: DataService) {
 
     this.checkins = propertiesService.checkins;
-
     this.dataSource = new MatTableDataSource(this.checkins);
   }
 
@@ -54,18 +53,20 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
 
     this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(checkins => {
       this.checkins = checkins;
+      this.dataSource = new MatTableDataSource(this.checkins);
     });
 
-    this.propertyForm = new FormGroup({
-      name: new FormControl(this.property.name),
-      address: new FormControl(this.property.address)
-    });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
 
 
     /*
+    this.propertyForm = new FormGroup({
+      name: new FormControl(this.property.name),
+      address: new FormControl(this.property.address)
+    });
+
     this.focus = [];
     this.focus['name'] = false;
     this.focus['address'] = false;
@@ -84,6 +85,10 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  editCheckin(checkIn) {
+    console.log(checkIn);
   }
 
   onFieldFocusIn(event) {

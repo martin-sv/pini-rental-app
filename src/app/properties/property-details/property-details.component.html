@@ -30,9 +30,34 @@
       <td mat-cell *matCellDef="let row"> {{ row.checkoutDateTime | date:'MMM d, y - h:mm a'  }} </td>
     </ng-container>
 
+    <!--
+    <ng-container matColumnDef="checkoutDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Checkout Date </th>
+        <td mat-cell *matCellDef="let row">    <mat-form-field>
+            <input
+              matInput
+              type="checkout"
+              name="checkout"
+              formControlName="checkout"
+              required
+              [matDatepicker]="checkout"
+              value=" {{ row.checkoutDateTime | date:'MMM d, y - h:mm a'  }} ">
+            <mat-datepicker-toggle matSuffix [for]="checkout"></mat-datepicker-toggle>
+            <mat-datepicker #checkout></mat-datepicker>
+          </mat-form-field></td>
+      </ng-container>
+    -->
+
+
     <ng-container matColumnDef="expensesPaid">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Expenses Pre Paid </th>
       <td mat-cell *matCellDef="let row"> {{ row.expensesPaid }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Edit</th>
+      <td mat-cell *matCellDef="let row"><mat-icon style="cursor: pointer;" matSuffix (click)="editCheckin(row)">mode_edit</mat-icon></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

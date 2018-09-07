@@ -90,7 +90,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
     this.cd.detectChanges();
 }
 
-  async onSubmit() {
+  onSubmit() {
     const propertyFormValues = this.newPropertyForm.value;
     const apartment = (propertyFormValues.condoHouseSelect === 0) ? propertyFormValues.apartmentCondo : propertyFormValues.apartmentHouse;
     let condo;
