@@ -45,6 +45,7 @@ export class PropertiesService implements OnDestroy {
       } else {
         this._host = null;
         this._properties = null;
+        this._checkins = null;
       }
     });
 
@@ -72,6 +73,22 @@ export class PropertiesService implements OnDestroy {
       // console.log(res);
       // CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
     });
+
+    // Subscribe to logout to clean the data
+    this.store.select(fromRoot.getIsAuth).subscribe(isAuth => {
+      if (!isAuth) {
+        this.clearPropertiesData();
+      }
+    });
+  }
+
+  private clearPropertiesData() {
+    this._host = null;
+    this._properties = [];
+    this._checkins = [];
+    this.hostUpdate.next(this._host);
+    this.propertiesUpdate.next(this._properties);
+    this.checkinsUpdate.next(this._checkins);
   }
 
   private fetchHostAndProperties() {
