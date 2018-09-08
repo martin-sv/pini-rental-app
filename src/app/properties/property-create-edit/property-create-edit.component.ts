@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Condo } from '../../shared/models/condo.model';
 import { DataService } from '../../shared/data.service';
 import { PropertiesService } from '../../properties/properties.service';
 import { Property } from '../../shared/models/property.model';
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 import * as fromProperties from '../store/properties.reducer';
 import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs/operators';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-property-create-edit',
@@ -132,7 +131,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       this.router.navigate(['/properties']);
     });
   }
-/*
+  /*
   onFieldFocusIn(event) {
     this.focus[event.target.name] = true;
     // console.log(event.target.name);
@@ -148,5 +147,5 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
   onFieldPressEnter(event) {
     event.target.blur();
   }
-*/
+  */
 }

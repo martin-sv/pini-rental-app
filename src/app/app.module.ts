@@ -15,9 +15,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HostComponent } from './host/host.component';
-import { GuestsPastComponent } from './guests/guests-past/guests-past.component';
-import { GuestsFutureComponent } from './guests/guests-future/guests-future.component';
-import { GuestsListComponent } from './guests/guests-list/guests-list.component';
 
 import { AuthService } from './auth/auth.service';
 import { FirestoreService } from './shared/firestore.service';
@@ -45,9 +42,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     HostComponent,
     DashboardComponent,
-    GuestsPastComponent,
-    GuestsFutureComponent,
-    GuestsListComponent,
     CheckinComponent
   ],
   imports: [
