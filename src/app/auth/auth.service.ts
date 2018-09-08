@@ -23,7 +23,7 @@ export class AuthService {
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        // console.log('User In: ' + user.email);
+        console.log('User In: ' + user.email);
         AuthDataStatic.setAuthData(new AuthData(user.email, ''));
         // this.isAuthenticated = true;
         // this.authChange.next(true);

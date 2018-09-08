@@ -2,21 +2,36 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
 import * as fromRoot from '../app.reducer';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
 // export class AuthGuard implements CanActivate, CanLoad {
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>,
+              private afAuth: AngularFireAuth) {}
   // constructor(private store: Store<fromRoot.State>, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // this.store.select(fromRoot.getIsAuth).subscribe(asd => console.log('isAuth'));
     if (state.url.search('properties') === 1) {
-      return (this.store.select(fromRoot.getIsAuth).pipe(take(1)));
+      return this.afAuth.authState.pipe(take(1), map(user => {
+        if (user) {
+          return true;
+        } else {
+          return false;
+        }
+      }));
+      // return (this.store.select(fromRoot.getIsAuth).pipe(take(1)));
     } else {
-      return (this.store.select(fromRoot.getIsUnAuth).pipe(take(1)));
+      return this.afAuth.authState.pipe(take(1), map(user => {
+        if (user) {
+          return false;
+        } else {
+          return true;
+        }
+      }));
+      // return (this.store.select(fromRoot.getIsUnAuth).pipe(take(1)));
     }
   }
 
