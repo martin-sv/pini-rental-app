@@ -9,6 +9,7 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 import { Condo } from './models/condo.model';
 import { Address } from './models/address.model';
 import { CheckIn } from './models/checkIn.model';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
 export class FirestoreService {
@@ -62,7 +63,9 @@ export class FirestoreService {
       .subscribe(propertiesRaw => {
         const properties: Property[] = [];
         propertiesRaw.forEach((property: Property) => {
-          properties.push(property);
+          if (!property['inactive']) {
+            properties.push(property);
+          }
         });
         this.propertiesUpdate.next(Object.create(properties));
       }, error => {
@@ -106,8 +109,18 @@ export class FirestoreService {
 
   removeMyProperty(idProperty: string) {
     if (this.verbose) { console.log('Firebase: removeMyProperty: ' + idProperty); }
-    this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
-    this.db.doc('properties/' + idProperty).delete();
+    // this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).delete();
+    // this.db.doc('properties/' + idProperty).delete();
+    this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty).update({inactive: true});
+    this.db.doc('properties/' + idProperty).update({inactive: true});
+    this.db
+      .collection('checkins', ref => ref.where('idProperty', '==', idProperty))
+      .valueChanges()
+      .subscribe(checkins => {
+        checkins.forEach((checkin: CheckIn) => {
+          this.removeCheckin(checkin.idCheckin);
+        });
+    });
   }
 
   public fetchProperty(idProperty: string) {
@@ -128,12 +141,14 @@ export class FirestoreService {
     if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
 
     this.firebaseSubs.push(this.db
-      .collection('checkin', ref => ref.where('idHost', '==', host.idHost))
+      .collection('checkins', ref => ref.where('idHost', '==', host.idHost))
       .valueChanges()
       .subscribe(checkinsRaw => {
         const checkins: CheckIn[] = [];
         checkinsRaw.forEach(checkin => {
-          checkins.push(checkin as CheckIn);
+          if (!checkin['inactive']) {
+            checkins.push(checkin as CheckIn);
+          }
         });
         this.checkinsUpdate.next(Object.create(checkins));
     }));
@@ -142,7 +157,7 @@ export class FirestoreService {
   public fetchCheckInByProperty(property: Property) {
     if (this.verbose) { console.log('Firebase: fetchCheckInByProperty: '); console.log(property); }
     this.firebaseSubs.push(this.db
-      .collection('checkin', ref => ref.where('idProperty', '==', property.idProperty))
+      .collection('checkins', ref => ref.where('idProperty', '==', property.idProperty))
       .valueChanges()
       .subscribe(checkinsRaw => {
         const checkins: CheckIn[] = [];
@@ -153,17 +168,21 @@ export class FirestoreService {
     }));
   }
 
-  addNewCheckin(checkIn: CheckIn) {
-    if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkIn); }
+  addNewCheckin(checkin: CheckIn) {
+    if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkin); }
     // checkIn.checkingDateTime = checkIn.checkingDateTime.toUTCString();
     // checkIn.checkoutDateTime = checkIn.checkingDateTime.toUTCString();
-    const checkInJSON = JSON.parse(JSON.stringify(checkIn));
+    const checkInJSON = JSON.parse(JSON.stringify(checkin));
     // this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
-    this.db.collection('checkin').add(checkInJSON)
+    this.db.collection('checkins').add(checkInJSON)
     .then (data => {
-      this.db.doc('checkin/' + data.id).update({'idCheckin': data.id });
+      this.db.doc('checkins/' + data.id).update({'idCheckin': data.id });
     })
     .catch( error => console.log (error));
+  }
+
+  removeCheckin(idCheckin: string) {
+    this.db.doc('checkins/' + idCheckin).update({inactive: true});
   }
 
 
