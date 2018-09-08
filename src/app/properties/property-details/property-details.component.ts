@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { PropertiesService } from '../properties.service';
-import { Property } from '../../shared/models/property.model';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DataService } from '../../shared/data.service';
 import { Condo } from '../../shared/models/condo.model';
-import { CheckIn } from '../../shared/models/checkIn.model';
-import { Subscription, Observable, Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-property-details',
@@ -17,11 +14,10 @@ import { map } from 'rxjs/operators';
 })
 export class PropertyDetailsComponent implements OnInit, OnDestroy {
   idProperty = '';
-  focus: boolean[];
+  // focus: boolean[];
   inputs = [];
   propertyForm: FormGroup;
   condosList: Condo[];
-  // checkins$: Observable<CheckIn[]>;
   private checkinsUpdateSub: Subscription;
 
   displayedColumns: string[] = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
@@ -31,11 +27,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               public propertiesService: PropertiesService,
-              private dataService: DataService) {
-
-    // this.checkins = propertiesService.checkins;
-    // this.dataSource = new MatTableDataSource(this.checkins$);
-  }
+              private dataService: DataService) { }
 
   ngOnInit() {
     this.condosList = this.dataService.condosList;
@@ -44,19 +36,15 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         (params: Params) => {
           // console.log(params);
-          // this.db.fetchProperty(params.id);
           this.propertiesService.getPropertyByID(params.id).then(res => {
+            console.log('aca' + params.id);
+            console.log(res);
             this.idProperty = res.idProperty;
             // console.log('Property Details Component: idProperty: ' + this.idProperty);
           });
         }
       );
 
-      /*
-      this.propertiesService.checkinsUpdate.pipe(map(data => {
-        this.dataSource.data = data;
-      }));
-      */
      this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(data => {
         const a = data;
         a.forEach(dat => {
@@ -66,20 +54,9 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
         });
         this.dataSource.data = a;
       });
-      // Push the initial data
-      // this.propertiesService.checkinsUpdate.next(this.propertiesService.checkins);
 
-
-    /*
-    this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(checkins => {
-      this.checkins = checkins;
-      this.dataSource = new MatTableDataSource(this.checkins);
-    });
-    */
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-
 
     /*
     this.propertyForm = new FormGroup({
@@ -110,7 +87,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   editCheckin(checkIn) {
     console.log(checkIn);
   }
-
+  /*
   onFieldFocusIn(event) {
     this.focus[event.target.name] = true;
     // console.log(event.target.name);
@@ -126,7 +103,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   onFieldPressEnter(event) {
     event.target.blur();
   }
-
+  */
   ngOnDestroy() {
     if (this.checkinsUpdateSub) { this.checkinsUpdateSub.unsubscribe(); }
   }

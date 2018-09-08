@@ -8,7 +8,7 @@ import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Router } from '@angular/router';
 import * as fromProperties from '../store/properties.reducer';
 import { Store } from '@ngrx/store';
-import { take, map } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 
 @Component({

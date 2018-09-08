@@ -38,14 +38,12 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to AuthChange
     // this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
     this.store.select(fromRoot.getIsAuth).subscribe(logedIn => {
-      // console.log('Auth Change Subscriber ' + logedIn);
+      console.log('Auth Change Subscriber ' + logedIn);
       // console.log(AuthDataStatic.authData);
-      if (logedIn ) {
+      if (logedIn) {
         this.fetchHostAndProperties();
       } else {
-        this._host = null;
-        this._properties = null;
-        this._checkins = null;
+        this.clearPropertiesData();
       }
     });
 
@@ -63,7 +61,7 @@ export class PropertiesService implements OnDestroy {
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
       this._properties = res;
       this.propertiesUpdate.next(Object.create(this._properties));
-      // console.log (this.properties);
+      console.log (this._properties);
     });
 
     // Subscribe to Checkins Response
@@ -73,22 +71,17 @@ export class PropertiesService implements OnDestroy {
       // console.log(res);
       // CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
     });
-
-    // Subscribe to logout to clean the data
-    this.store.select(fromRoot.getIsAuth).subscribe(isAuth => {
-      if (!isAuth) {
-        this.clearPropertiesData();
-      }
-    });
   }
 
   private clearPropertiesData() {
-    this._host = null;
-    this._properties = [];
-    this._checkins = [];
-    this.hostUpdate.next(this._host);
-    this.propertiesUpdate.next(this._properties);
-    this.checkinsUpdate.next(this._checkins);
+    if (this._host && this._host != null) {
+      this._host = null;
+      this._properties = [];
+      this._checkins = [];
+      this.hostUpdate.next(this._host);
+      this.propertiesUpdate.next(this._properties);
+      this.checkinsUpdate.next(this._checkins);
+    }
   }
 
   private fetchHostAndProperties() {
@@ -96,11 +89,12 @@ export class PropertiesService implements OnDestroy {
   }
 
   public getPropertyByID(idProperty: string): Promise<Property> {
+    console.log('b' + idProperty);
     return new Promise(resolve => {
       this.propertiesUpdate.pipe(take(1)
       , flatMap((properties: Property[]) => properties)
       , find(prop => {
-        // console.log(prop.idProperty + ' ' + idProperty);
+        console.log(prop.idProperty + ' ' + idProperty);
         return prop.idProperty === idProperty;
       })
       , map(prod1 => resolve (prod1))

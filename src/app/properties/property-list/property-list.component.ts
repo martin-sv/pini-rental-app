@@ -17,8 +17,6 @@ import { CheckinsService } from '../../checkin/checkins.service';
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit, OnDestroy {
-  // host: Host;
-  // properties: Property[];
   checkins: CheckIn[];
   production = environment.production;
   hasProperties: boolean;
@@ -30,18 +28,10 @@ export class PropertyListComponent implements OnInit, OnDestroy {
               private router: Router,
               public propertiesService: PropertiesService,
               private checkinsService: CheckinsService,
-              private store: Store<fromProperties.State>) {
-
-    // this.checkins = propertiesService.checkins;
-  }
+              private store: Store<fromProperties.State>) {}
 
   ngOnInit() {
     // Initial Listeners
-    /*
-    this.hostUpdateSub = this.propertiesService.hostUpdate.subscribe(host => {
-      this.host = host;
-    });
-    */
     this.propertiesUpdateSub = this.propertiesService.propertiesUpdate.subscribe(properties => {
       this.hasProperties = (properties.length > 0) ? true : false;
     });
@@ -61,27 +51,19 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   }
 
   nextCheckin(idProperty: string) {
-    if (this.checkins !== null) {
-      return (this.checkinsService.nextCheckin(idProperty) as CheckIn).checkingDateTime;
-    }
+    return (this.checkinsService.nextCheckin(idProperty) as CheckIn).checkingDateTime;
   }
 
   nextCheckout(idProperty: string) {
-    if (this.checkins !== null) {
-      return (this.checkinsService.nextCheckout(idProperty) as CheckIn).checkoutDateTime;
-    }
+    return (this.checkinsService.nextCheckout(idProperty) as CheckIn).checkoutDateTime;
   }
 
   lastCheckin(idProperty: string) {
-    if (this.checkins !== null) {
-      return (this.checkinsService.lastCheckin(idProperty) as CheckIn).checkingDateTime;
-    }
+    return (this.checkinsService.lastCheckin(idProperty) as CheckIn).checkingDateTime;
   }
 
   lastCheckout(idProperty: string) {
-    if (this.checkins !== null) {
-      return (this.checkinsService.lastCheckout(idProperty) as CheckIn).checkoutDateTime;
-    }
+    return (this.checkinsService.lastCheckout(idProperty) as CheckIn).checkoutDateTime;
   }
 
   getCover(property: Property) {

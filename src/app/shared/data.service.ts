@@ -11,7 +11,7 @@ export class DataService implements OnDestroy {
   condosSub: Subscription;
   propertyTypeSub: Subscription;
   isAuthSub: Subscription;
-  public condosList: Condo[];
+  condosList: Condo[];
   propertyTypeList: string[];
 
   constructor(private db: FirestoreService,
