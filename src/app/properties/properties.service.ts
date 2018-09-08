@@ -7,6 +7,8 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
+import * as fromProperties from './store/properties.reducer';
+import * as PropertiesActions from './store/properties.actions';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { take, map, find, mergeMap, flatMap } from 'rxjs/operators';
 
@@ -53,7 +55,12 @@ export class PropertiesService implements OnDestroy {
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
       this._properties = res;
       this.propertiesUpdate.next(Object.create(this._properties));
-      console.log (this._properties);
+
+
+      // this.store.dispatch(new PropertiesActions.SetPropertiesList(this._properties));
+      // this.store.select(fromProperties.getPropertiesList).subscribe( r => {console.log('rrrr'); console.log(r); });
+
+      // console.log (this._properties);
     });
 
     // Subscribe to Checkins Response
