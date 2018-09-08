@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'properties', loadChildren: './properties/properties.module#PropertiesModule' },
   { path: 'checkin', component: CheckinComponent },
-  { path: 'checkin/:id', component: CheckinComponent },
+  { path: 'checkin/:id', component: CheckinComponent }
 ];
 
 @NgModule({

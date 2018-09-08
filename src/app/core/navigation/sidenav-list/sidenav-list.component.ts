@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
 import * as fromRoot from '../../../app.reducer';
+import * as Auth from '../../../auth/store/auth.actions';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -14,7 +14,7 @@ export class SidenavListComponent implements OnInit {
   isAuth$: Observable<boolean>;
   // authSubscription: Subscription;
 
-  constructor(private store: Store<fromRoot.State>, private authServce: AuthService) { }
+  constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.isAuth$ = this.store.select(fromRoot.getIsAuth);
@@ -29,6 +29,6 @@ export class SidenavListComponent implements OnInit {
 
   onSignOut() {
     this.onClose();
-    this.authServce.signOut();
+    this.store.dispatch(new Auth.Signout());
   }
 }

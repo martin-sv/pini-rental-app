@@ -22,7 +22,3 @@ export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
 export const getIsAuth = createSelector(getAuthState, fromAuth.getIsAuth);
 export const getIsUnAuth = createSelector(getAuthState, fromAuth.getIsUnAuth);
 export const onAuthError = createSelector(getAuthState, fromAuth.onAuthError);
-
-// export const getDataState = createFeatureSelector<fromData.State>('data');
-// export const getCondosList = createSelector(getDataState, fromData.getCondosList);
-// export const getPropertyTypes = createSelector(getDataState, fromData.getPropertyTypes);

@@ -15,8 +15,7 @@ import { DataService } from './shared/data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  private startLogedin = false;
+export class AppComponent implements OnInit {
 
   constructor(private translate: TranslateService,
               private authService: AuthService,
@@ -36,16 +35,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    if (this.startLogedin) {
-      setTimeout(() => {
-        this.authService.signIn(new AuthData('asd@asd.com', '123456'));
-      }, 10);
-    }
-  }
+  ngOnInit() { }
 
   private configureTranslations() {
     const defaultLanguage = 'es';  // TODO: Llevar a un archivo de configuracion.

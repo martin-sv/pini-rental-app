@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  minPasswordLength: 6,
   firebase: {
     apiKey: 'AIzaSyA8_we0BZNL-cXlFL2sQo33S4KuYALEfbA',
     authDomain: 'pini-rental-app.firebaseapp.com',

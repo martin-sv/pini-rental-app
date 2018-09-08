@@ -44,7 +44,6 @@ export class FirestoreService {
     );
   }
 
-
   addNewHost(host: Host) {
     if (this.verbose) { console.log('Firebase: addNewHost: ' + host); }
     const propertyJSON = JSON.parse(JSON.stringify(host));

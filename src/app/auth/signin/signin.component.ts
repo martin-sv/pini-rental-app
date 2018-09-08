@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { AuthData } from '../auth-data.model';
 import { Subscription, Observable } from 'rxjs';
 import { UIService } from '../../shared/ui.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer';
-import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-signin',
@@ -20,10 +18,8 @@ export class SigninComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
 
-  constructor(private authService: AuthService,
-              private uiService: UIService,
-              private store: Store<fromRoot.State>,
-              private router: Router) { }
+  constructor(private uiService: UIService,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     // Init & Add Validators
@@ -40,14 +36,17 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
-    this.authErrorSub = this.store.select(fromRoot.onAuthError).subscribe( error => {
+    this.authErrorSub = this.store.select(fromRoot.onAuthError).subscribe(error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
   }
 
   onSubmit() {
     // console.log(this.loginForm);
-    this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
+    // this.authService.signIn(new AuthData(this.loginForm.value.email, this.loginForm.value.password));
+    const authData = new AuthData(this.loginForm.value.email, this.loginForm.value.password);
+    this.store.dispatch(new AuthActions.TrySignin({authData}));
+
   }
 
   ngOnDestroy() {

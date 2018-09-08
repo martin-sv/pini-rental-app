@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { environment } from '../../../environments/environment.prod';
 import { NgForm } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { AuthData } from '../auth-data.model';
 import { UIService } from '../../shared/ui.service';
 import { Host } from '../../shared/models/host.model';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 import * as AuthActions from '../store/auth.actions';
 
@@ -18,6 +19,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   authErrorSub: Subscription;
   isLoading$: Observable<boolean>;
   isAuth$: Observable<boolean>;
+  minPasswordLength = environment.minPasswordLength;
 
   constructor(private uiService: UIService,
               private store: Store<fromRoot.State>) { }
@@ -27,7 +29,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.isAuth$ = this.store.select(fromRoot.getIsAuth);
 
     // Subscribe and show Firebase errors.
-    this.store.select(fromRoot.onAuthError).subscribe( error => {
+    this.store.select(fromRoot.onAuthError).subscribe(error => {
       this.uiService.showSnackbar(error.code, error.message, null);
     });
   }

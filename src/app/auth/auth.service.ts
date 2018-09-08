@@ -4,11 +4,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirestoreService } from '../shared/firestore.service';
-import { UIService } from '../shared/ui.service';
 import { AuthDataStatic } from './auth-data.static';
-import { Host } from '../shared/models/host.model';
 import * as fromRoot from '../app.reducer';
-import * as UI from '../shared/ui.actions';
 import * as Auth from './store/auth.actions';
 
 @Injectable()
@@ -17,7 +14,6 @@ export class AuthService {
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
               private db: FirestoreService,
-              private uiService: UIService,
               private store: Store<fromRoot.State>) {}
 
   initAuthListener() {
@@ -34,14 +30,19 @@ export class AuthService {
         this.db.cancelSubscriptions();
         // this.isAuthenticated = false;
         // this.authChange.next(false);
+        AuthDataStatic.clearAuthData();
         this.store.dispatch(new Auth.SetUnauthenticated());
-        // this.router.navigate(['/signin']);
+        this.router.navigate(['/signin']);
       }
     });
   }
 
+  /*
+  signOut(): void {
+    this.afAuth.auth.signOut();
+  }
+
   regusterUser(authData: AuthData, newHost: Host): void {
-    // this.uiService.loadingStateChanged.next(true);  // Shown before the request since it starts loading as soon as an action ocurs.
     this.store.dispatch(new UI.StartLoading());
     this.afAuth.auth.createUserWithEmailAndPassword(
       authData.email,
@@ -86,9 +87,6 @@ export class AuthService {
     AuthDataStatic.setAuthData(authData);
     this.uiService.loadingStateChanged.next(false);
   }
+  */
 
-  signOut(): void {
-    this.afAuth.auth.signOut();
-    AuthDataStatic.clearAuthData();
-  }
 }

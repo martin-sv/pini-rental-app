@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
-import * as fromRoot from '../app.reducer';
-import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs/operators';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
-// export class AuthGuard implements CanActivate, CanLoad {
 
-  constructor(private store: Store<fromRoot.State>,
-              private afAuth: AngularFireAuth) {}
-  // constructor(private store: Store<fromRoot.State>, private router: Router) {}
+  constructor(private afAuth: AngularFireAuth) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (state.url.search('properties') === 1) {

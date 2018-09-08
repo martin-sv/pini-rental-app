@@ -19,7 +19,7 @@
         <mat-error *ngIf="email.hasError('required')">{{ 'FORM_COMMON.FIELDEMPTYERROR' | translate }}</mat-error>
         <mat-error *ngIf="email.hasError('email')">{{ 'FORM_COMMON.EMAILINVALID' | translate }}</mat-error>
     </mat-form-field>
-    <mat-form-field hintLabel="{{ 'FORM_COMMON.MINPASSWORD' | translate:{value : '6'} }}">
+    <mat-form-field hintLabel="{{ 'FORM_COMMON.MINPASSWORD' | translate:{value : minPasswordLength} }}">
       <input
         matInput
         placeholder="{{ 'FORM_COMMON.PASSWORD' | translate }}"
@@ -28,9 +28,9 @@
         name="password"
         password
         required
-        minlength="6"
+        [minlength]=minPasswordLength
         #password="ngModel">
-        <mat-hint align="end">{{ password.value?.length }}/6</mat-hint> <!-- TODO: Pasar minlength a Archivo de configuracion -->
+        <mat-hint align="end">{{ password.value?.length }}/{{ minPasswordLength }}</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input
