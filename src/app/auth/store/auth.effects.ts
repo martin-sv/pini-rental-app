@@ -41,8 +41,6 @@ export class AuthEffects {
   authSignin = this.actions$.pipe(
   ofType<AuthActions.TrySignin> (AuthActions.TRY_SIGNIN)
   , concatMap(data => {
-    console.log('data');
-    console.log(data);
     this.store.dispatch(new UI.StartLoading());
     return fromPromise(this.afAuth.auth.signInWithEmailAndPassword(
       data.payload.authData.email,

@@ -102,8 +102,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       this.propertiesService.hostUpdate.pipe(take(1))
     )
     .subscribe(result => {
-      console.log('result');
-      console.log(result);
+      // console.log('result');      console.log(result);
       // result[0] contains the idproperty returned by the store.
       const idProp = (result[0] === null) ? '0' : result[0];
       const property = new Property(

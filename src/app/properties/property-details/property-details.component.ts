@@ -37,8 +37,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
         (params: Params) => {
           // console.log(params);
           this.propertiesService.getPropertyByID(params.id).then(res => {
-            console.log('aca' + params.id);
-            console.log(res);
+            // console.log(params.id);
             this.idProperty = res.idProperty;
             // console.log('Property Details Component: idProperty: ' + this.idProperty);
           });

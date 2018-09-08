@@ -76,12 +76,12 @@ export class PropertiesService implements OnDestroy {
   }
 
   public getPropertyByID(idProperty: string): Promise<Property> {
-    console.log('b' + idProperty);
+    // console.log('b' + idProperty);
     return new Promise(resolve => {
       this.propertiesUpdate.pipe(take(1)
       , flatMap((properties: Property[]) => properties)
       , find(prop => {
-        console.log(prop.idProperty + ' ' + idProperty);
+        // console.log(prop.idProperty + ' ' + idProperty);
         return prop.idProperty === idProperty;
       })
       , map(prod1 => resolve (prod1))
