@@ -1,4 +1,4 @@
-import { Subscription, ReplaySubject } from 'rxjs';
+import { Subscription, ReplaySubject, Observable } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { FirestoreService } from '../shared/firestore.service';
 import { Host } from '../shared/models/host.model';
@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as fromProperties from './store/properties.reducer';
 import { CheckIn } from '../shared/models/checkIn.model';
+import { take, map, find, mergeMap, flatMap } from 'rxjs/operators';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
@@ -77,11 +78,16 @@ export class PropertiesService implements OnDestroy {
     this.db.fetchHost(AuthDataStatic.authData.email);
   }
 
-  public getPropertyByID(idProperty: string): Property {
-    // console.log(this._properties);
-    return this._properties.find(prop => {
-      // console.log(asd.idProperty + ' - ' + idProperty);
-      return prop.idProperty === idProperty;
+  public getPropertyByID(idProperty: string): Promise<any> {
+    return new Promise(resolve => {
+      resolve (this.propertiesUpdate.pipe(take(1)
+      , flatMap((properties: Property[]) => properties)
+      , find(prop => {
+        // console.log(prop.idProperty + ' ' + idProperty);
+        return prop.idProperty === idProperty;
+      })
+      , map(prod1 => resolve (prod1))
+      ).toPromise());
     });
   }
 

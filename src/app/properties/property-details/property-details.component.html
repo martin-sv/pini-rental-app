@@ -67,8 +67,8 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
-
-<app-property-create-edit [idProperty]="property.idProperty"></app-property-create-edit>
+<!-- Wait for the property information to arrive before subloading -->
+<app-property-create-edit *ngIf="idProperty !== ''" [idProperty]="idProperty"></app-property-create-edit>
 
 <!-- <form [formGroup]= "propertyForm">
   <mat-form-field *ngFor="let inputF of inputs">

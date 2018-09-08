@@ -6,7 +6,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DataService } from '../../shared/data.service';
 import { Condo } from '../../shared/models/condo.model';
 import { CheckIn } from '../../shared/models/checkIn.model';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./property-details.component.css']
 })
 export class PropertyDetailsComponent implements OnInit, OnDestroy {
-  property: Property;
+  idProperty = '';
   focus: boolean[];
   inputs = [];
   propertyForm: FormGroup;
@@ -45,9 +45,10 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
         (params: Params) => {
           // console.log(params);
           // this.db.fetchProperty(params.id);
-          this.property = this.propertiesService.getPropertyByID(params.id);
-          console.log('Property: ' + this.property.name);
-          console.log(this.property);
+          this.propertiesService.getPropertyByID(params.id).then(res => {
+            this.idProperty = res.idProperty;
+            // console.log('Property Details Component: idProperty: ' + this.idProperty);
+          });
         }
       );
 
@@ -114,7 +115,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
     // console.log(event);
     // console.log('onFieldFocusOut');
     this.focus[event.target.name] = false;
-    this.propertiesService.updatePropertyValue(this.property.idProperty, event.target.name, event.target.value);
+    this.propertiesService.updatePropertyValue(this.idProperty, event.target.name, event.target.value);
   }
 
   onFieldPressEnter(event) {
