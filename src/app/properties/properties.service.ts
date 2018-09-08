@@ -78,21 +78,29 @@ export class PropertiesService implements OnDestroy {
     this.db.fetchHost(AuthDataStatic.authData.email);
   }
 
-  public getPropertyByID(idProperty: string): Promise<any> {
+  public getPropertyByID(idProperty: string): Promise<Property> {
     return new Promise(resolve => {
-      resolve (this.propertiesUpdate.pipe(take(1)
+      this.propertiesUpdate.pipe(take(1)
       , flatMap((properties: Property[]) => properties)
       , find(prop => {
         // console.log(prop.idProperty + ' ' + idProperty);
         return prop.idProperty === idProperty;
       })
       , map(prod1 => resolve (prod1))
-      ).toPromise());
+      ).toPromise();
     });
   }
 
-  public getCheckinByID(idCheckin: string): CheckIn {
-    return this._checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
+  public getCheckinByID(idCheckin: string): Promise<CheckIn> {
+    return new Promise(resolve => {
+      this.checkinsUpdate.pipe(take(1)
+      , flatMap((checkins: CheckIn[]) => checkins)
+      , find((checkin: CheckIn) => checkin.idCheckin === idCheckin)
+      , map(checkin => resolve(checkin))
+      ).toPromise();
+    });
+
+    // return this._checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
   }
 
   public getCondos() {

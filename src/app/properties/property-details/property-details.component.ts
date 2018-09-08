@@ -59,7 +59,12 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
       */
      this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(data => {
         const a = data;
-        this.dataSource.data = data;
+        a.forEach(dat => {
+          this.propertiesService.getPropertyByID(dat.idProperty).then(res => {
+            dat['propertyName'] = res.name;
+          });
+        });
+        this.dataSource.data = a;
       });
       // Push the initial data
       // this.propertiesService.checkinsUpdate.next(this.propertiesService.checkins);
