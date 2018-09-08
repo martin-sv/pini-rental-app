@@ -56,27 +56,11 @@ export class CheckinComponent implements OnInit {
           this.newCheckinForm.controls['propertySelect'].setValue(params.id, {onlySelf: true});
         }
       });
-
-    /*
-    const pfValues = this.newCheckinForm.value;
-    pfValues.propertySelect = 'qqqq';
-    pfValues.fullName = 'NullName',
-    pfValues.phone = 'Phone';
-    pfValues.email = 'asd@asd.com';
-    pfValues.adultCount = '15';
-    pfValues.childCount = '13';
-    pfValues.checkin = new Date();
-    pfValues.checkout = new Date();
-    pfValues.expensesPaid = true;
-    pfValues.notes = 'Note';
-    */
   }
 
   onSubmit() {
     this.store.select(fromProperties.getSelectedCheckin).pipe(take(1)).subscribe(idSelectedCheckin => {
-
       const idCheckin = (idSelectedCheckin === null) ? '0' : idSelectedCheckin;
-
       const pfValues = this.newCheckinForm.value;
       const checkIn = new CheckIn(
         idCheckin,

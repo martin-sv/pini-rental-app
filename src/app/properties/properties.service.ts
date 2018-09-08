@@ -7,21 +7,14 @@ import { AuthDataStatic } from '../auth/auth-data.static';
 import { DataMock } from '../shared/dataMock';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
-import * as fromProperties from './store/properties.reducer';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { take, map, find, mergeMap, flatMap } from 'rxjs/operators';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
   private _host: Host;
-  // get host(): Host { return ((this._host) ? Object.create(this._host) : null); }
-  // host: Observable<Host>;
   private _properties: Property[];
-  // properties: Observable<Property[]>;
-  // get properties(): Property[] { return ((this._properties)  ? Object.create(this._properties) : null); }
   private _checkins: CheckIn[];
-  // checkins: Observable<CheckIn>;
-  // get checkins(): CheckIn[] { return ((this._checkins)  ? Object.create(this._checkins) : null); }
 
   selectedProperty: Property;
   private propertiesSub: Subscription;
@@ -38,7 +31,7 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to AuthChange
     // this.authChangeSub = this.authService.authChange.subscribe(logedIn => {
     this.store.select(fromRoot.getIsAuth).subscribe(logedIn => {
-      console.log('Auth Change Subscriber ' + logedIn);
+      // console.log('Auth Change Subscriber ' + logedIn);
       // console.log(AuthDataStatic.authData);
       if (logedIn) {
         this.fetchHostAndProperties();
@@ -50,7 +43,6 @@ export class PropertiesService implements OnDestroy {
     // Subscribe to Host Response
     this.hostSub = this.db.hostUpdate.subscribe(res => {
       this._host = res;
-      // this._host.idHost = AuthDataStatic.authData.email;
       this.hostUpdate.next(Object.create(this._host));
       this.db.fetchMyProperties(this._host);
       this.db.fetchCheckInByHost(this._host);
@@ -69,19 +61,7 @@ export class PropertiesService implements OnDestroy {
       this._checkins = res;
       this.checkinsUpdate.next(Object.create(this._checkins));
       // console.log(res);
-      // CheckinsHelper.getPropertyCheckins(Object.create(this._checkins), 'v3Sbj0rJ1X1sgGeVbo5R');
     });
-  }
-
-  private clearPropertiesData() {
-    if (this._host && this._host != null) {
-      this._host = null;
-      this._properties = [];
-      this._checkins = [];
-      this.hostUpdate.next(this._host);
-      this.propertiesUpdate.next(this._properties);
-      this.checkinsUpdate.next(this._checkins);
-    }
   }
 
   private fetchHostAndProperties() {
@@ -110,7 +90,6 @@ export class PropertiesService implements OnDestroy {
       , map(checkin => resolve(checkin))
       ).toPromise();
     });
-
     // return this._checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
   }
 
@@ -140,6 +119,17 @@ export class PropertiesService implements OnDestroy {
 
   public removeMyProperty(idProperty: string) {
     this.db.removeMyProperty(idProperty);
+  }
+
+  private clearPropertiesData() {
+    if (this._host && this._host != null) {
+      this._host = null;
+      this._properties = [];
+      this._checkins = [];
+      this.hostUpdate.next(this._host);
+      this.propertiesUpdate.next(this._properties);
+      this.checkinsUpdate.next(this._checkins);
+    }
   }
 
   ngOnDestroy() {
