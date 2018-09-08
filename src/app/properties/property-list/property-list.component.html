@@ -9,18 +9,18 @@
 <!-- provides space between buttons in xs screens -->
 <!-- <div [ngStyle.xs]="{'height': '50px'}"></div> -->
 
-<button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddMockPropertyClick()">
+<button *ngIf="!production" fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddMockPropertyClick()">
   {{ 'PROPERTIES.ADDMOCKPROPERTY' | translate }}
 </button>
 
-<button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onFlushPropertiesClick()">
+<button *ngIf="!production" fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onFlushPropertiesClick()">
   {{ 'PROPERTIES.FLUSHPROPERTIES' | translate }}
 </button>
 
 <!-- provides space between buttons in xs screens -->
 <!-- <div [ngStyle.xs]="{'height': '50px'}"></div> -->
 
-  <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" (click)="onAddGuestClick()">
+  <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" [disabled]="properties != null && properties.length === 0" (click)="onAddGuestClick()">
     {{ 'PROPERTIES.REGISTERGUEST' | translate }}
   </button>
 </section>

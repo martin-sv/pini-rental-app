@@ -5,12 +5,11 @@ import { PropertiesService } from '../properties.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromProperties from '../store/properties.reducer';
-// import * as fromRoot from '../app.reducer';
 import * as PROPERTIES from '../store/properties.actions';
 import { CheckIn } from '../../shared/models/checkIn.model';
 import { CheckinsHelper } from '../../checkin/checkinsHelper';
-import { OrderEnum } from '../../checkin/oderEnum';
 import { Guest } from '../../shared/models/guest.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-property-list',
@@ -24,6 +23,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   private hostUpdateSub: Subscription;
   private propertiesUpdateSub: Subscription;
   private checkinsUpdateSub: Subscription;
+  production = environment.production;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
