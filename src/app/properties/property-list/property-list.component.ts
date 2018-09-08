@@ -99,8 +99,8 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     this.propertiesService.onFlushProperties();
   }
 
-  onAddGuestClick() {
-    this.router.navigate(['/checkin']);
+  onAddGuestClick(idProperty = '') {
+    this.router.navigate(['/checkin/' + idProperty]);
   }
 
   onPropertyClick(idProperty: string) {

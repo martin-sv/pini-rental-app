@@ -4,7 +4,7 @@ import { PropertiesService } from '../properties/properties.service';
 import { FirestoreService } from '../shared/firestore.service';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { Guest } from '../shared/models/guest.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import * as fromProperties from '../properties/store/properties.reducer';
 import { take } from 'rxjs/operators';
@@ -21,6 +21,7 @@ export class CheckinComponent implements OnInit {
 
   constructor(public propertiesService: PropertiesService,
               private db: FirestoreService,
+              private route: ActivatedRoute,
               private router: Router,
               private store: Store<fromProperties.State>) { }
 
@@ -43,7 +44,14 @@ export class CheckinComponent implements OnInit {
 
     if (this.propertiesService.properties.length === 1) {
       this.newCheckinForm.controls['propertySelect'].setValue(this.propertiesService.properties[0].idProperty, {onlySelf: true});
+      console.log(this.propertiesService.properties[0].idProperty);
     }
+
+    this.route.params
+    .subscribe(
+      (params: Params) => {
+        this.newCheckinForm.controls['propertySelect'].setValue(params.id, {onlySelf: true});
+      });
 
     /*
     const pfValues = this.newCheckinForm.value;

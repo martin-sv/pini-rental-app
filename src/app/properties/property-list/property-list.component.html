@@ -31,6 +31,14 @@
   <div *ngFor="let property of properties" fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
+        <!-- // TODO: Arreglar estilos -->
+        <div class="container">
+          <div class="row">
+              <div class="col"></div>
+            </div>
+        </div>
+        <!-- // TODO: Arreglar srs imagen, estilos -->
+        <div><img mat-card-image style="cursor: pointer; width: 40px; height: 40px;" src="https://firebasestorage.googleapis.com/v0/b/pini-rental-app.appspot.com/o/add_guest.png?alt=media&token=d1b83ab1-13fa-4461-807a-c5bb367014aa" alt="{{ 'PROPERTIES.REGISTERGUEST' | translate }}" (click)="onAddGuestClick(property.idProperty)"></div>
         <div (click)="onPropertyCardClick(property.idProperty)" mat-card-avatar [ngStyle]="{backgroundImage: getCover(property), backgroundSize: 'cover'}"></div>
         <mat-card-title fxLayoutAlign="left">{{ property.name }}</mat-card-title>
         <mat-card-subtitle *ngIf="property.condo" fxLayoutAlign="left">{{ property.condo.name }}</mat-card-subtitle>
