@@ -75,7 +75,7 @@ export class FirestoreService {
   }
 
   addMyProperty(property: Property) {
-    if (this.verbose) { console.log('Firebase: addMyProperty: '); console.log(property)); }
+    if (this.verbose) { console.log('Firebase: addMyProperty: '); console.log(property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
     propertyJSON.idHost = property.host.idHost;
