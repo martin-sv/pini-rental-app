@@ -99,6 +99,10 @@ export class PropertiesService implements OnDestroy {
     this.db.addMyProperty(DataMock.generateProperty(this._host));
   }
 
+  public onFlushProperties() {
+    this.db.flushMyProperties();
+  }
+
   public updateProperty(property: Property) {
     this.db.updateProperty(property);
   }

@@ -2,7 +2,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Host } from './models/host.model';
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Property } from './models/property.model';
 import { PropertyClassEnum } from './models/propertyClassEnum';
 import { AuthDataStatic } from '../auth/auth-data.static';
@@ -120,6 +120,28 @@ export class FirestoreService {
         checkins.forEach((checkin: CheckIn) => {
           this.removeCheckin(checkin.idCheckin);
         });
+    });
+  }
+
+  flushMyProperties() {
+    if (this.verbose) { console.log('Firebase: flushMyProperties'); }
+    this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties')
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((properties) => {
+        properties.forEach((property: Property) => {
+          console.log('Deleting Property:' + 'hosts/' + AuthDataStatic.authData.email + '/properties/' + property.idProperty);
+          this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + property.idProperty).delete();
+          this.db
+          .collection('checkins', ref => ref.where('idProperty', '==', property.idProperty))
+          .valueChanges()
+          .subscribe(checkins => {
+            checkins.forEach((checkin: CheckIn) => {
+              this.db.doc('checkins/' + checkin.idCheckin).delete();
+              console.log('Deleting Checkin:' + 'checkins/' + checkin.idCheckin);
+            });
+          });
+      });
     });
   }
 

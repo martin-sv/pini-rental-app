@@ -39,7 +39,8 @@
     "ALTPROPERTYCOVER": "Imágen de la Propiedad",
     "REGISTERGUEST": "Agregar Huesped",
     "ADDPROPERTY": "Registrar Propiedad",
-    "ADDMOCKPROPERTY": "Registrar [Mock] Propiedad"
+    "ADDMOCKPROPERTY": "Registrar [Mock] Propiedad",
+    "FLUSHPROPERTIES": "Limpiar Propedades"
   },
   "FIREBASE": {
     "auth/email-already-in-use": "El email ya fue usado por otra cuenta.",

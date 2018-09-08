@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: '', component: PropertyListComponent, canActivate: [AuthGuard] },
   { path: 'addproperty', component: PropertyCreateEditComponent },
   { path: ':id', component: PropertyDetailsComponent }
+
   // { path: 'properties/:id', component: PropertyDetailsComponent }
 ];
 

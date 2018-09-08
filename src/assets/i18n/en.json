@@ -39,7 +39,8 @@
     "ALTPROPERTYCOVER": "Property Image",
     "REGISTERGUEST": "Add New Guest",
     "ADDPROPERTY": "Register New Property",
-    "ADDMOCKPROPERTY": "Register New Mock Property"
+    "ADDMOCKPROPERTY": "Register New Mock Property",
+    "FLUSHPROPERTIES": "Flush My Properties"
   },
   "FIREBASE": {
     "auth/email-already-in-use": "The email address is already in use by another account.",

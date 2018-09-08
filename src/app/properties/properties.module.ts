@@ -11,7 +11,7 @@ import { propertiesReducer } from './store/properties.reducer';
   declarations: [
     PropertyCreateEditComponent,
     PropertyListComponent,
-    PropertyDetailsComponent,
+    PropertyDetailsComponent
   ],
   imports: [
     PropertiesRoutingModule,

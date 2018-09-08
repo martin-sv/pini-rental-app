@@ -95,6 +95,10 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     this.propertiesService.addMyMockProperty();
   }
 
+  onFlushPropertiesClick() {
+    this.propertiesService.onFlushProperties();
+  }
+
   onAddGuestClick() {
     this.router.navigate(['/checkin']);
   }
