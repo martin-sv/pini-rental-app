@@ -1,4 +1,4 @@
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, ReplaySubject } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { FirestoreService } from '../shared/firestore.service';
 import { Host } from '../shared/models/host.model';
@@ -9,24 +9,26 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as fromProperties from './store/properties.reducer';
 import { CheckIn } from '../shared/models/checkIn.model';
-import { CheckinsHelper } from '../checkin/checkinsHelper';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
   private _host: Host;
-  get host(): Host { return ((this._host) ? Object.create(this._host) : null); }
+  // get host(): Host { return ((this._host) ? Object.create(this._host) : null); }
+  // host: Observable<Host>;
   private _properties: Property[];
-  get properties(): Property[] { return ((this._properties)  ? Object.create(this._properties) : null); }
+  // properties: Observable<Property[]>;
+  // get properties(): Property[] { return ((this._properties)  ? Object.create(this._properties) : null); }
   private _checkins: CheckIn[];
-  get checkins(): CheckIn[] { return ((this._checkins)  ? Object.create(this._checkins) : null); }
+  // checkins: Observable<CheckIn>;
+  // get checkins(): CheckIn[] { return ((this._checkins)  ? Object.create(this._checkins) : null); }
 
   selectedProperty: Property;
   private propertiesSub: Subscription;
   private hostSub: Subscription;
   private checkinSub: Subscription;
-  hostUpdate = new Subject<Host>();
-  propertiesUpdate = new Subject<Property[]>();
-  checkinsUpdate = new Subject<CheckIn[]>();
+  hostUpdate = new ReplaySubject<Host>(1);
+  propertiesUpdate = new ReplaySubject<Property[]>(1);
+  checkinsUpdate = new ReplaySubject<CheckIn[]>(1);
 
   constructor(private store: Store<fromRoot.State>,
               private db: FirestoreService) {}
@@ -77,14 +79,14 @@ export class PropertiesService implements OnDestroy {
 
   public getPropertyByID(idProperty: string): Property {
     // console.log(this._properties);
-    return this.properties.find(prop => {
+    return this._properties.find(prop => {
       // console.log(asd.idProperty + ' - ' + idProperty);
       return prop.idProperty === idProperty;
     });
   }
 
   public getCheckinByID(idCheckin: string): CheckIn {
-    return this.checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
+    return this._checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
   }
 
   public getCondos() {

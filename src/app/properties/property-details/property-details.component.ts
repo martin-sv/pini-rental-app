@@ -61,7 +61,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
         this.dataSource.data = data;
       });
       // Push the initial data
-      this.propertiesService.checkinsUpdate.next(this.propertiesService.checkins);
+      // this.propertiesService.checkinsUpdate.next(this.propertiesService.checkins);
 
 
     /*

@@ -20,7 +20,7 @@
 <!-- provides space between buttons in xs screens -->
 <!-- <div [ngStyle.xs]="{'height': '50px'}"></div> -->
 
-  <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" [disabled]="properties != null && properties.length === 0" (click)="onAddGuestClick()">
+  <button fxFlex="1 1 200px" mat-button mat-raised-button color="primary" [disabled]="!hasProperties" (click)="onAddGuestClick()">
     {{ 'PROPERTIES.REGISTERGUEST' | translate }}
   </button>
 </section>
@@ -28,7 +28,7 @@
 <!-- Property List -->
 <div style="padding: 10px"></div>
 <section fxLayout.xs="column" fxLayoutGap.xs="0px" fxLayout="row wrap" fxLayoutGap="20px grid" fxLayoutAlign="center">
-  <div *ngFor="let property of properties" fxLayoutAlign="center">
+  <div *ngFor="let property of propertiesService.propertiesUpdate | async" fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
         <!-- // TODO: Arreglar estilos -->

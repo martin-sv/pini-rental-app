@@ -29,12 +29,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   // Start Translations Service
   this.configureTranslations();
 
+  this.authService.initAuthListener();
+  this.propertiesService.initPropertiesListener();
+  this.dataService.initDataListener();
+
+
   }
 
   ngOnInit() {
-    this.authService.initAuthListener();
-    this.propertiesService.initPropertiesListener();
-    this.dataService.initDataListener();
   }
 
   ngAfterViewInit() {
@@ -61,10 +63,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     json:
     "TITLE": "Bienvenido a Pini Rental! {{ value }}"
     */
-  }
-
-  private generateMockData() {
-    const host: Host = DataMock.generateHost();
-    const properties: Property[] = DataMock.generateProperties(host, 5);
   }
 }

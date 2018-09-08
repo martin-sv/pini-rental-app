@@ -22,13 +22,14 @@ import { GuestsListComponent } from './guests/guests-list/guests-list.component'
 import { AuthService } from './auth/auth.service';
 import { FirestoreService } from './shared/firestore.service';
 import { UIService } from './shared/ui.service';
+import { PropertiesService } from './properties/properties.service';
+import { DataService } from './shared/data.service';
+import { CheckinsService } from './checkin/checkins.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
-import { PropertiesService } from './properties/properties.service';
-import { DataService } from './shared/data.service';
 import { reducers } from './app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { CheckinComponent } from './checkin/checkin.component';
@@ -78,7 +79,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AuthService,
     FirestoreService,
     UIService,
-    DataService
+    DataService,
+    CheckinsService
   ],
   bootstrap: [AppComponent]
 })

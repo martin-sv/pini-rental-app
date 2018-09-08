@@ -28,14 +28,14 @@ export class AuthService {
         // this.isAuthenticated = true;
         // this.authChange.next(true);
         this.store.dispatch(new Auth.SetAuthenticated());
-        this.router.navigate(['/properties']);
+        // this.router.navigate(['/properties']);
       } else {
         // console.log('User Out');
         this.db.cancelSubscriptions();
         // this.isAuthenticated = false;
         // this.authChange.next(false);
         this.store.dispatch(new Auth.SetUnauthenticated());
-        this.router.navigate(['/signin']);
+        // this.router.navigate(['/signin']);
       }
     });
   }

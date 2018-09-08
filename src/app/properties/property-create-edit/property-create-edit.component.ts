@@ -8,9 +8,9 @@ import { DataMock } from '../../shared/dataMock';
 import { PeopleAddress } from '../../shared/models/peopleAddress.model';
 import { Router } from '@angular/router';
 import * as fromProperties from '../store/properties.reducer';
-import * as PROPERTIES from '../store/properties.actions';
 import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-property-create-edit',
@@ -97,11 +97,18 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       // condo = this.condosList$.find(c => c.idCondo === propertyFormValues.condoSelect);
     }
     // console.log(property);
-    this.store.select(fromProperties.getPropertySelected).pipe(take(1)).subscribe(idSelectedProperty => {
-      const idProp = (idSelectedProperty === null) ? '0' : idSelectedProperty;
+    forkJoin(
+      this.store.select(fromProperties.getPropertySelected).pipe(take(1)),
+      this.propertiesService.hostUpdate.pipe(take(1))
+    )
+    .subscribe(result => {
+      console.log('result');
+      console.log(result);
+      // result[0] contains the idproperty returned by the store.
+      const idProp = (result[0] === null) ? '0' : result[0];
       const property = new Property(
         idProp,
-        this.propertiesService.host,
+        result[1],
         propertyFormValues.name,
         DataMock.getPropertyImage(),
         propertyFormValues.condoHouseSelect,
@@ -115,7 +122,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
           propertyFormValues.zip),
         condo);
 
-      if (idSelectedProperty === null) {
+      if (result[0] === null) {
         this.propertiesService.addMyProperty(property);
         // this.router.navigate(['/properties']);
       } else {

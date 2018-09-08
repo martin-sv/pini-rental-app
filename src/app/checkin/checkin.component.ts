@@ -7,8 +7,9 @@ import { Guest } from '../shared/models/guest.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthDataStatic } from '../auth/auth-data.static';
 import * as fromProperties from '../properties/store/properties.reducer';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Property } from '../shared/models/property.model';
 
 @Component({
   selector: 'app-checkin',
@@ -42,15 +43,18 @@ export class CheckinComponent implements OnInit {
       notes: new FormControl(),
     });
 
-    if (this.propertiesService.properties.length === 1) {
-      this.newCheckinForm.controls['propertySelect'].setValue(this.propertiesService.properties[0].idProperty, {onlySelf: true});
-      console.log(this.propertiesService.properties[0].idProperty);
-    }
+    this.propertiesService.propertiesUpdate.pipe(take(1)).subscribe((properties: Property[]) => {
+      if (properties.length === 1) {
+        this.newCheckinForm.controls['propertySelect'].setValue(properties[0].idProperty, {onlySelf: true});
+      }
+    });
 
     this.route.params
     .subscribe(
       (params: Params) => {
-        this.newCheckinForm.controls['propertySelect'].setValue(params.id, {onlySelf: true});
+        if (params.id !== undefined) {
+          this.newCheckinForm.controls['propertySelect'].setValue(params.id, {onlySelf: true});
+        }
       });
 
     /*
