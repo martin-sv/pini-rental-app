@@ -6,6 +6,9 @@ import { CheckIn } from '../shared/models/checkIn.model';
 import { Guest } from '../shared/models/guest.model';
 import { Router } from '@angular/router';
 import { AuthDataStatic } from '../auth/auth-data.static';
+import * as fromProperties from '../properties/store/properties.reducer';
+import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-checkin',
@@ -18,7 +21,8 @@ export class CheckinComponent implements OnInit {
 
   constructor(public propertiesService: PropertiesService,
               private db: FirestoreService,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<fromProperties.State>) { }
 
   ngOnInit() {
 
@@ -52,23 +56,29 @@ export class CheckinComponent implements OnInit {
   }
 
   onSubmit() {
-    const pfValues = this.newCheckinForm.value;
-    const checkIn = new CheckIn(
-      AuthDataStatic.authData.email,
-      pfValues.propertySelect,
-      new Guest(
-        pfValues.fullName,
-        pfValues.phone,
-        pfValues.email,
-        pfValues.adultCount,
-        pfValues.childCount),
-        new Date(pfValues.checkin).toUTCString(),
-        new Date(pfValues.checkout).toUTCString(),
-        pfValues.expensesPaid,
-        pfValues.notes
-      );
-    this.db.addNewCheckin(checkIn);
-    // this.router.navigate(['properties/' + pfValues.propertySelect]);
-    this.router.navigate(['properties']);
+    this.store.select(fromProperties.getSelectedCheckin).pipe(take(1)).subscribe(idSelectedCheckin => {
+
+      const idCheckin = (idSelectedCheckin === null) ? '0' : idSelectedCheckin;
+
+      const pfValues = this.newCheckinForm.value;
+      const checkIn = new CheckIn(
+        idCheckin,
+        AuthDataStatic.authData.email,
+        pfValues.propertySelect,
+        new Guest(
+          pfValues.fullName,
+          pfValues.phone,
+          pfValues.email,
+          pfValues.adultCount,
+          pfValues.childCount),
+          new Date(pfValues.checkin).toUTCString(),
+          new Date(pfValues.checkout).toUTCString(),
+          pfValues.expensesPaid,
+          pfValues.notes
+        );
+      this.db.addNewCheckin(checkIn);
+      // this.router.navigate(['properties/' + pfValues.propertySelect]);
+      this.router.navigate(['properties']);
+    });
   }
 }

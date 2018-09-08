@@ -46,9 +46,10 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
           // console.log(params);
           // this.db.fetchProperty(params.id);
           this.property = this.propertiesService.getPropertyByID(params.id);
+          console.log('Property: ' + this.property.name);
+          console.log(this.property);
         }
       );
-
 
       /*
       this.propertiesService.checkinsUpdate.pipe(map(data => {
@@ -56,6 +57,7 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
       }));
       */
      this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(data => {
+        const a = data;
         this.dataSource.data = data;
       });
       // Push the initial data

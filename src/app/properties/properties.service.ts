@@ -77,10 +77,14 @@ export class PropertiesService implements OnDestroy {
 
   public getPropertyByID(idProperty: string): Property {
     // console.log(this._properties);
-    return this._properties.find(prop => {
+    return this.properties.find(prop => {
       // console.log(asd.idProperty + ' - ' + idProperty);
       return prop.idProperty === idProperty;
     });
+  }
+
+  public getCheckinByID(idCheckin: string): CheckIn {
+    return this.checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
   }
 
   public getCondos() {

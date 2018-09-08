@@ -4,8 +4,9 @@ import { Time } from '@angular/common';
 export class Cleaning {
 
   constructor(
-    public property: Property,
+    public idCleaning: string,
+    public idHost: string,
+    public idProperty: string,
     public cleaner: string,
-    public date: Date,
-    public time: Time) {}
+    public date: Date) {}
 }

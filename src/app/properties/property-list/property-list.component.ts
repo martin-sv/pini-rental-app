@@ -82,8 +82,6 @@ export class PropertyListComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   getCover(property: Property) {
     return ('url("' + property.cover + '")');
   }

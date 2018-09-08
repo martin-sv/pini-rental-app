@@ -6,12 +6,12 @@ import { Condo } from './condo.model';
 import { CheckIn } from './checkIn.model';
 
 export class Property {
-  get idProperty(): string { return this._idProperty; }
+  // get idProperty(): string { return this._idProperty; }
   public checkInOutHistory: CheckIn[];
   public cleaningHistory: Cleaning[];
 
   constructor(
-    private _idProperty: string,
+    public idProperty: string,
     public host: Host,
     public name: string,
     public cover: string,

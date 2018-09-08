@@ -77,10 +77,8 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       }
     }
 
-
-    this.focus = [];
-    this.focus['name'] = false;
-
+    // this.focus = [];
+    // this.focus['name'] = false;
   }
 
   ngAfterViewChecked() {

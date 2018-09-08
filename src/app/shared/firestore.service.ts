@@ -27,6 +27,8 @@ export class FirestoreService {
 
   constructor(private db: AngularFirestore) {}
 
+  // *** HOSTS *** //
+
   public fetchHost(emailHost: string) {
     if (this.verbose) { console.log('Firebase: fetchHost: ' + emailHost); }
     this.firebaseSubs.push(this.db.doc<Host>('hosts/' + emailHost)
@@ -35,122 +37,12 @@ export class FirestoreService {
         // The properties are then fetched elsewhere. Since they don't come with the doc as they are a collection of the Host.
         const host = new Host(emailHost, result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
         this.hostUpdate.next(Object.create(host));
-      // tslint:disable-next-line:no-shadowed-variable
       }, error => {
         console.log(error);
       })
     );
   }
 
-  // TODO: Ver que hacer con el tema host
-  public fetchMyProperties(host: Host) {
-    if (this.verbose) { console.log('Firebase: fetchMyProperties: '); console.log(host); }
-    this.firebaseSubs.push(this.db
-      .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
-      .snapshotChanges()
-      .pipe(map(docArray => {
-        // console.log(docArray);
-        return docArray.map(doc => {
-          return new Property(
-            doc.payload.doc.id,
-            host,
-            doc.payload.doc.data()['name'],
-            doc.payload.doc.data()['cover'],
-            PropertyClassEnum.appartment, // TODO: Traer info de Firebase
-            doc.payload.doc.data()['serviceFee'],
-            doc.payload.doc.data()['address'],
-            doc.payload.doc.data()['condo'],
-            doc.payload.doc.data()['checkInOutHistory'],
-            doc.payload.doc.data()['cleaningHistory']);
-        });
-      }))
-      .subscribe((props: Property[]) => {
-        // console.log(props);
-        this.propertiesUpdate.next(Object.create(props));
-      // tslint:disable-next-line:no-shadowed-variable
-      }, error => {
-        console.log(error);
-      })
-    );
-  }
-
-  public fetchCheckInByHost(host: Host) {
-    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
-    this.firebaseSubs.push(this.db
-      .collection('checkin', ref => ref.where('idHost', '==', host.idHost)).valueChanges().subscribe(checkinsRaw => {
-        const checkins: CheckIn[] = [];
-        checkinsRaw.forEach(checkin => {
-          checkins.push(checkin as CheckIn);
-        });
-        this.checkinsUpdate.next(Object.create(checkins));
-    }));
-  }
-
-  public fetchCheckInByProperty(property: Property) {
-    if (this.verbose) { console.log('Firebase: fetchCheckInByProperty: '); console.log(property); }
-    this.firebaseSubs.push(this.db
-      .collection('checkin', ref => ref.where('idProperty', '==', property.idProperty)).valueChanges().subscribe(checkinsRaw => {
-        const checkins: CheckIn[] = [];
-        checkinsRaw.forEach((checkin: CheckIn) => {
-          checkins.push(checkin);
-        });
-        this.checkinsUpdate.next(Object.create(checkins));
-    }));
-  }
-
-
-  public fetchProperty(idProperty: string) {
-    if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }
-    // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
-    this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
-      .valueChanges()
-      .subscribe(result => {
-        // console.log(result);
-      })
-    );
-  }
-
-  fetchCondos() {
-    if (this.verbose) { console.log('Firebase: fetchCondos'); }
-    this.firebaseSubs.push(this.db.collection<Condo>('condos')
-      .snapshotChanges()
-      .pipe(map(docArray => {
-        return docArray.map(doc => {
-          return new Condo(
-            doc.payload.doc.id,
-            doc.payload.doc.data()['name'],
-            new Address(
-              doc.payload.doc.data()['street'],
-              doc.payload.doc.data()['city'],
-              doc.payload.doc.data()['state'],
-              doc.payload.doc.data()['country'],
-              doc.payload.doc.data()['zip']
-            ),
-            doc.payload.doc.data()['phone'],
-            doc.payload.doc.data()['condoNotes']
-          );
-        });
-      }))
-      .subscribe((condos: Condo[]) => {
-        // console.log(condos);
-        this.condosUpdate.next(condos);
-        // this.store.dispatch(new data.SetCondosList(condos));
-      })
-    );
-  }
-
-  fetchPropertyTypes() {
-    if (this.verbose) { console.log('Firebase: fetchPropertyTypes'); }
-    this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
-      .valueChanges()
-      .subscribe(result => {
-        const propertyTypes = (result[0].list);
-        // console.log(propertyTypes);
-        this.propertyTypesUpdate.next(propertyTypes);
-        // this.store.dispatch(new data.SetPropertyTypes(propertyTypes));
-      })
-    );
-  }
 
   addNewHost(host: Host) {
     if (this.verbose) { console.log('Firebase: addNewHost: ' + host); }
@@ -159,17 +51,43 @@ export class FirestoreService {
     this.db.doc('hosts/' + host.email).set(propertyJSON);
   }
 
+  // *** PROPERTIES *** //
+
+  // TODO: Ver que hacer con el tema host
+  public fetchMyProperties(host: Host) {
+    if (this.verbose) { console.log('Firebase: fetchMyProperties: '); console.log(host); }
+    this.firebaseSubs.push(this.db
+      .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
+      .valueChanges()
+      .subscribe(propertiesRaw => {
+        const properties: Property[] = [];
+        propertiesRaw.forEach((property: Property) => {
+          properties.push(property);
+        });
+        this.propertiesUpdate.next(Object.create(properties));
+      }, error => {
+        console.log(error);
+      })
+    );
+  }
+
   addMyProperty(property: Property) {
     if (this.verbose) { console.log('Firebase: addMyProperty: ' + property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
+    propertyJSON.idHost = property.host.idHost;
     // console.log(property);
     // console.log(propertyJSON);
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON)
-      .then(f => {
-        propertyJSON.idHost = property.host.idHost;
-        this.db.doc('properties/' + f.id).set(propertyJSON);
-      });
+      .then(data => {
+        // Add property ID
+        propertyJSON.idProperty = data.id;
+        // Copy the property in the properties root
+        this.db.doc('properties/' + data.id).set(propertyJSON);
+        // Update the property ID under the host's collection on properties
+        this.db.doc(data.path).update({'idProperty': data.id });
+      })
+      .catch( error => console.log (error));
   }
 
   public updateProperty(property: Property) {
@@ -192,13 +110,91 @@ export class FirestoreService {
     this.db.doc('properties/' + idProperty).delete();
   }
 
+  public fetchProperty(idProperty: string) {
+    if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }
+    // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
+    this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
+      .valueChanges()
+      .subscribe(result => {
+        // console.log(result);
+      })
+    );
+  }
+
+
+  // *** CHECKIN *** //
+
+  public fetchCheckInByHost(host: Host) {
+    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
+
+    this.firebaseSubs.push(this.db
+      .collection('checkin', ref => ref.where('idHost', '==', host.idHost))
+      .valueChanges()
+      .subscribe(checkinsRaw => {
+        const checkins: CheckIn[] = [];
+        checkinsRaw.forEach(checkin => {
+          checkins.push(checkin as CheckIn);
+        });
+        this.checkinsUpdate.next(Object.create(checkins));
+    }));
+  }
+
+  public fetchCheckInByProperty(property: Property) {
+    if (this.verbose) { console.log('Firebase: fetchCheckInByProperty: '); console.log(property); }
+    this.firebaseSubs.push(this.db
+      .collection('checkin', ref => ref.where('idProperty', '==', property.idProperty))
+      .valueChanges()
+      .subscribe(checkinsRaw => {
+        const checkins: CheckIn[] = [];
+        checkinsRaw.forEach(checkin => {
+          checkins.push(checkin as CheckIn);
+        });
+        this.checkinsUpdate.next(Object.create(checkins));
+    }));
+  }
+
   addNewCheckin(checkIn: CheckIn) {
     if (this.verbose) { console.log('Firebase: addNewCheckin: '); console.log(checkIn); }
     // checkIn.checkingDateTime = checkIn.checkingDateTime.toUTCString();
     // checkIn.checkoutDateTime = checkIn.checkingDateTime.toUTCString();
     const checkInJSON = JSON.parse(JSON.stringify(checkIn));
     // this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties/' + checkIn.idProperty + '/checkin').add(checkInJSON);
-    this.db.collection('checkin').add(checkInJSON);
+    this.db.collection('checkin').add(checkInJSON)
+    .then (data => {
+      this.db.doc('checkin/' + data.id).update({'idCheckin': data.id });
+    })
+    .catch( error => console.log (error));
+  }
+
+
+  // *** OTHER *** //
+
+  fetchCondos() {
+    if (this.verbose) { console.log('Firebase: fetchCondos'); }
+    this.firebaseSubs.push(this.db.collection<Condo>('condos')
+      .valueChanges()
+      .subscribe(condoRaw => {
+        const condos: Condo[] = [];
+        condoRaw.forEach((condo: Condo) => {
+          condos.push(condo);
+        });
+        // console.log(condos);
+        this.condosUpdate.next(condos);
+        // this.store.dispatch(new data.SetCondosList(condos));
+      }, error => console.log(error)));
+  }
+
+  fetchPropertyTypes() {
+    if (this.verbose) { console.log('Firebase: fetchPropertyTypes'); }
+    this.firebaseSubs.push(this.db.collection<any>('propertyTypes')
+      .valueChanges()
+      .subscribe(result => {
+        const propertyTypes = (result[0].list);
+        // console.log(propertyTypes);
+        this.propertyTypesUpdate.next(propertyTypes);
+        // this.store.dispatch(new data.SetPropertyTypes(propertyTypes));
+      })
+    );
   }
 
   addNewErrorMessageDiscovered(code: string, message: string) {

@@ -8,6 +8,7 @@ export interface PropertiesState {
   propertiesList: Property[];
   hostData: Host;
   selectedProperty: string;
+  selectedCheckin: string;
 }
 
 export interface State extends fromRoot.State {
@@ -17,7 +18,8 @@ export interface State extends fromRoot.State {
 const initialState: PropertiesState = {
   propertiesList: [],
   hostData: null,
-  selectedProperty: null
+  selectedProperty: null,
+  selectedCheckin: null
 };
 
 export function propertiesReducer(state: PropertiesState = initialState, action: PropertiesActions.PropertiesActions) {
@@ -36,6 +38,12 @@ export function propertiesReducer(state: PropertiesState = initialState, action:
           selectedProperty: action.payload };
     case PropertiesActions.UNSELECT_PROPERTY:
           return {...state, selectedProperty: null };
+    case PropertiesActions.SELECT_CHECKIN:
+          return {
+            ...state,
+            selectedCheckin: action.payload };
+    case PropertiesActions.UNSELECT_PROPERTY:
+          return { ...state, selectedCheckin: null };
     default: return state;
   }
 }
@@ -45,4 +53,4 @@ export const getPropertiesState = createFeatureSelector<PropertiesState>('proper
 export const getPropertiesList = createSelector(getPropertiesState, (state: PropertiesState) => state.propertiesList);
 export const getHostData = createSelector(getPropertiesState, (state: PropertiesState) => state.hostData);
 export const getPropertySelected = createSelector(getPropertiesState, (state: PropertiesState) => state.selectedProperty);
-
+export const getSelectedCheckin = createSelector(getPropertiesState, (state: PropertiesState) => state.selectedCheckin);
