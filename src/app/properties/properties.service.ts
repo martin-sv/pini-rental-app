@@ -14,11 +14,11 @@ import { CheckinsHelper } from '../checkin/checkinsHelper';
 @Injectable()
 export class PropertiesService implements OnDestroy {
   private _host: Host;
-  get host() { return ((this._host) ? Object.create(this._host) : null); }
+  get host(): Host { return ((this._host) ? Object.create(this._host) : null); }
   private _properties: Property[];
-  get properties() { return ((this._properties)  ? Object.create(this._properties) : null); }
+  get properties(): Property[] { return ((this._properties)  ? Object.create(this._properties) : null); }
   private _checkins: CheckIn[];
-  get checkins() { return ((this._checkins)  ? Object.create(this._checkins) : null); }
+  get checkins(): CheckIn[] { return ((this._checkins)  ? Object.create(this._checkins) : null); }
 
   selectedProperty: Property;
   private propertiesSub: Subscription;

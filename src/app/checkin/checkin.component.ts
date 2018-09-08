@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PropertiesService } from '../properties/properties.service';
 import { FirestoreService } from '../shared/firestore.service';
 import { CheckIn } from '../shared/models/checkIn.model';
@@ -40,6 +40,11 @@ export class CheckinComponent implements OnInit {
       expensesPaid: new FormControl(),
       notes: new FormControl(),
     });
+
+    if (this.propertiesService.properties.length === 1) {
+      this.newCheckinForm.controls['propertySelect'].setValue(this.propertiesService.properties[0].idProperty, {onlySelf: true});
+    }
+
     /*
     const pfValues = this.newCheckinForm.value;
     pfValues.propertySelect = 'qqqq';
