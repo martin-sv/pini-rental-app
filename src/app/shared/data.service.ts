@@ -4,7 +4,6 @@ import { FirestoreService } from './firestore.service';
 import { Condo } from './models/condo.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
-import { take } from 'rxjs/operators';
 
 @Injectable()
 export class DataService implements OnDestroy {
