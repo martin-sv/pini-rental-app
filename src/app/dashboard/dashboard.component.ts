@@ -21,18 +21,24 @@ export class DashboardComponent implements OnInit {
       console.log(data);
       this.calendarOptions = {
         editable: true,
-        eventLimit: false,
+        eventLimit: 5,
         header: {
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay,listMonth'
         },
-        events: data
+        contentHeight: 'auto',
+        events: data,
+        displayEventEnd: true,
+        displayEventTime: true,
+        eventDurationEditable: true,
+        eventStartEditable: true,
       };
     });
   }
 
   eventClick() {
+    /*
     console.log('event');
     const data = this.eventsService.data;
     console.log(data);
@@ -46,14 +52,15 @@ export class DashboardComponent implements OnInit {
       },
       events: data
     };
-
+    */
 
     const el = {
       title: 'New event',
       start: '2018-09-07',
-      end: '2018-09-10'
+      end: '2018-09-10',
+      color: '#257e4a'
     };
-    this.ucCalendar.fullCalendar('renderEvent', data);
+    this.ucCalendar.fullCalendar('renderEvent', el);
     this.ucCalendar.fullCalendar('rerenderEvents');
 
     // this.eventsService.getEvents();
