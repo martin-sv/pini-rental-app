@@ -7,7 +7,9 @@
     "SIGNUP": "Registrarse",
     "SIGNIN": "Entrar",
     "SIGNOUT": "Salir",
-    "PROPERTIES": "Propiedades"
+    "PROPERTIES": "Propiedades",
+    "DASHBOARD": "Tablero"
+
   },
   "FORM_COMMON": {
     "SUBMIT": "Enviar",

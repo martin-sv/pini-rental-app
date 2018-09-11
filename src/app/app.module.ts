@@ -13,6 +13,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { FullCalendarModule } from 'ng-fullcalendar';
+// import { CalendarComponent } from 'ap-angular2-fullcalendar/src/calendar/calendar';
+import { MomentModule } from 'angular2-moment';
+import * as $ from 'jquery';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HostComponent } from './host/host.component';
 
@@ -31,6 +36,7 @@ import { reducers } from './app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SharedModule } from './shared/shared.module';
+import { EventsSesrvice } from './dashboard/events.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -42,7 +48,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     HostComponent,
     DashboardComponent,
-    CheckinComponent
+    CheckinComponent,
+    // CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +73,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AuthEffects]),
     // PropertiesModule
-    SharedModule
+    SharedModule,
+    FullCalendarModule,
+    MomentModule
   ],
   providers: [
     PropertiesService,
@@ -74,7 +83,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FirestoreService,
     UIService,
     DataService,
-    CheckinsService
+    CheckinsService,
+    EventsSesrvice
   ],
   bootstrap: [AppComponent]
 })

@@ -100,6 +100,16 @@ export class PropertiesService implements OnDestroy {
     // return this._checkins.find((checkin: CheckIn) => checkin.idCheckin === idCheckin);
   }
 
+  public getHostByID(idHost: string): Promise<Host> {
+    return new Promise(resolve => {
+      this.hostUpdate.pipe(take(1)
+      , flatMap((hosts: Host[]) => hosts)
+      , find((host: Host) => host.idHost === idHost)
+      , map(host => resolve(host))
+      ).toPromise();
+    });
+  }
+
   public getCondos() {
     this.db.fetchCondos();
   }

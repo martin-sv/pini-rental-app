@@ -14,6 +14,9 @@
           <a [routerLink]="['/signin']">{{ 'TITLES.SIGNIN' | translate }}</a>
         </li>
         <li *ngIf="isAuth$ | async">
+          <a [routerLink]="['/dashboard']">{{ 'TITLES.DASHBOARD' | translate }}</a>
+        </li>
+        <li *ngIf="isAuth$ | async">
           <a [routerLink]="['/properties']">{{ 'TITLES.PROPERTIES' | translate }}</a>
         </li>
         <li *ngIf="isAuth$ | async">

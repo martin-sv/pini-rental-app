@@ -9,6 +9,10 @@
     </a>
     <a *ngIf="isAuth$ | async"  mat-list-item [routerLink]="['/properties']" (click)="onClose()">
       <mat-icon>input</mat-icon>
+      <span class="nav-caption">{{ 'TITLES.DASHBOARD' | translate }}</span>
+    </a>
+    <a *ngIf="isAuth$ | async"  mat-list-item [routerLink]="['/properties']" (click)="onClose()">
+      <mat-icon>input</mat-icon>
       <span class="nav-caption">{{ 'TITLES.PROPERTIES' | translate }}</span>
     </a>
     <!-- <mat-list-item  *ngIf="isAuth">
