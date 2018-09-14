@@ -74,8 +74,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EffectsModule.forRoot([AuthEffects]),
     // PropertiesModule
     SharedModule,
-    FullCalendarModule,
-    MomentModule
+    MomentModule,
+    FullCalendarModule
   ],
   providers: [
     PropertiesService,
