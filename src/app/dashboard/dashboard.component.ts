@@ -3,7 +3,9 @@ import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@
 import { OptionsInput } from 'fullcalendar';
 import { EventsSesrvice } from './events.service';
 import * as $ from 'jquery';
-import 'moment';
+// import 'https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/lib/moment.min.js';
+import '../../../node_modules/moment/src/moment.js';
+// import 'moment';
 import 'fullcalendar';
 import 'fullcalendar-scheduler';
 // import 'moment';
@@ -38,6 +40,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.eventsService.onDataUpdate.subscribe(data => {
         console.log('onDataUpdate');
         console.log(data);
+
+        const dateObj = new Date();
+        const yearMonth = dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1);
+        const myData = [{
+          title: 'All Day Event',
+          start: yearMonth
+        }];
+
+
         this.calendarOptions = {
           editable: true,
           eventLimit: 5,
@@ -61,8 +72,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             { id: 'd', title: 'Room D' }
           ],
           defaultView: 'timelineMonth',
-          // events: data,
+          events: data,
         };
+
 
         const containerEl: JQuery = $('app-dashboard');
         containerEl.fullCalendar(this.calendarOptions);

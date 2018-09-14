@@ -9,7 +9,7 @@ import { newMomentProto } from 'fullcalendar/src/moment-ext';
 
 @Injectable()
 export class EventsSesrvice {
-  private data: {id: string, title: string, start: string, end?: string}[] = [];
+  private data: {title: string, start: string, end?: string}[] = [];
   onDataUpdate = new Subject<any>();
 
   constructor(private propertiesService: PropertiesService) {
@@ -17,13 +17,14 @@ export class EventsSesrvice {
       checkins.forEach(checkin => {
         console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
         this.data.push({
-          id: 'a',
           title: checkin.idHost + ': ' + checkin.guest.fullName,
           start: checkin.checkingDateTime,
           end: checkin.checkoutDateTime,
         });
       });
       this.onDataUpdate.next(this.data);
+      // this.onDataUpdate.next(this.fullData());
+
     });
   }
 
