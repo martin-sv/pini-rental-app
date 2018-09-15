@@ -40,21 +40,23 @@ export class EventsSesrvice {
     this.resources = [];
 
     // Get Hosts with properties
-    const hostsWithProperties: string[] = [];
+    // const hostsWithProperties: string[] = [];
+    const hostsWithProperties: {id: string, title: string}[] = [];
     for (let i = 0; i < properties.length; i++) {
-      if (!hostsWithProperties.find(value => value === properties[i].idHost)) {
-        hostsWithProperties.push(properties[i].idHost);
+      if (!hostsWithProperties.find(value => value.id === properties[i].idHost)) {
+        const host: Host = await this.propertiesService.getHostByID(properties[i].idHost);
+        hostsWithProperties.push({id: properties[i].idHost, title: host.firstName + ' ' + host.lastName});
       }
     }
     console.log('Hosts With Properties: ' + hostsWithProperties.length);
     const hostsProperties: string[] = [];
     for (let i = 0; i < hostsWithProperties.length; i++) {
-      const hostProperties: Property[] = await this.propertiesService.getHostProperties(hostsWithProperties[i]);
+      const hostProperties: Property[] = await this.propertiesService.getHostProperties(hostsWithProperties[i].id);
       const children:  {id: string, title: string}[] = [];
       for (let j = 0; j < hostProperties.length; j++) {
         children.push({id: hostProperties[j].idProperty, title: hostProperties[j].name});
       }
-      this.resources.push({id: hostsWithProperties[i], title: 'Title', children: children});
+      this.resources.push({id: hostsWithProperties[i].id, title: hostsWithProperties[i].title, children: children});
     }
 
     /*
