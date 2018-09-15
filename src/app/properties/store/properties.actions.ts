@@ -9,8 +9,6 @@ export const UNSELECT_PROPERTY = '[PROPERTIES] UnSelect Property';
 export const SELECT_CHECKIN = '[PROPERTIES] Select Scheckin';
 export const UNSELECT_CHECKIN = '[PROPERTIES] UnSelect Checkin';
 
-// export const START_EDIT
-
 export class SetPropertiesList implements Action {
   readonly type = SET_PROPERTIES_LIST ;
 

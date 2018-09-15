@@ -1,11 +1,7 @@
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { DataMock } from './shared/dataMock';
-import { Host } from './shared/models/host.model';
-import { Property } from './shared/models/property.model';
 import { AuthService } from './auth/auth.service';
-import { AuthData } from './auth/auth-data.model';
 import { FirestoreService } from './shared/firestore.service';
 import { PropertiesService } from './properties/properties.service';
 import { DataService } from './shared/data.service';
@@ -16,7 +12,6 @@ import { DataService } from './shared/data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
   constructor(private translate: TranslateService,
               private authService: AuthService,
               private db: FirestoreService,

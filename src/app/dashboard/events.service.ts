@@ -7,27 +7,30 @@ import { Host } from '../shared/models/host.model';
 
 @Injectable()
 export class EventsSesrvice {
-  private data: {resourceId: string, title: string, start: string, end?: string}[] = [];
-  private resources: {id: string, title: string, children?: {id: string, title: string}[]}[];
-  onDataUpdate = new ReplaySubject<any>(1);
-  onPropertiesUpdate = new ReplaySubject<any>(1);
+  private allData: {resourceId: string, title: string, start: string, end?: string}[] = [];
+  private allResources: {id: string, title: string, children?: {id: string, title: string}[]}[];
+  private myData: {resourceId: string, title: string, start: string, end?: string}[] = [];
+  private myResources: {id: string, title: string, children?: {id: string, title: string}[]}[];
+  onAllDataUpdate = new ReplaySubject<any>(1);
+  onAllPropertiesUpdate = new ReplaySubject<any>(1);
+  onMyDataUpdate = new ReplaySubject<any>(1);
+  onMyPropertiesUpdate = new ReplaySubject<any>(1);
 
   constructor(private propertiesService: PropertiesService) {
-
     this.propertiesService.allCheckinsUpdate.subscribe((checkins: CheckInFull[]) => {
-      this.data = [];
+      this.allData = [];
       checkins.forEach(checkin => {
         // console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
         const start = new Date(checkin.checkingDateTime);
         const end = new Date(checkin.checkoutDateTime);
-        this.data.push({
+        this.allData.push({
           resourceId: checkin.property.idProperty,
           title: checkin.host.firstName + ': ' + checkin.guest.fullName,
           start: start.toISOString(),
           end: end.toISOString()
         });
       });
-      this.onDataUpdate.next(this.data);
+      this.onAllDataUpdate.next(this.allData);
       // this.onDataUpdate.next(this.fullData());
 
     });
@@ -37,7 +40,7 @@ export class EventsSesrvice {
   }
 
   private async buildResources(properties: Property[]) {
-    this.resources = [];
+    this.allResources = [];
 
     // Get Hosts with properties
     // const hostsWithProperties: string[] = [];
@@ -56,9 +59,9 @@ export class EventsSesrvice {
       for (let j = 0; j < hostProperties.length; j++) {
         children.push({id: hostProperties[j].idProperty, title: hostProperties[j].name});
       }
-      this.resources.push({id: hostsWithProperties[i].id, title: hostsWithProperties[i].title, children: children});
+      this.allResources.push({id: hostsWithProperties[i].id, title: hostsWithProperties[i].title, children: children});
     }
-    this.onPropertiesUpdate.next(this.resources);
+    this.onAllPropertiesUpdate.next(this.allResources);
   }
 
 

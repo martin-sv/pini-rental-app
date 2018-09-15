@@ -42,7 +42,7 @@ export function propertiesReducer(state: PropertiesState = initialState, action:
           return {
             ...state,
             selectedCheckin: action.payload };
-    case PropertiesActions.UNSELECT_PROPERTY:
+    case PropertiesActions.UNSELECT_CHECKIN:
           return { ...state, selectedCheckin: null };
     default: return state;
   }

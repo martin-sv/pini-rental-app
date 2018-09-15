@@ -7,9 +7,13 @@ import { FirestoreService } from '../shared/firestore.service';
 import { AuthDataStatic } from './auth-data.static';
 import * as fromRoot from '../app.reducer';
 import * as Auth from './store/auth.actions';
+import { take } from 'rxjs/operators';
+import { UserRolesEnum } from './userRolesEnum';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+  onUserRoleUpdate = new ReplaySubject<string>(1);
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
@@ -24,12 +28,19 @@ export class AuthService {
         // this.isAuthenticated = true;
         // this.authChange.next(true);
         this.store.dispatch(new Auth.SetAuthenticated());
+        this.db.userUpdate.subscribe(userRole => {
+          AuthDataStatic.authData.role = userRole as UserRolesEnum;
+          this.onUserRoleUpdate.next(userRole as UserRolesEnum);
+          // this.store.dispatch(new Auth.RoleUpdate({userRole: userRole as UserRolesEnum}));
+        });
+        this.db.fetchUser(user.email);
         // this.router.navigate(['/properties']);
       } else {
         // console.log('User Out');
         this.db.cancelSubscriptions();
         // this.isAuthenticated = false;
         // this.authChange.next(false);
+        AuthDataStatic.authData.role = UserRolesEnum.ANONYMOUS;
         AuthDataStatic.clearAuthData();
         this.store.dispatch(new Auth.SetUnauthenticated());
         this.router.navigate(['/signin']);

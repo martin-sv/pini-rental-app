@@ -16,6 +16,7 @@ import { CheckInFull } from './models/checkinFull.model';
 export class FirestoreService {
   myPropertiesUpdate = new Subject<Property[]>();
   allPropertiesUpdate = new Subject<Property[]>();
+  userUpdate = new Subject<string>();
   hostUpdate = new Subject<Host>();
   hostsUpdate = new Subject<Host[]>();
   condosUpdate = new Subject<Condo[]>();
@@ -26,6 +27,18 @@ export class FirestoreService {
   private verbose = true;
 
   constructor(private db: AngularFirestore) {}
+
+  public fetchUser(idUser: string) {
+    if (this.verbose) { console.log('Firebase: fetchHost: ' + idUser); }
+    this.firebaseSubs.push(this.db.doc('hosts/' + idUser)
+      .valueChanges().pipe(take(1))
+      .subscribe(result => {
+        this.userUpdate.next(result['role']);
+      }, error => {
+        console.log(error);
+      })
+    );
+  }
 
   //#region  // *** HOSTS *** //
   public fetchHosts() {
@@ -45,13 +58,13 @@ export class FirestoreService {
     );
   }
 
-  public fetchHost(emailHost: string) {
-    if (this.verbose) { console.log('Firebase: fetchHost: ' + emailHost); }
-    this.firebaseSubs.push(this.db.doc<Host>('hosts/' + emailHost)
+  public fetchHost(idHost: string) {
+    if (this.verbose) { console.log('Firebase: fetchHost: ' + idHost); }
+    this.firebaseSubs.push(this.db.doc<Host>('hosts/' + idHost)
       .valueChanges()
       .subscribe(result => {
         // The properties are then fetched elsewhere. Since they don't come with the doc as they are a collection of the Host.
-        const host = new Host(emailHost, result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
+        const host = new Host(idHost, result.firstName, result.lastName, result.phone, result.email, result.homeAddress);
         this.hostUpdate.next(Object.create(host));
       }, error => {
         console.log(error);

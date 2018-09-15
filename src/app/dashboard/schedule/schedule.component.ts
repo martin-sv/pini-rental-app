@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventsSesrvice } from '../events.service';
+import { AuthDataStatic } from '../../auth/auth-data.static';
 declare const FullCalendar: any;
 declare const $: any;
 
