@@ -82,8 +82,8 @@ export class PropertiesService implements OnDestroy {
   }
 
   async fetchAndCreateCheckins(checkins: CheckIn[]) {
-      console.log('this!!');
-      console.log(this);
+      // console.log('this!!');
+      // console.log(this);
       // this._checkins = res;
       this._checkins = [];
       for (let i = 0; i < checkins.length; i++) {

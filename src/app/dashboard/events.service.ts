@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs';
 import { PropertiesService } from '../properties/properties.service';
-import { CheckIn } from '../shared/models/checkIn.model';
-import { getMomentLocaleData } from 'fullcalendar/src/locale';
-import { newMomentProto } from 'fullcalendar/src/moment-ext';
 import { CheckInFull } from '../shared/models/checkinFull.model';
 
 @Injectable()
@@ -20,7 +15,7 @@ export class EventsSesrvice {
       this.data = [];
       this.hostIDs = [];
       checkins.forEach(checkin => {
-        console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
+        // console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
         const start = new Date(checkin.checkingDateTime);
         const end = new Date(checkin.checkoutDateTime);
         this.data.push({

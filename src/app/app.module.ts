@@ -13,12 +13,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { FullCalendarModule } from 'ng-fullcalendar';
-// import { CalendarComponent } from 'ap-angular2-fullcalendar/src/calendar/calendar';
-import { MomentModule } from 'angular2-moment';
-import * as $ from 'jquery';
-
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ScheduleComponent} from './dashboard/schedule/schedule.component';
 import { HostComponent } from './host/host.component';
 
 import { AuthService } from './auth/auth.service';
@@ -48,8 +44,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     HostComponent,
     DashboardComponent,
+    ScheduleComponent,
     CheckinComponent,
-    // CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -74,8 +70,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EffectsModule.forRoot([AuthEffects]),
     // PropertiesModule
     SharedModule,
-    MomentModule,
-    FullCalendarModule
   ],
   providers: [
     PropertiesService,
