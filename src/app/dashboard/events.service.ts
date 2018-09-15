@@ -14,7 +14,7 @@ export class EventsSesrvice {
 
   constructor(private propertiesService: PropertiesService) {
 
-    this.propertiesService.checkinsUpdate.subscribe((checkins: CheckInFull[]) => {
+    this.propertiesService.allCheckinsUpdate.subscribe((checkins: CheckInFull[]) => {
       this.data = [];
       checkins.forEach(checkin => {
         // console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
@@ -57,20 +57,6 @@ export class EventsSesrvice {
         children.push({id: hostProperties[j].idProperty, title: hostProperties[j].name});
       }
       this.resources.push({id: hostsWithProperties[i].id, title: hostsWithProperties[i].title, children: children});
-    }
-
-    /*
-    this.resources.push({id: 'd', title: 'Auditorium D', children: [
-      { id: 'd1', title: 'Room D1' },
-      { id: 'd2', title: 'Room D2' }
-    ]});
-    */
-    for (let i = 0; i < properties.length; i++) {
-      // console.log('BUILD RESOURCES ' + i);
-      // const host: Host = await this.propertiesService.getHostByID(properties[i].idHost);
-      // const hostProperties: Property = await this.propertiesService.getHostProperties(host);
-      // console.log(hostProperties);
-      this.resources.push({id: properties[i].idProperty, title: properties[i].name});
     }
     this.onPropertiesUpdate.next(this.resources);
   }

@@ -1,4 +1,4 @@
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, CollectionReference } from 'angularfire2/firestore';
 import { Host } from './models/host.model';
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
@@ -20,7 +20,8 @@ export class FirestoreService {
   hostsUpdate = new Subject<Host[]>();
   condosUpdate = new Subject<Condo[]>();
   propertyTypesUpdate = new Subject<any>();
-  checkinsUpdate = new Subject<CheckIn[]>();
+  myCheckinsUpdate = new Subject<CheckIn[]>();
+  allCheckinsUpdate = new Subject<CheckIn[]>();
   private firebaseSubs: Subscription[] = [];
   private verbose = true;
 
@@ -196,9 +197,24 @@ export class FirestoreService {
 
   //#region // *** CHECKIN *** //
 
-  public fetchCheckInByHost(host: Host) {
-    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
+  public fetchAllCheckins() {
+    if (this.verbose) { console.log('Firebase: fetchAllCheckins'); }
+    this.firebaseSubs.push(this.db
+      .collection('checkins')
+      .valueChanges()
+      .subscribe(checkinsRaw => {
+        const checkins: CheckInFull[] = [];
+        checkinsRaw.forEach(checkin => {
+          if (!checkin['inactive']) {
+            checkins.push(checkin as CheckInFull);
+          }
+        });
+        this.allCheckinsUpdate.next(Object.create(checkins));
+    }));
+  }
 
+  public fetchCheckinByHost(host: Host) {
+    if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
     this.firebaseSubs.push(this.db
       .collection('checkins', ref => ref.where('idHost', '==', host.idHost))
       .valueChanges()
@@ -209,7 +225,7 @@ export class FirestoreService {
             checkins.push(checkin as CheckInFull);
           }
         });
-        this.checkinsUpdate.next(Object.create(checkins));
+        this.myCheckinsUpdate.next(Object.create(checkins));
     }));
   }
 
@@ -223,7 +239,7 @@ export class FirestoreService {
         checkinsRaw.forEach(checkin => {
           checkins.push(checkin as CheckIn);
         });
-        this.checkinsUpdate.next(Object.create(checkins));
+        this.myCheckinsUpdate.next(Object.create(checkins));
     }));
   }
 

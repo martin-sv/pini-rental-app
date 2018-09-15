@@ -8,7 +8,7 @@ export class CheckinsService {
   checkins: CheckIn[];
 
   constructor(private propertiesService: PropertiesService) {
-    propertiesService.checkinsUpdate.subscribe((checkins: CheckIn[]) => {
+    propertiesService.myCheckinsUpdate.subscribe((checkins: CheckIn[]) => {
       this.checkins = checkins;
     });
   }

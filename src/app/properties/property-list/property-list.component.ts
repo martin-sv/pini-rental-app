@@ -36,7 +36,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
       this.hasProperties = (properties.length > 0) ? true : false;
     });
 
-    this.checkinsUpdateSub = this.propertiesService.checkinsUpdate.subscribe(checkins => {
+    this.checkinsUpdateSub = this.propertiesService.myCheckinsUpdate.subscribe(checkins => {
         this.checkins = checkins;
     });
     this.store.dispatch(new PROPERTIES.UnSelectProperty());

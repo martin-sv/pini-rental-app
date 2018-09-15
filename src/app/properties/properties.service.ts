@@ -19,19 +19,22 @@ export class PropertiesService implements OnDestroy {
   private _hosts: Host[];
   private _myProperties: Property[];
   private _allProperties: Property[];
-  private _checkins: CheckInFull[];
+  private _myCheckins: CheckInFull[];
+  private _allCheckins: CheckInFull[];
 
   selectedProperty: Property;
   private hostSub: Subscription;
   private hostsSub: Subscription;
   private myPropertiesSub: Subscription;
   private allPropertiesSub: Subscription;
-  private checkinSub: Subscription;
+  private myCheckinsSub: Subscription;
+  private allCheckinsSub: Subscription;
   hostUpdate = new ReplaySubject<Host>(1);
   hostsUpdate = new ReplaySubject<Host[]>(1);
   myPropertiesUpdate = new ReplaySubject<Property[]>(1);
   allPropertiesUpdate = new ReplaySubject<Property[]>(1);
-  checkinsUpdate = new ReplaySubject<CheckInFull[]>(1);
+  myCheckinsUpdate = new ReplaySubject<CheckInFull[]>(1);
+  allCheckinsUpdate = new ReplaySubject<CheckInFull[]>(1);
 
   constructor(private store: Store<fromRoot.State>,
               private db: FirestoreService) {}
@@ -61,8 +64,16 @@ export class PropertiesService implements OnDestroy {
     this.allPropertiesSub = this.db.allPropertiesUpdate.subscribe(properties => {
       this._allProperties = properties;
       this.allPropertiesUpdate.next(Object.create(this._allProperties));
+
+      // Subscribe to Checkins Response
+      this.allCheckinsSub = this.db.allCheckinsUpdate.subscribe(checkins => this.fetchAndCreateCheckins(checkins, true)
+        .then(() => { this.allCheckinsUpdate.next(Object.create(this._allCheckins)); }));
+        this.db.fetchAllCheckins();
+
     });
     this.db.fetchAllProperties();
+
+
 
     // TODO: Al llegar la lista de todos los hosts, identificarme en lugar de hacer otro request y después pedir las propeidades.
     // Subscribe to Host Response
@@ -70,7 +81,7 @@ export class PropertiesService implements OnDestroy {
       this._host = res;
       this.hostUpdate.next(Object.create(this._host));
       this.db.fetchMyProperties(this._host);
-      this.db.fetchCheckInByHost(this._host);
+      this.db.fetchCheckinByHost(this._host);
       // console.log(this.host);
     });
 
@@ -84,20 +95,29 @@ export class PropertiesService implements OnDestroy {
     });
 
     // Subscribe to Checkins Response
-    this.checkinSub = this.db.checkinsUpdate.subscribe(asd => this.fetchAndCreateCheckins(asd));
+    this.myCheckinsSub = this.db.myCheckinsUpdate.subscribe(checkins => this.fetchAndCreateCheckins(checkins, false)
+    .then(() => { this.myCheckinsUpdate.next(Object.create(this._myCheckins)); }));
   }
 
-  async fetchAndCreateCheckins(checkins: CheckIn[]) {
+  async fetchAndCreateCheckins(checkins: CheckIn[], all: boolean) {
       // console.log('this!!');
       // console.log(this);
       // this._checkins = res;
-      this._checkins = [];
+      if (all) {
+        this._allCheckins = [];
+      } else {
+        this._myCheckins = [];
+      }
       for (let i = 0; i < checkins.length; i++) {
       // checkins.forEach(checkin => {
         const checkinFull = new CheckInFull(checkins[i].idCheckin, checkins[i].idHost, checkins[i].idProperty, checkins[i].guest,
                                   checkins[i].checkingDateTime, checkins[i].checkoutDateTime, checkins[i].expensesPaid, checkins[i].notes);
 
-        this._checkins.push(checkinFull);
+        if (all) {
+          this._allCheckins.push(checkinFull);
+        } else {
+          this._myCheckins.push(checkinFull);
+        }
         // this.getHostByID(checkin.idHost).then((host: Host) => {checkinFull.host = host; console.log('AAAAA'); console.log(host); });
         // this.getPropertyByID(checkin.idProperty).then((property: Property) => checkinFull.property = property);
         const host = await this.getHostByID(checkins[i].idHost);
@@ -105,7 +125,7 @@ export class PropertiesService implements OnDestroy {
         checkinFull.host = host;
         checkinFull.property = property;
       }
-      this.checkinsUpdate.next(Object.create(this._checkins));
+      // this.myCheckinsUpdate.next(Object.create(this._checkins));
       // console.log(res);
 
   }
@@ -117,7 +137,7 @@ export class PropertiesService implements OnDestroy {
   public getPropertyByID(idProperty: string): Promise<Property> {
     // console.log('b' + idProperty);
     return new Promise(resolve => {
-      this.myPropertiesUpdate.pipe(take(1)
+      this.allPropertiesUpdate.pipe(take(1)
       , flatMap((properties: Property[]) => properties)
       , find(prop => {
         // console.log(prop.idProperty + ' ' + idProperty);
@@ -130,7 +150,7 @@ export class PropertiesService implements OnDestroy {
 
   public getCheckinByID(idCheckin: string): Promise<CheckIn> {
     return new Promise(resolve => {
-      this.checkinsUpdate.pipe(take(1)
+      this.allCheckinsUpdate.pipe(take(1)
       , flatMap((checkins: CheckIn[]) => checkins)
       , find((checkin: CheckIn) => checkin.idCheckin === idCheckin)
       , map(checkin => resolve(checkin))
@@ -205,17 +225,17 @@ export class PropertiesService implements OnDestroy {
     if (this._host && this._host != null) {
       this._host = null;
       this._myProperties = [];
-      this._checkins = [];
+      this._myCheckins = [];
       this.hostUpdate.next(this._host);
       this.myPropertiesUpdate.next(this._myProperties);
-      this.checkinsUpdate.next(this._checkins);
+      this.myCheckinsUpdate.next(this._myCheckins);
     }
   }
 
   ngOnDestroy() {
     if (this.myPropertiesSub) { this.myPropertiesSub.unsubscribe(); }
     if (this.hostSub) { this.hostSub.unsubscribe(); }
-    if (this.checkinSub) { this.checkinSub.unsubscribe(); }
+    if (this.myCheckinsSub) { this.myCheckinsSub.unsubscribe(); }
   }
 
 }
