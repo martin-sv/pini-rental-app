@@ -48,7 +48,7 @@ export class EventsSesrvice {
         hostsWithProperties.push({id: properties[i].idHost, title: host.firstName + ' ' + host.lastName});
       }
     }
-    console.log('Hosts With Properties: ' + hostsWithProperties.length);
+    // console.log('Hosts With Properties: ' + hostsWithProperties.length);
     const hostsProperties: string[] = [];
     for (let i = 0; i < hostsWithProperties.length; i++) {
       const hostProperties: Property[] = await this.propertiesService.getHostProperties(hostsWithProperties[i].id);
