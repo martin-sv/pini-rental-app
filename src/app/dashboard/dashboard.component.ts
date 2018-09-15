@@ -1,24 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
-// import { CalendarComponent } from 'ng-fullcalendar';
+import { CalendarComponent } from 'ng-fullcalendar';
 import { OptionsInput } from 'fullcalendar';
 import { EventsSesrvice } from './events.service';
 import * as $ from 'jquery';
-// import 'https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/lib/moment.min.js';
-import '../../../node_modules/moment/src/moment.js';
-// import 'moment';
+import 'moment';
 import 'fullcalendar';
+import { Moment } from 'moment';
 import 'fullcalendar-scheduler';
-// import 'moment';
-// import 'angular2-moment';
-// import 'fullcalendar';
-// import 'fullcalendar-scheduler';
-
-/*
-"../node_modules/jquery/dist/jquery.min.js",
-"../node_modules/moment/min/moment.min.js",
-"../node_modules/fullcalendar/dist/fullcalendar.min.js",
-"../node_modules/fullcalendar-scheduler/dist/scheduler.min.js"
-*/
 
 @Component({
   selector: 'app-dashboard',
@@ -48,7 +36,55 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           start: yearMonth
         }];
 
+        const events2 = [
+          {
+            resourceID: 'a',
+            title: 'event1',
+            start: 'Sun, 09 Sep 2018 04:00:00 GMT',
+            end: 'Tue, 11 Sep 2018 04:00:00 GMT'
+          /*
+          },
+          {
+            title: 'event2',
+            start: '2018-09-14T14:30:00',
+            end: '2018-09-16T15:30:00'
+          },
+          {
+            title  : 'event3',
+            start  : '2018-09-14',
+            */
+          }];
 
+          this.calendarOptions = {
+            editable: true,
+            eventLimit: 5,
+            header: {
+              left: 'prev,next today',
+              center: 'title',
+              // center: 'month,timelineFourDays',
+              right: 'timelineMont,month,agendaWeek,agendaDay,listMonth'
+              // right: 'timelineDay, timelineWeek, timelineMonth,timelineYear'
+            },
+            contentHeight: 'auto',
+            displayEventEnd: true,
+            displayEventTime: true,
+            eventDurationEditable: true,
+            eventStartEditable: true,
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            resources: [
+              { id: 'a', title: 'Room A' },
+              { id: 'b', title: 'Room B' },
+              { id: 'c', title: 'Room C' },
+              { id: 'd', title: 'Room D' }
+            ],
+            // defaultView: 'timelineMonth',
+            events: data,
+            timeFormat: 'hh:mm',
+          };
+
+          const containerEl: JQuery = $('app-dashboard');
+          containerEl.fullCalendar(this.calendarOptions);
+          /*
         this.calendarOptions = {
           editable: true,
           eventLimit: 5,
@@ -74,10 +110,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           defaultView: 'timelineMonth',
           events: data,
         };
+        */
 
 
-        const containerEl: JQuery = $('app-dashboard');
-        containerEl.fullCalendar(this.calendarOptions);
       });
 
 

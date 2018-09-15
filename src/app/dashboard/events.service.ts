@@ -9,17 +9,20 @@ import { newMomentProto } from 'fullcalendar/src/moment-ext';
 
 @Injectable()
 export class EventsSesrvice {
-  private data: {title: string, start: string, end?: string}[] = [];
+  private data: {resourceId: string, title: string, start: string, end?: string}[] = [];
   onDataUpdate = new Subject<any>();
 
   constructor(private propertiesService: PropertiesService) {
     this.propertiesService.checkinsUpdate.subscribe((checkins: CheckIn[]) => {
       checkins.forEach(checkin => {
         console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
+        const start = new Date(checkin.checkingDateTime);
+        const end = new Date(checkin.checkoutDateTime);
         this.data.push({
+          resourceId: 'a',
           title: checkin.idHost + ': ' + checkin.guest.fullName,
-          start: checkin.checkingDateTime,
-          end: checkin.checkoutDateTime,
+          start: start.toISOString(),
+          end: end.toISOString()
         });
       });
       this.onDataUpdate.next(this.data);
