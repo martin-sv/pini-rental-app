@@ -32,16 +32,37 @@ export class EventsSesrvice {
 
     });
 
-    this.propertiesService.propertiesUpdate.subscribe((properties: Property[]) => { this.buildResources(properties); });
+    // this.propertiesService.myPropertiesUpdate.subscribe((properties: Property[]) => { this.buildResources(properties); });
+    this.propertiesService.allPropertiesUpdate.subscribe((properties: Property[]) => { this.buildResources(properties); });
   }
 
   private async buildResources(properties: Property[]) {
     this.resources = [];
+
+    // Get Hosts with properties
+    const hostsWithProperties: string[] = [];
+    for (let i = 0; i < properties.length; i++) {
+      if (!hostsWithProperties.find(value => value === properties[i].idHost)) {
+        hostsWithProperties.push(properties[i].idHost);
+      }
+    }
+    console.log('Hosts With Properties: ' + hostsWithProperties.length);
+    const hostsProperties: string[] = [];
+    for (let i = 0; i < hostsWithProperties.length; i++) {
+      const hostProperties: Property[] = await this.propertiesService.getHostProperties(hostsWithProperties[i]);
+      const children:  {id: string, title: string}[] = [];
+      for (let j = 0; j < hostProperties.length; j++) {
+        children.push({id: hostProperties[j].idProperty, title: hostProperties[j].name});
+      }
+      this.resources.push({id: hostsWithProperties[i], title: 'Title', children: children});
+    }
+
+    /*
     this.resources.push({id: 'd', title: 'Auditorium D', children: [
       { id: 'd1', title: 'Room D1' },
       { id: 'd2', title: 'Room D2' }
     ]});
-
+    */
     for (let i = 0; i < properties.length; i++) {
       // console.log('BUILD RESOURCES ' + i);
       // const host: Host = await this.propertiesService.getHostByID(properties[i].idHost);

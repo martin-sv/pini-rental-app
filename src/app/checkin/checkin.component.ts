@@ -43,7 +43,7 @@ export class CheckinComponent implements OnInit {
       notes: new FormControl(),
     });
 
-    this.propertiesService.propertiesUpdate.pipe(take(1)).subscribe((properties: Property[]) => {
+    this.propertiesService.myPropertiesUpdate.pipe(take(1)).subscribe((properties: Property[]) => {
       if (properties.length === 1) {
         this.newCheckinForm.controls['propertySelect'].setValue(properties[0].idProperty, {onlySelf: true});
       }

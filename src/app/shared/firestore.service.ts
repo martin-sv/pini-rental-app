@@ -19,7 +19,8 @@ export class FirestoreService {
   private properties: Property[];
   private checkins: CheckIn[];
   */
-  propertiesUpdate = new Subject<Property[]>();
+  myPropertiesUpdate = new Subject<Property[]>();
+  allPropertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
   hostsUpdate = new Subject<Host[]>();
   condosUpdate = new Subject<Condo[]>();
@@ -82,7 +83,7 @@ export class FirestoreService {
         propertiesRaw.forEach((property: Property) => {
           properties.push(property);
         });
-        this.propertiesUpdate.next(Object.create(properties));
+        this.myPropertiesUpdate.next(Object.create(properties));
       }, error => {
         console.log(error);
       })
@@ -91,12 +92,12 @@ export class FirestoreService {
 
   public fetchAllProperties() {
     if (this.verbose) { console.log('Firebase: fetchAllProperties'); }
-
     this.firebaseSubs.push(this.db
       .collection<Property>('properties', ref => ref.where('inactive', '==', 'false'))
       .valueChanges()
       .subscribe((properties: Property[]) => {
         console.log(properties);
+        this.allPropertiesUpdate.next(Object.create(properties));
       }));
   }
 
@@ -122,7 +123,7 @@ export class FirestoreService {
       .then(data => {
         // Add property ID
         propertyJSON.idProperty = data.id;
-        propertyJSON.inactive = 'fasle';
+        propertyJSON.inactive = 'false';
         // Copy the property in the properties root
         this.db.doc('properties/' + data.id).set(propertyJSON);
         // Update the property ID under the host's collection on properties

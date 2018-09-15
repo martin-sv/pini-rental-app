@@ -17,17 +17,20 @@ import { CheckInFull } from '../shared/models/checkinFull.model';
 export class PropertiesService implements OnDestroy {
   private _host: Host;
   private _hosts: Host[];
-  private _properties: Property[];
+  private _myProperties: Property[];
+  private _allProperties: Property[];
   private _checkins: CheckInFull[];
 
   selectedProperty: Property;
   private hostSub: Subscription;
   private hostsSub: Subscription;
-  private propertiesSub: Subscription;
+  private myPropertiesSub: Subscription;
+  private allPropertiesSub: Subscription;
   private checkinSub: Subscription;
   hostUpdate = new ReplaySubject<Host>(1);
   hostsUpdate = new ReplaySubject<Host[]>(1);
-  propertiesUpdate = new ReplaySubject<Property[]>(1);
+  myPropertiesUpdate = new ReplaySubject<Property[]>(1);
+  allPropertiesUpdate = new ReplaySubject<Property[]>(1);
   checkinsUpdate = new ReplaySubject<CheckInFull[]>(1);
 
   constructor(private store: Store<fromRoot.State>,
@@ -47,12 +50,19 @@ export class PropertiesService implements OnDestroy {
     });
 
     // Subscribe to Hosts Response
-    this.hostsSub = this.db.hostsUpdate.subscribe(res => {
-      this._hosts = res;
+    this.hostsSub = this.db.hostsUpdate.subscribe(hosts => {
+      this._hosts = hosts;
       this.hostsUpdate.next(Object.create(this._hosts));
       console.log(this._hosts);
     });
     this.db.fetchHosts();
+
+    // Subscribe to Properties Response
+    this.allPropertiesSub = this.db.allPropertiesUpdate.subscribe(properties => {
+      this._allProperties = properties;
+      this.allPropertiesUpdate.next(Object.create(this._allProperties));
+    });
+    this.db.fetchAllProperties();
 
     // TODO: Al llegar la lista de todos los hosts, identificarme en lugar de hacer otro request y después pedir las propeidades.
     // Subscribe to Host Response
@@ -65,9 +75,9 @@ export class PropertiesService implements OnDestroy {
     });
 
     // Subscribe to Properties Response
-    this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
-      this._properties = res;
-      this.propertiesUpdate.next(Object.create(this._properties));
+    this.myPropertiesSub = this.db.myPropertiesUpdate.subscribe(res => {
+      this._myProperties = res;
+      this.myPropertiesUpdate.next(Object.create(this._myProperties));
       // this.store.dispatch(new PropertiesActions.SetPropertiesList(this._properties));
       // this.store.select(fromProperties.getPropertiesList).subscribe( r => {console.log('rrrr'); console.log(r); });
       // console.log (this._properties);
@@ -107,7 +117,7 @@ export class PropertiesService implements OnDestroy {
   public getPropertyByID(idProperty: string): Promise<Property> {
     // console.log('b' + idProperty);
     return new Promise(resolve => {
-      this.propertiesUpdate.pipe(take(1)
+      this.myPropertiesUpdate.pipe(take(1)
       , flatMap((properties: Property[]) => properties)
       , find(prop => {
         // console.log(prop.idProperty + ' ' + idProperty);
@@ -147,28 +157,19 @@ export class PropertiesService implements OnDestroy {
     });
   }
 
-  public getHostProperties(host: Host): Promise<Property> {
+  public getHostProperties(idHost: string): Promise<Property[]> {
     return new Promise(resolve => {
-      this.propertiesUpdate.pipe(take(1)
-      , flatMap((properties: Property[]) => {
-        console.log(properties);
+      this.allPropertiesUpdate.pipe(take(1)
+      , map((properties: Property[]) => {
+        // console.log(properties);
         const retProps: Property[] = [];
         for (let i = 0; i < properties.length; i++) {
-          if (properties[i].idHost === host.idHost) {
+          if (properties[i].idHost === idHost) {
             retProps.push(properties[i]);
           }
         }
-        return retProps; })).toPromise();
-        /*
-        return (properties); })
-      , find((property: Property) => {
-        console.log(property);
-        return (property.idHost === host.idHost); })
-      , map (property => {
-        console.log(property);
-        resolve(property);
+        resolve(retProps);
       })).toPromise();
-      */
     });
   }
 
@@ -203,16 +204,16 @@ export class PropertiesService implements OnDestroy {
   private clearPropertiesData() {
     if (this._host && this._host != null) {
       this._host = null;
-      this._properties = [];
+      this._myProperties = [];
       this._checkins = [];
       this.hostUpdate.next(this._host);
-      this.propertiesUpdate.next(this._properties);
+      this.myPropertiesUpdate.next(this._myProperties);
       this.checkinsUpdate.next(this._checkins);
     }
   }
 
   ngOnDestroy() {
-    if (this.propertiesSub) { this.propertiesSub.unsubscribe(); }
+    if (this.myPropertiesSub) { this.myPropertiesSub.unsubscribe(); }
     if (this.hostSub) { this.hostSub.unsubscribe(); }
     if (this.checkinSub) { this.checkinSub.unsubscribe(); }
   }

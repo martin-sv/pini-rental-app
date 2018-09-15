@@ -28,7 +28,7 @@
 <!-- Property List -->
 <div style="padding: 10px"></div>
 <section fxLayout.xs="column" fxLayoutGap.xs="0px" fxLayout="row wrap" fxLayoutGap="20px grid" fxLayoutAlign="center">
-  <div *ngFor="let property of propertiesService.propertiesUpdate | async" fxLayoutAlign="center">
+  <div *ngFor="let property of propertiesService.myPropertiesUpdate | async" fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-header>
         <!-- // TODO: Arreglar estilos -->

@@ -21,7 +21,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
   production = environment.production;
   hasProperties: boolean;
   private hostUpdateSub: Subscription;
-  private propertiesUpdateSub: Subscription;
+  private myPropertiesUpdateSub: Subscription;
   private checkinsUpdateSub: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Initial Listeners
-    this.propertiesUpdateSub = this.propertiesService.propertiesUpdate.subscribe(properties => {
+    this.myPropertiesUpdateSub = this.propertiesService.myPropertiesUpdate.subscribe(properties => {
       this.hasProperties = (properties.length > 0) ? true : false;
     });
 
@@ -99,7 +99,7 @@ export class PropertyListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.hostUpdateSub) { this.hostUpdateSub.unsubscribe(); }
-    if (this.propertiesUpdateSub) { this.propertiesUpdateSub.unsubscribe(); }
+    if (this.myPropertiesUpdateSub) { this.myPropertiesUpdateSub.unsubscribe(); }
     if (this.checkinsUpdateSub) { this.checkinsUpdateSub.unsubscribe(); }
   }
 }
