@@ -1,9 +1,11 @@
 import { CheckIn } from './checkIn.model';
 import { Property } from './property.model';
-import { Host } from '@angular/core';
 import { Guest } from './guest.model';
 import { PropertiesService } from '../../properties/properties.service';
+import { Host } from './host.model';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class CheckInFull extends CheckIn {
   public host: Host;
   public property: Property;
@@ -16,11 +18,8 @@ export class CheckInFull extends CheckIn {
     public checkingDateTime: string,
     public checkoutDateTime: string,
     public expensesPaid: boolean,
-    public notes: string = '',
-    private propertiesService: PropertiesService) {
+    public notes: string = '') {
 
     super(idCheckin, idHost, idProperty, guest, checkingDateTime, checkoutDateTime, expensesPaid, notes);
-    this.propertiesService.getHostByID(idHost).then((host: Host) => this.host = host);
-    this.propertiesService.getPropertyByID(idProperty).then((property: Property) => this.property = property);
   }
 }

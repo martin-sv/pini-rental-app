@@ -10,6 +10,7 @@ import { Condo } from './models/condo.model';
 import { Address } from './models/address.model';
 import { CheckIn } from './models/checkIn.model';
 import { forEach } from '@angular/router/src/utils/collection';
+import { CheckInFull } from './models/checkinFull.model';
 
 @Injectable()
 export class FirestoreService {
@@ -20,6 +21,7 @@ export class FirestoreService {
   */
   propertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
+  hostsUpdate = new Subject<Host[]>();
   condosUpdate = new Subject<Condo[]>();
   propertyTypesUpdate = new Subject<any>();
   checkinsUpdate = new Subject<CheckIn[]>();
@@ -29,6 +31,22 @@ export class FirestoreService {
   constructor(private db: AngularFirestore) {}
 
   // *** HOSTS *** //
+  public fetchHosts() {
+    if (this.verbose) { console.log('Firebase: fetchHosts'); }
+    this.firebaseSubs.push(this.db
+      .collection<Host>('/hosts')
+      .valueChanges()
+      .subscribe(hostsRaw => {
+        const hosts: Host[] = [];
+        hostsRaw.forEach((host: Host) => {
+          hosts.push(host);
+        });
+        this.hostsUpdate.next(Object.create(hosts));
+      }, error => {
+        console.log(error);
+      })
+    );
+  }
 
   public fetchHost(emailHost: string) {
     if (this.verbose) { console.log('Firebase: fetchHost: ' + emailHost); }
@@ -165,10 +183,10 @@ export class FirestoreService {
       .collection('checkins', ref => ref.where('idHost', '==', host.idHost))
       .valueChanges()
       .subscribe(checkinsRaw => {
-        const checkins: CheckIn[] = [];
+        const checkins: CheckInFull[] = [];
         checkinsRaw.forEach(checkin => {
           if (!checkin['inactive']) {
-            checkins.push(checkin as CheckIn);
+            checkins.push(checkin as CheckInFull);
           }
         });
         this.checkinsUpdate.next(Object.create(checkins));

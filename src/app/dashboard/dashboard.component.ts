@@ -20,8 +20,11 @@ export class DashboardComponent implements OnInit {
   calendar() {
 
     this.eventsService.onDataUpdate.subscribe(data => {
-      console.log('onDataUpdate');
-      console.log(data);
+      const res: {id: string, title: string}[] = [];
+      for (let i = 0; i < data[1].length; i++) {
+        res.push({id: data[1][i], title: data[1][i]});
+      }
+      console.log(res);
 
       const calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -70,6 +73,8 @@ export class DashboardComponent implements OnInit {
             }
           });
         },
+        resources: res,
+        /*
         resources: [
           { id: 'a', title: 'Auditorium A' },
           { id: 'b', title: 'Auditorium B', eventColor: 'green' },
@@ -88,7 +93,8 @@ export class DashboardComponent implements OnInit {
           { id: 'l', title: 'Auditorium L' },
           { id: 'm', title: 'Auditorium M' }
         ],
-        events: data
+        */
+        events: data[0]
         /*
         [
           { id: '1', resourceId: 'b', start: '2018-04-07T02:00:00', end: '2018-04-07T07:00:00', title: 'event 1' },

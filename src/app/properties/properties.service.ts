@@ -11,20 +11,24 @@ import * as fromProperties from './store/properties.reducer';
 import * as PropertiesActions from './store/properties.actions';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { take, map, find, mergeMap, flatMap } from 'rxjs/operators';
+import { CheckInFull } from '../shared/models/checkinFull.model';
 
 @Injectable()
 export class PropertiesService implements OnDestroy {
   private _host: Host;
+  private _hosts: Host[];
   private _properties: Property[];
-  private _checkins: CheckIn[];
+  private _checkins: CheckInFull[];
 
   selectedProperty: Property;
-  private propertiesSub: Subscription;
   private hostSub: Subscription;
+  private hostsSub: Subscription;
+  private propertiesSub: Subscription;
   private checkinSub: Subscription;
   hostUpdate = new ReplaySubject<Host>(1);
+  hostsUpdate = new ReplaySubject<Host[]>(1);
   propertiesUpdate = new ReplaySubject<Property[]>(1);
-  checkinsUpdate = new ReplaySubject<CheckIn[]>(1);
+  checkinsUpdate = new ReplaySubject<CheckInFull[]>(1);
 
   constructor(private store: Store<fromRoot.State>,
               private db: FirestoreService) {}
@@ -42,6 +46,15 @@ export class PropertiesService implements OnDestroy {
       }
     });
 
+    // Subscribe to Hosts Response
+    this.hostsSub = this.db.hostsUpdate.subscribe(res => {
+      this._hosts = res;
+      this.hostsUpdate.next(Object.create(this._hosts));
+      console.log(this._hosts);
+    });
+    this.db.fetchHosts();
+
+    // TODO: Al llegar la lista de todos los hosts, identificarme en lugar de hacer otro request y después pedir las propeidades.
     // Subscribe to Host Response
     this.hostSub = this.db.hostUpdate.subscribe(res => {
       this._host = res;
@@ -55,20 +68,40 @@ export class PropertiesService implements OnDestroy {
     this.propertiesSub = this.db.propertiesUpdate.subscribe(res => {
       this._properties = res;
       this.propertiesUpdate.next(Object.create(this._properties));
-
-
       // this.store.dispatch(new PropertiesActions.SetPropertiesList(this._properties));
       // this.store.select(fromProperties.getPropertiesList).subscribe( r => {console.log('rrrr'); console.log(r); });
-
       // console.log (this._properties);
     });
 
     // Subscribe to Checkins Response
-    this.checkinSub = this.db.checkinsUpdate.subscribe(res => {
-      this._checkins = res;
+    this.checkinSub = this.db.checkinsUpdate.subscribe(asd => this.fetchAndCreateCheckins(asd));
+  }
+
+  async a() {
+      let host = await this.getHostByID('asd');
+  }
+
+  async fetchAndCreateCheckins(checkins: CheckIn[]) {
+      console.log('this!!');
+      console.log(this);
+      // this._checkins = res;
+      this._checkins = [];
+      for (let i = 0; i < checkins.length; i++) {
+      // checkins.forEach(checkin => {
+        const checkinFull = new CheckInFull(checkins[i].idCheckin, checkins[i].idHost, checkins[i].idProperty, checkins[i].guest,
+                                  checkins[i].checkingDateTime, checkins[i].checkoutDateTime, checkins[i].expensesPaid, checkins[i].notes);
+
+        this._checkins.push(checkinFull);
+        // this.getHostByID(checkin.idHost).then((host: Host) => {checkinFull.host = host; console.log('AAAAA'); console.log(host); });
+        // this.getPropertyByID(checkin.idProperty).then((property: Property) => checkinFull.property = property);
+        const host = await this.getHostByID(checkins[i].idHost);
+        const property = await this.getPropertyByID(checkins[i].idProperty);
+        checkinFull.host = host;
+        checkinFull.property = property;
+      }
       this.checkinsUpdate.next(Object.create(this._checkins));
       // console.log(res);
-    });
+
   }
 
   private fetchHostAndProperties() {
@@ -102,10 +135,18 @@ export class PropertiesService implements OnDestroy {
 
   public getHostByID(idHost: string): Promise<Host> {
     return new Promise(resolve => {
-      this.hostUpdate.pipe(take(1)
-      , flatMap((hosts: Host[]) => hosts)
-      , find((host: Host) => host.idHost === idHost)
-      , map(host => resolve(host))
+      this.hostsUpdate.pipe(take(1)
+      , flatMap((hosts: Host[]) => {
+        // console.log (hosts);
+        return (hosts); })
+      , find((host: Host) => {
+        // console.log(host.idHost + ' - ' + idHost);
+        return (host.idHost === idHost);
+      })
+      , map(host => {
+        // console.log(host);
+        resolve(host);
+      })
       ).toPromise();
     });
   }

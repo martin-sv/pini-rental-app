@@ -6,26 +6,34 @@ import { PropertiesService } from '../properties/properties.service';
 import { CheckIn } from '../shared/models/checkIn.model';
 import { getMomentLocaleData } from 'fullcalendar/src/locale';
 import { newMomentProto } from 'fullcalendar/src/moment-ext';
+import { CheckInFull } from '../shared/models/checkinFull.model';
 
 @Injectable()
 export class EventsSesrvice {
   private data: {resourceId: string, title: string, start: string, end?: string}[] = [];
+  private hostIDs: string[];
   onDataUpdate = new Subject<any>();
 
   constructor(private propertiesService: PropertiesService) {
-    this.propertiesService.checkinsUpdate.subscribe((checkins: CheckIn[]) => {
+
+    this.propertiesService.checkinsUpdate.subscribe((checkins: CheckInFull[]) => {
+      this.data = [];
+      this.hostIDs = [];
       checkins.forEach(checkin => {
         console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
         const start = new Date(checkin.checkingDateTime);
         const end = new Date(checkin.checkoutDateTime);
         this.data.push({
-          resourceId: 'a',
-          title: checkin.idHost + ': ' + checkin.guest.fullName,
+          resourceId: checkin.host.idHost,
+          title: checkin.host.firstName + ': ' + checkin.guest.fullName,
           start: start.toISOString(),
           end: end.toISOString()
         });
       });
-      this.onDataUpdate.next(this.data);
+      for (let i = 0; i < checkins.length; i++) {
+        this.hostIDs.push(checkins[i].idHost);
+      }
+      this.onDataUpdate.next([this.data, this.hostIDs]);
       // this.onDataUpdate.next(this.fullData());
 
     });
