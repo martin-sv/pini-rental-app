@@ -37,9 +37,9 @@ export class DashboardComponent implements OnInit {
         eventStartEditable: true,
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         timeFormat: 'h(:mm)t',
-        height: 'auto',
+        height: 'parent',
         contentHeight: 'auto',
-        aspectRatio: 1.8,
+        // aspectRatio: 1.8,
         eventOverlap: true,
         scrollTime: '00:00',
         header: {
@@ -47,6 +47,11 @@ export class DashboardComponent implements OnInit {
           center: 'title',
           right: 'month,agendaWeek, agendaDay,timelineMonth,listWeek'
         },
+        defaultView: 'timelineDay',
+        resourceLabelText: 'Properties',
+        resources: res,
+        events: data[0]
+        /*
         customButtons: {
           promptResource: {
             text: '+ room',
@@ -58,14 +63,12 @@ export class DashboardComponent implements OnInit {
             }
           }
         },
-        defaultView: 'timelineDay',
         views: {
           timelineThreeDays: {
             type: 'timeline',
             duration: { days: 3 }
           }
         },
-        resourceLabelText: 'Properties',
         resourceRender: function(resource, tr) {
           tr.addEventListener('click', function() {
             if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
@@ -73,7 +76,7 @@ export class DashboardComponent implements OnInit {
             }
           });
         },
-        resources: res,
+        */
         /*
         resources: [
           { id: 'a', title: 'Auditorium A' },
@@ -94,7 +97,6 @@ export class DashboardComponent implements OnInit {
           { id: 'm', title: 'Auditorium M' }
         ],
         */
-        events: data[0]
         /*
         [
           { id: '1', resourceId: 'b', start: '2018-04-07T02:00:00', end: '2018-04-07T07:00:00', title: 'event 1' },
