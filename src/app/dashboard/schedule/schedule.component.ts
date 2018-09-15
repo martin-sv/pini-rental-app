@@ -12,7 +12,7 @@ export class ScheduleComponent implements OnInit {
   @Input() data: {resourceId: string, title: string, start: string, end?: string}[];
   @Input() resources: {id: string, title: string}[];
 
-  constructor (private eventsService: EventsSesrvice) {}
+  constructor () {}
 
   ngOnInit() {
     this.schedule();
@@ -20,98 +20,88 @@ export class ScheduleComponent implements OnInit {
   }
 
   schedule() {
-    console.log(this.data);
-
-    this.eventsService.onDataUpdate.subscribe(data => {
-      const res: {id: string, title: string}[] = [];
-      for (let i = 0; i < data[1].length; i++) {
-        res.push({id: data[1][i], title: data[1][i]});
-      }
-      // console.log(res);
-
-      const calendarEl = document.getElementById('schedule');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        // now: '2018-04-07',
-        editable: true,
-        eventLimit: 2,
-        displayEventEnd: true,
-        displayEventTime: true,
-        eventDurationEditable: true,
-        eventStartEditable: true,
-        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-        timeFormat: 'h(:mm)t',
-        height: 'parent',
-        contentHeight: 'auto',
-        // aspectRatio: 1.8,
-        eventOverlap: true,
-        scrollTime: '00:00',
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek, agendaDay,timelineMonth,listWeek'
-        },
-        defaultView: 'timelineDay',
-        resourceLabelText: 'Properties',
-        resources: res,
-        events: data[0]
-        /*
-        customButtons: {
-          promptResource: {
-            text: '+ room',
-            click: function() {
-              const title = prompt('Room name');
-              if (title) {
-                calendar.addResource({ title: title }, true); // true = scroll to new resource
-              }
+    const calendarEl = document.getElementById('schedule');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      // now: '2018-04-07',
+      editable: true,
+      eventLimit: 2,
+      displayEventEnd: true,
+      displayEventTime: true,
+      eventDurationEditable: true,
+      eventStartEditable: true,
+      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+      timeFormat: 'h(:mm)t',
+      height: 'parent',
+      contentHeight: 'auto',
+      // aspectRatio: 1.8,
+      eventOverlap: true,
+      scrollTime: '00:00',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek, agendaDay,timelineMonth,listWeek'
+      },
+      defaultView: 'timelineDay',
+      resourceLabelText: 'Properties',
+      resources: this.resources,
+      events: this.data
+      /*
+      customButtons: {
+        promptResource: {
+          text: '+ room',
+          click: function() {
+            const title = prompt('Room name');
+            if (title) {
+              calendar.addResource({ title: title }, true); // true = scroll to new resource
             }
           }
-        },
-        views: {
-          timelineThreeDays: {
-            type: 'timeline',
-            duration: { days: 3 }
+        }
+      },
+      views: {
+        timelineThreeDays: {
+          type: 'timeline',
+          duration: { days: 3 }
+        }
+      },
+      resourceRender: function(resource, tr) {
+        tr.addEventListener('click', function() {
+          if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
+            calendar.removeResource(resource);
           }
-        },
-        resourceRender: function(resource, tr) {
-          tr.addEventListener('click', function() {
-            if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
-              calendar.removeResource(resource);
-            }
-          });
-        },
-        */
-        /*
-        resources: [
-          { id: 'a', title: 'Auditorium A' },
-          { id: 'b', title: 'Auditorium B', eventColor: 'green' },
-          { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
-          { id: 'd', title: 'Auditorium D', children: [
-            { id: 'd1', title: 'Room D1' },
-            { id: 'd2', title: 'Room D2' }
-          ] },
-          { id: 'e', title: 'Auditorium E' },
-          { id: 'f', title: 'Auditorium F', eventColor: 'red' },
-          { id: 'g', title: 'Auditorium G' },
-          { id: 'h', title: 'Auditorium H' },
-          { id: 'i', title: 'Auditorium I' },
-          { id: 'j', title: 'Auditorium J' },
-          { id: 'k', title: 'Auditorium K' },
-          { id: 'l', title: 'Auditorium L' },
-          { id: 'm', title: 'Auditorium M' }
-        ],
-        */
-        /*
-        [
-          { id: '1', resourceId: 'b', start: '2018-04-07T02:00:00', end: '2018-04-07T07:00:00', title: 'event 1' },
-          { id: '2', resourceId: 'c', start: '2018-04-07T05:00:00', end: '2018-04-07T22:00:00', title: 'event 2' },
-          { id: '3', resourceId: 'd', start: '2018-04-06', end: '2018-04-08', title: 'event 3' },
-          { id: '4', resourceId: 'e', start: '2018-04-07T03:00:00', end: '2018-04-07T08:00:00', title: 'event 4' },
-          { id: '5', resourceId: 'f', start: '2018-04-07T00:30:00', end: '2018-04-07T02:30:00', title: 'event 5' }
-        ]
-        */
-      });
-      calendar.render();
+        });
+      },
+      */
+      /*
+      resources: [
+        { id: 'a', title: 'Auditorium A' },
+        { id: 'b', title: 'Auditorium B', eventColor: 'green' },
+        { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
+        { id: 'd', title: 'Auditorium D', children: [
+          { id: 'd1', title: 'Room D1' },
+          { id: 'd2', title: 'Room D2' }
+        ] },
+        { id: 'e', title: 'Auditorium E' },
+        { id: 'f', title: 'Auditorium F', eventColor: 'red' },
+        { id: 'g', title: 'Auditorium G' },
+        { id: 'h', title: 'Auditorium H' },
+        { id: 'i', title: 'Auditorium I' },
+        { id: 'j', title: 'Auditorium J' },
+        { id: 'k', title: 'Auditorium K' },
+        { id: 'l', title: 'Auditorium L' },
+        { id: 'm', title: 'Auditorium M' }
+      ],
+      */
+      /*
+      [
+        { id: '1', resourceId: 'b', start: '2018-04-07T02:00:00', end: '2018-04-07T07:00:00', title: 'event 1' },
+        { id: '2', resourceId: 'c', start: '2018-04-07T05:00:00', end: '2018-04-07T22:00:00', title: 'event 2' },
+        { id: '3', resourceId: 'd', start: '2018-04-06', end: '2018-04-08', title: 'event 3' },
+        { id: '4', resourceId: 'e', start: '2018-04-07T03:00:00', end: '2018-04-07T08:00:00', title: 'event 4' },
+        { id: '5', resourceId: 'f', start: '2018-04-07T00:30:00', end: '2018-04-07T02:30:00', title: 'event 5' }
+      ]
+      */
     });
+    calendar.render();
   }
 
   calendar() {
