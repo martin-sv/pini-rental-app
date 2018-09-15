@@ -10,6 +10,7 @@ import * as fromProperties from '../properties/store/properties.reducer';
 import { take, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Property } from '../shared/models/property.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-checkin',
@@ -62,6 +63,11 @@ export class CheckinComponent implements OnInit {
     this.store.select(fromProperties.getSelectedCheckin).pipe(take(1)).subscribe(idSelectedCheckin => {
       const idCheckin = (idSelectedCheckin === null) ? '0' : idSelectedCheckin;
       const pfValues = this.newCheckinForm.value;
+      const checkinDate = new Date(pfValues.checkin);
+      checkinDate.setHours(environment.defaultCheckinTime);
+      const checkoutDate = new Date(pfValues.checkout);
+      checkoutDate.setHours(environment.defaultCheckoutTime);
+
       const checkIn = new CheckIn(
         idCheckin,
         AuthDataStatic.authData.email,
@@ -72,8 +78,8 @@ export class CheckinComponent implements OnInit {
           pfValues.email,
           pfValues.adultCount,
           pfValues.childCount),
-          new Date(pfValues.checkin).toUTCString(),
-          new Date(pfValues.checkout).toUTCString(),
+          checkinDate.toUTCString(),
+          checkoutDate.toUTCString(),
           pfValues.expensesPaid,
           pfValues.notes
         );

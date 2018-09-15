@@ -38,6 +38,10 @@ export class ScheduleComponent implements OnInit {
       // aspectRatio: 1.8,
       eventOverlap: true,
       scrollTime: '00:00',
+      minTime: '00:00:00',
+      maxTime: '24:00:00',
+      locale: 'es', // TODO: Poner Lang
+      timezone: 'local',
       header: {
         left: 'prev,next today',
         center: 'title',
