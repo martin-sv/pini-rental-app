@@ -1,6 +1,3 @@
-
-
-
 <section>
   <form
     fxLayout="column"
@@ -15,7 +12,7 @@
         formControlName="propertySelect"
         required
         placeholder="{{ 'CHECKIN.PROPERTY_SELECT' | translate }}">
-        <mat-option *ngFor="let property of propertiesService.propertiesUpdate | async"  [value]="property.idProperty">
+        <mat-option *ngFor="let property of propertiesService.myPropertiesUpdate | async"  [value]="property.idProperty">
             {{ property.name }}
         </mat-option>
       </mat-select>

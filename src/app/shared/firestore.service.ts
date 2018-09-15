@@ -31,7 +31,7 @@ export class FirestoreService {
 
   constructor(private db: AngularFirestore) {}
 
-  // *** HOSTS *** //
+  //#region  // *** HOSTS *** //
   public fetchHosts() {
     if (this.verbose) { console.log('Firebase: fetchHosts'); }
     this.firebaseSubs.push(this.db
@@ -70,7 +70,9 @@ export class FirestoreService {
     this.db.doc('hosts/' + host.email).set(propertyJSON);
   }
 
-  // *** PROPERTIES *** //
+  //#endregion
+
+  //#region // *** PROPERTIES *** //
 
   // TODO: Ver que hacer con el tema host
   public fetchMyProperties(host: Host) {
@@ -195,8 +197,9 @@ export class FirestoreService {
         });
     });
   }
+  //#endregion
 
-  // *** CHECKIN *** //
+  //#region // *** CHECKIN *** //
 
   public fetchCheckInByHost(host: Host) {
     if (this.verbose) { console.log('Firebase: fetchCheckInByHost: '); console.log(host); }
@@ -245,9 +248,9 @@ export class FirestoreService {
   removeCheckin(idCheckin: string) {
     this.db.doc('checkins/' + idCheckin).update({inactive: true});
   }
+  //#endregion
 
-
-  // *** OTHER *** //
+  //#region // *** OTHER *** //
 
   fetchCondos() {
     if (this.verbose) { console.log('Firebase: fetchCondos'); }
@@ -285,4 +288,5 @@ export class FirestoreService {
   cancelSubscriptions() {
     if (this.firebaseSubs) { this.firebaseSubs.forEach(sub => sub.unsubscribe()); }
   }
+  //#endregion
 }
