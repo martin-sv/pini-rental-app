@@ -25,9 +25,15 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "src/my-theme.scss"
+              "src/my-theme.scss",
+              "node_modules/fullcalendar/dist/fullcalendar.min.css",
+              "node_modules/fullcalendar-scheduler/dist/scheduler.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/fullcalendar/dist/fullcalendar.min.js",
+              "node_modules/fullcalendar-scheduler/dist/scheduler.min.js"
+            ]
           },
           "configurations": {
             "production": {
