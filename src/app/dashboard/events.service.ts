@@ -43,8 +43,6 @@ export class EventsSesrvice {
       });
       this.onAllDataUpdate.next(this.allData);
       this.onMyDataUpdate.next(this.myData);
-      // this.onDataUpdate.next(this.fullData());
-
     });
 
     // this.propertiesService.myPropertiesUpdate.subscribe((properties: Property[]) => { this.buildResources(properties); });
@@ -54,7 +52,6 @@ export class EventsSesrvice {
   private async buildResources(properties: Property[]) {
     this.allResources = [];
     this.myResources = [];
-    // Get Hosts with properties
     const hostsWithProperties: {id: string, title: string}[] = [];
     for (let i = 0; i < properties.length; i++) {
       if (!hostsWithProperties.find(value => value.id === properties[i].idHost)) {
@@ -77,65 +74,4 @@ export class EventsSesrvice {
     this.onAllPropertiesUpdate.next(this.allResources);
     this.onMyPropertiesUpdate.next(this.myResources);
   }
-
-
-    private fullData() {
-      const dateObj = new Date();
-      const yearMonth = dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1);
-      const data = [{
-          title: 'All Day Event',
-          start: yearMonth + '-01'
-      },
-      {
-          title: 'Long Event',
-          start: yearMonth + '-07',
-          end: yearMonth + '-10'
-      },
-      {
-          id: 999,
-          title: 'Repeating Event',
-          start: yearMonth + '-09T16:00:00'
-      },
-      {
-          id: 999,
-          title: 'Repeating Event',
-          start: yearMonth + '-16T16:00:00'
-      },
-      {
-          title: 'Conference',
-          start: yearMonth + '-11',
-          end: yearMonth + '-13'
-      },
-      {
-          title: 'Meeting',
-          start: yearMonth + '-12T10:30:00',
-          end: yearMonth + '-12T12:30:00'
-      },
-      {
-          title: 'Lunch',
-          start: yearMonth + '-12T12:00:00'
-      },
-      {
-          title: 'Meeting',
-          start: yearMonth + '-12T14:30:00'
-      },
-      {
-          title: 'Happy Hour',
-          start: yearMonth + '-12T17:30:00'
-      },
-      {
-          title: 'Dinner',
-          start: yearMonth + '-12T20:00:00'
-      },
-      {
-          title: 'Birthday Party',
-          start: yearMonth + '-13T07:00:00'
-      },
-      {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: yearMonth + '-28'
-      }];
-      return data;
-    }
 }
