@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { PropertiesService } from '../properties/properties.service';
 import { CheckInFull } from '../shared/models/checkinFull.model';
 import { Property } from '../shared/models/property.model';

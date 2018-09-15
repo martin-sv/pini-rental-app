@@ -3,7 +3,6 @@ import { EventsSesrvice } from './events.service';
 import { take } from 'rxjs/operators';
 import { UserRolesEnum } from '../auth/userRolesEnum';
 import { AuthService } from '../auth/auth.service';
-import { AuthDataStatic } from '../auth/auth-data.static';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.authService.onUserRoleUpdate.subscribe((userRole: UserRolesEnum) => {
-      if (AuthDataStatic.authData.role === UserRolesEnum.ADMIN) {
+      if (userRole === UserRolesEnum.ADMIN) {
         this.eventsService.onAllDataUpdate.pipe(take(1)).subscribe(data => {
           this.data = data;
         });
