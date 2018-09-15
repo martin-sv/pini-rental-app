@@ -75,14 +75,12 @@ export class FirestoreService {
   public fetchMyProperties(host: Host) {
     if (this.verbose) { console.log('Firebase: fetchMyProperties: '); console.log(host); }
     this.firebaseSubs.push(this.db
-      .collection('hosts/' + AuthDataStatic.authData.email + '/properties')
+      .collection('hosts/' + AuthDataStatic.authData.email + '/properties', ref => ref.where('inactive', '==', 'false'))
       .valueChanges()
       .subscribe(propertiesRaw => {
         const properties: Property[] = [];
         propertiesRaw.forEach((property: Property) => {
-          if (!property['inactive']) {
-            properties.push(property);
-          }
+          properties.push(property);
         });
         this.propertiesUpdate.next(Object.create(properties));
       }, error => {
@@ -91,21 +89,44 @@ export class FirestoreService {
     );
   }
 
+  public fetchAllProperties() {
+    if (this.verbose) { console.log('Firebase: fetchAllProperties'); }
+
+    this.firebaseSubs.push(this.db
+      .collection<Property>('properties', ref => ref.where('inactive', '==', 'false'))
+      .valueChanges()
+      .subscribe((properties: Property[]) => {
+        console.log(properties);
+      }));
+  }
+
+  public fetchProperty(idProperty: string) {
+    if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }
+    // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
+    this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
+      .valueChanges()
+      .subscribe(result => {
+        // console.log(result);
+      })
+    );
+  }
+
   addMyProperty(property: Property) {
     if (this.verbose) { console.log('Firebase: addMyProperty: '); console.log(property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
-    propertyJSON.idHost = property.host.idHost;
+    propertyJSON.idHost = property.idHost;
     // console.log(property);
     // console.log(propertyJSON);
     this.db.collection('hosts/' + AuthDataStatic.authData.email + '/properties').add(propertyJSON)
       .then(data => {
         // Add property ID
         propertyJSON.idProperty = data.id;
+        propertyJSON.inactive = 'fasle';
         // Copy the property in the properties root
         this.db.doc('properties/' + data.id).set(propertyJSON);
         // Update the property ID under the host's collection on properties
-        this.db.doc(data.path).update({'idProperty': data.id });
+        this.db.doc(data.path).update({'idProperty': data.id, 'inactive': 'false' });
       })
       .catch( error => console.log (error));
   }
@@ -114,6 +135,8 @@ export class FirestoreService {
     if (this.verbose) { console.log('Firebase: updateProperty: '); console.log(property); }
     const propertyJSON = JSON.parse(JSON.stringify(property));
     delete propertyJSON.host;
+    // TODO: Related with strings and booleans being mixed since no types are working in the db
+    propertyJSON.inactive = propertyJSON.inactive.toString();
     this.db.doc('hosts/' + AuthDataStatic.authData.email + '/properties/' + property.idProperty).set(propertyJSON);
   }
 
@@ -158,21 +181,19 @@ export class FirestoreService {
               console.log('Deleting Checkin:' + 'checkins/' + checkin.idCheckin);
             });
           });
-      });
+          this.db
+          .collection('properties', ref => ref.where('idProperty', '==', property.idProperty))
+          .valueChanges()
+          .subscribe(properties2 => {
+            properties2.forEach((property2: Property) => {
+              this.db.doc('properties/' + property2.idProperty).delete();
+              console.log('Deleting Properties:' + 'properties/' + property2.idProperty);
+            });
+          });
+
+        });
     });
   }
-
-  public fetchProperty(idProperty: string) {
-    if (this.verbose) { console.log('Firebase: fetchProperty: ' + idProperty); }
-    // console.log('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty);
-    this.firebaseSubs.push(this.db.doc<Property>('hosts/' + AuthDataStatic.authData.email + '/properties/' + idProperty)
-      .valueChanges()
-      .subscribe(result => {
-        // console.log(result);
-      })
-    );
-  }
-
 
   // *** CHECKIN *** //
 

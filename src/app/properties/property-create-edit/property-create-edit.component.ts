@@ -107,7 +107,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
       const idProp = (result[0] === null) ? '0' : result[0];
       const property = new Property(
         idProp,
-        result[1],
+        result[1].idHost,
         propertyFormValues.name,
         DataMock.getPropertyImage(),
         propertyFormValues.condoHouseSelect,
@@ -119,6 +119,7 @@ export class PropertyCreateEditComponent implements OnInit, AfterViewChecked {
           propertyFormValues.state,
           propertyFormValues.country,
           propertyFormValues.zip),
+        false,
         condo);
 
       if (result[0] === null) {

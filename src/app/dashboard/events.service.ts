@@ -1,37 +1,55 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, ReplaySubject } from 'rxjs';
 import { PropertiesService } from '../properties/properties.service';
 import { CheckInFull } from '../shared/models/checkinFull.model';
+import { Property } from '../shared/models/property.model';
+import { Host } from '../shared/models/host.model';
 
 @Injectable()
 export class EventsSesrvice {
   private data: {resourceId: string, title: string, start: string, end?: string}[] = [];
-  private hostIDs: string[];
-  onDataUpdate = new Subject<any>();
+  private resources: {id: string, title: string, children?: {id: string, title: string}[]}[];
+  onDataUpdate = new ReplaySubject<any>(1);
+  onPropertiesUpdate = new ReplaySubject<any>(1);
 
   constructor(private propertiesService: PropertiesService) {
 
     this.propertiesService.checkinsUpdate.subscribe((checkins: CheckInFull[]) => {
       this.data = [];
-      this.hostIDs = [];
       checkins.forEach(checkin => {
         // console.log(checkin.guest.fullName + ' - ' + checkin.checkingDateTime + ' - ' + checkin.checkoutDateTime);
         const start = new Date(checkin.checkingDateTime);
         const end = new Date(checkin.checkoutDateTime);
         this.data.push({
-          resourceId: checkin.host.idHost,
+          resourceId: checkin.property.idProperty,
           title: checkin.host.firstName + ': ' + checkin.guest.fullName,
           start: start.toISOString(),
           end: end.toISOString()
         });
       });
-      for (let i = 0; i < checkins.length; i++) {
-        this.hostIDs.push(checkins[i].idHost);
-      }
-      this.onDataUpdate.next([this.data, this.hostIDs]);
+      this.onDataUpdate.next(this.data);
       // this.onDataUpdate.next(this.fullData());
 
     });
+
+    this.propertiesService.propertiesUpdate.subscribe((properties: Property[]) => { this.buildResources(properties); });
+  }
+
+  private async buildResources(properties: Property[]) {
+    this.resources = [];
+    this.resources.push({id: 'd', title: 'Auditorium D', children: [
+      { id: 'd1', title: 'Room D1' },
+      { id: 'd2', title: 'Room D2' }
+    ]});
+
+    for (let i = 0; i < properties.length; i++) {
+      // console.log('BUILD RESOURCES ' + i);
+      // const host: Host = await this.propertiesService.getHostByID(properties[i].idHost);
+      // const hostProperties: Property = await this.propertiesService.getHostProperties(host);
+      // console.log(hostProperties);
+      this.resources.push({id: properties[i].idProperty, title: properties[i].name});
+    }
+    this.onPropertiesUpdate.next(this.resources);
   }
 
 

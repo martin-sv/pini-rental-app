@@ -23,12 +23,13 @@ export class DataMock {
     for (let i = 0; i < propertyCount; i++) {
     const property: Property = new Property(
       this.rndNum().toString(),
-      host,
+      host.idHost,
       this.rndText(),
       this.getPropertyImage(),
       Math.round(Math.random()),
       this.rndNum(200, 150),
-      new PeopleAddress(this.rndText(), this.rndText(), this.rndText(), 'FL', 'US', this.rndNum(99999, 10000).toString()));
+      new PeopleAddress(this.rndText(), this.rndText(), this.rndText(), 'FL', 'US', this.rndNum(99999, 10000).toString()),
+      false);
       properties.push(property);
     }
     this._properties.push(...properties);

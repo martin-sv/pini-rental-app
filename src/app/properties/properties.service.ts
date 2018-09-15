@@ -77,10 +77,6 @@ export class PropertiesService implements OnDestroy {
     this.checkinSub = this.db.checkinsUpdate.subscribe(asd => this.fetchAndCreateCheckins(asd));
   }
 
-  async a() {
-      let host = await this.getHostByID('asd');
-  }
-
   async fetchAndCreateCheckins(checkins: CheckIn[]) {
       // console.log('this!!');
       // console.log(this);
@@ -148,6 +144,31 @@ export class PropertiesService implements OnDestroy {
         resolve(host);
       })
       ).toPromise();
+    });
+  }
+
+  public getHostProperties(host: Host): Promise<Property> {
+    return new Promise(resolve => {
+      this.propertiesUpdate.pipe(take(1)
+      , flatMap((properties: Property[]) => {
+        console.log(properties);
+        const retProps: Property[] = [];
+        for (let i = 0; i < properties.length; i++) {
+          if (properties[i].idHost === host.idHost) {
+            retProps.push(properties[i]);
+          }
+        }
+        return retProps; })).toPromise();
+        /*
+        return (properties); })
+      , find((property: Property) => {
+        console.log(property);
+        return (property.idHost === host.idHost); })
+      , map (property => {
+        console.log(property);
+        resolve(property);
+      })).toPromise();
+      */
     });
   }
 

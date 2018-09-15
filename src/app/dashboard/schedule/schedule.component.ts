@@ -20,6 +20,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   schedule() {
+    console.log('Data: ' + this.data);
+
     const calendarEl = document.getElementById('schedule');
     const calendar = new FullCalendar.Calendar(calendarEl, {
       // now: '2018-04-07',
@@ -41,7 +43,7 @@ export class ScheduleComponent implements OnInit {
         center: 'title',
         right: 'month,agendaWeek, agendaDay,timelineMonth,listWeek'
       },
-      defaultView: 'timelineDay',
+      defaultView: 'timelineMonth',
       resourceLabelText: 'Properties',
       resources: this.resources,
       events: this.data

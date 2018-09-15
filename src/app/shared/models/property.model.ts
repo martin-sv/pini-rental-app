@@ -12,19 +12,20 @@ export class Property {
 
   constructor(
     public idProperty: string,
-    public host: Host,
+    public idHost: string,
     public name: string,
     public cover: string,
     public propertyClass: PropertyClassEnum,
     public serviceFee: number,
     public address: PeopleAddress,
+    public inactive: boolean,
     public condo?: Condo,
     checkInOutHistory?: CheckIn[],
     cleaningHistory?: Cleaning[]) {
 
     this.checkInOutHistory = checkInOutHistory;
     this.cleaningHistory = cleaningHistory;
-    host.addProperty(this);
+    // host.addProperty(this);
     // host.propertyList.push(this);
   }
 
