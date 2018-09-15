@@ -14,11 +14,6 @@ import { CheckInFull } from './models/checkinFull.model';
 
 @Injectable()
 export class FirestoreService {
-  /*
-  private host: Host;
-  private properties: Property[];
-  private checkins: CheckIn[];
-  */
   myPropertiesUpdate = new Subject<Property[]>();
   allPropertiesUpdate = new Subject<Property[]>();
   hostUpdate = new Subject<Host>();
