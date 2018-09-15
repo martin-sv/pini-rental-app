@@ -17,7 +17,42 @@
 
     <ng-container matColumnDef="guestName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> GuestName </th>
-      <td mat-cell *matCellDef="let row"> {{ row.guest.fullName }} </td>
+      <!-- <td mat-cell *matCellDef="let row"> {{ row.guest.fullName }} </td> -->
+
+      <mat-cell *matCellDef="let row">
+				<mat-form-field floatLabel="never">
+          <input
+            matInput
+            [value]="row.guest.fullName"
+            [(ngModel)]="row.guest.fullName"
+            name="{{ row.idHost }}"
+            (focusin)="onFieldFocusIn($event)"
+            (focusout)="onFieldFocusOut($event)"
+            (keyup.enter)="onFieldPressEnter($event)"
+            placeholder="Name" >
+				</mat-form-field>
+			</mat-cell>
+
+
+
+      <!-- <form [formGroup]= "propertyForm">
+  <mat-form-field *ngFor="let inputF of inputs">
+      <input
+      matInput
+      type="{{ inputF.name }}"
+      name="{{ inputF.name }}"
+      formControlName="{{ inputF.name }}"
+      placeholder="{{ inputF.name }} -> Translate"
+      (focusin)="onFieldFocusIn($event)"
+      (focusout)="onFieldFocusOut($event)"
+      (keyup.enter)="onFieldPressEnter($event)"
+      value="{{ inputF.value }}" >
+    <mat-icon style="cursor: pointer;" *ngIf="!focus[inputF.name]" matSuffix>mode_edit</mat-icon>
+    <mat-icon style="cursor: pointer;" *ngIf="focus[inputF.name]" matSuffix>done</mat-icon>
+  </mat-form-field>
+</form> -->
+
+
     </ng-container>
 
     <ng-container matColumnDef="checkinDate">
@@ -67,6 +102,9 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+<br>
+<br>
+<br>
 <!-- Wait for the property information to arrive before subloading -->
 <app-property-create-edit *ngIf="idProperty !== ''" [idProperty]="idProperty"></app-property-create-edit>
 

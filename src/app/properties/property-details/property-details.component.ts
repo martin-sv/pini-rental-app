@@ -20,7 +20,8 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   condosList: Condo[];
   private checkinsUpdateSub: Subscription;
 
-  displayedColumns: string[] = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
+  displayedColumns: string[];
+  tableData: {}[];
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,6 +31,8 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
               private dataService: DataService) { }
 
   ngOnInit() {
+    // this.displayedColumns = ['idHost', 'propertyName', 'guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
+    this.displayedColumns = ['guestName', 'checkinDate', 'checkoutDate', 'expensesPaid', 'edit'];
     this.condosList = this.dataService.condosList;
 
     this.route.params
@@ -37,25 +40,32 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
         (params: Params) => {
           // console.log(params);
           this.propertiesService.getPropertyByID(params.id).then(res => {
-            // console.log(params.id);
             this.idProperty = res.idProperty;
-            // console.log('Property Details Component: idProperty: ' + this.idProperty);
+
+            // Get the checkins, filter and add PropertyName
+            this.checkinsUpdateSub = this.propertiesService.myCheckinsUpdate.subscribe(data => {
+              const a = data;
+              const b = [];
+              a.forEach(dat => {
+                if (dat.idProperty === this.idProperty) {
+                  this.propertiesService.getPropertyByID(dat.idProperty).then(res2 => {
+                    dat['propertyName'] = res2.name;
+                  });
+                  b.push(dat);
+                }
+              });
+              this.tableData = b;
+              this.dataSource.data = b;
+            });
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
           });
+
         }
       );
+      setInterval(() => console.log(this.tableData), 5000);
 
-     this.checkinsUpdateSub = this.propertiesService.myCheckinsUpdate.subscribe(data => {
-        const a = data;
-        a.forEach(dat => {
-          this.propertiesService.getPropertyByID(dat.idProperty).then(res => {
-            dat['propertyName'] = res.name;
-          });
-        });
-        this.dataSource.data = a;
-      });
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
 
     /*
     this.propertyForm = new FormGroup({
@@ -86,23 +96,23 @@ export class PropertyDetailsComponent implements OnInit, OnDestroy {
   editCheckin(checkIn) {
     console.log(checkIn);
   }
-  /*
+
   onFieldFocusIn(event) {
-    this.focus[event.target.name] = true;
-    // console.log(event.target.name);
+    // this.focus[event.target.name] = true;
+    console.log(event.target.name);
     // console.log(this.propertyForm);
   }
   onFieldFocusOut(event) {
     // console.log(event);
     // console.log('onFieldFocusOut');
-    this.focus[event.target.name] = false;
-    this.propertiesService.updatePropertyValue(this.idProperty, event.target.name, event.target.value);
+    // this.focus[event.target.name] = false;
+    // this.propertiesService.updatePropertyValue(this.idProperty, event.target.name, event.target.value);
   }
 
   onFieldPressEnter(event) {
-    event.target.blur();
+    // event.target.blur();
   }
-  */
+
   ngOnDestroy() {
     if (this.checkinsUpdateSub) { this.checkinsUpdateSub.unsubscribe(); }
   }
